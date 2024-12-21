@@ -1,4 +1,4 @@
-import { getCurveAPY, getYearnAPY, TokenAPY, getLidoAPY, getSkyAPY, getPendleAPY, ApyDetails } from './apy';
+import { getCurveAPY, getYearnAPY, TokenAPY, getLidoAPY, getSkyAPY, getPendleAPY, getDefiLamaAPY, ApyDetails } from './apy';
 import {
     NetworkType,
     supportedChains,
@@ -22,8 +22,9 @@ export class Fetcher {
             getSkyAPY(network),
             getPendleAPY(network),
             getLidoAPY(network),
+            getDefiLamaAPY(network),
         ]);
-        let protocols = ["Curve", "yearn", "Sky", "Pendle", "Lido"];
+        let protocols = ["Curve", "yearn", "Sky", "Pendle", "Lido", "Defllama"];
         let s = "";
         for (var ind in protocols) {
             s += ` ${protocols[ind]}:${Object.keys(allNetworkAPYs[ind]).length} `

@@ -3,11 +3,13 @@ import {
   PartialRecord,
   PERCENTAGE_FACTOR,
   TypedObjectUtils,
+  tokenDataByNetwork,
+  NOT_DEPLOYED,
 } from "@gearbox-protocol/sdk-gov";
 import axios from "axios";
 
 // import { GearboxBackendApi } from "../core/endpoint";
-import { TokensWithAPY } from ".";
+import { APYResult, getTokenAPY, TokensWithAPY } from ".";
 
 interface LamaItem {
   apy: number;
@@ -19,39 +21,50 @@ interface LamaItem {
   project: string;
 }
 
+const getDefillamaURL = () => "https://yields.llama.fi/pools";
+
 interface LamaResponse {
   data: Array<LamaItem>;
+  status: string;
 }
 
 export async function getDefiLamaAPY(
-  networkType: NetworkType,
-): Promise<PartialRecord<TokensWithAPY, number>> {
-  const currentNormal = NORMAL_TO_LAMA[networkType];
+  network: NetworkType,
+): Promise<APYResult> {
+  const currentNormal = NORMAL_TO_LAMA[network];
   const idList = Object.values(currentNormal);
   if (idList.length === 0) return {};
 
-  // const res = await axios.get<LamaResponse>(
-  //   GearboxBackendApi.getLlamaAPYUrl(idList),
-  // );
-  // const itemsRecord = res.data.data.reduce<Record<string, LamaItem>>(
-  //   (acc, item) => {
-  //     acc[item.pool] = item;
-  //     return acc;
-  //   },
-  //   {},
-  // );
+  const res = await axios.get<LamaResponse>(getDefillamaURL());
+  const itemsRecord = res.data.data.reduce<Record<string, LamaItem>>(
+    (acc, item) => {
+      acc[item.pool] = item;
+      return acc;
+    },
+    {},
+  );
 
-  // const allAPY = TypedObjectUtils.entries(
-  //   currentNormal as Record<TokensWithAPY, string>,
-  // ).reduce<PartialRecord<TokensWithAPY, number>>((acc, [symbol, pool]) => {
-  //   const { apy = 0 } = itemsRecord[pool] || {};
-  //   acc[symbol] = Math.round(apy * Number(PERCENTAGE_FACTOR));
 
-  //   return acc;
-  // }, {});
 
-  // return allAPY;
-  return {};
+  const currentTokens = tokenDataByNetwork[network];
+
+  const allAPY = TypedObjectUtils.entries(
+    currentNormal as Record<TokensWithAPY, string>,
+  ).reduce<APYResult>((acc, [symbol, pool]) => {
+    const { apy = 0 } = itemsRecord[pool] || {};
+    let address = currentTokens?.[symbol];
+    if (address != NOT_DEPLOYED) {
+      acc[address] = getTokenAPY(symbol, [{
+        reward: address,
+        symbol: symbol,
+        value: apy,
+      }]);
+    }
+
+    return acc;
+  }, {});
+
+  return allAPY;
 }
 
 const NORMAL_TO_LAMA: Record<
