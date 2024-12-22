@@ -16,7 +16,7 @@ export class Fetcher {
     }
     async getnetworkTokens(network: NetworkType) {
         let ans: Record<Address, TokenAPY> = {};
-        const [...allNetworkAPYs] = await Promise.all([
+        const [...allProtocolAPYs] = await Promise.all([
             getCurveAPY(network),
             getYearnAPY(network),
             getSkyAPY(network),
@@ -24,17 +24,25 @@ export class Fetcher {
             getLidoAPY(network),
             getDefiLamaAPY(network),
         ]);
-        let protocols = ["Curve", "yearn", "Sky", "Pendle", "Lido", "Defllama"];
+        let protocols = ["Curve", "Yearn", "Sky", "Pendle", "Lido", "Defillama"];
         let s = "";
         for (var ind in protocols) {
-            s += ` ${protocols[ind]}:${Object.keys(allNetworkAPYs[ind]).length} `
+            let t = "";
+            Object.entries(allProtocolAPYs[ind]).forEach(([k, v]) => {
+                t += v?.symbol + ", "
+            })
+            s += ` ${protocols[ind]}:${Object.keys(allProtocolAPYs[ind]).length} `
+            if (t != "") {
+                console.log(protocols[ind] + ": " + t)
+            }
         }
         console.log(`Fetched ${s} for ${network}`)
         let time = moment().utc().format();;
-        allNetworkAPYs.forEach((networkAPY) => {
+        allProtocolAPYs.forEach((networkAPY, networkInd) => {
             Object.entries(networkAPY).forEach(([token, newAPYs]) => {
                 newAPYs?.apys.forEach((entry: ApyDetails) => {
                     entry.lastUpdated = time;
+                    entry.protocol = protocols[networkInd]
                     // entry.symbol = entry.symbol.toLowerCase();
                 })
                 //

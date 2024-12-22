@@ -16,8 +16,6 @@ interface APYResponse {
 const getAPYURL = () =>
   "https://api-v2.pendle.finance/core/v2/1/markets/0xcdd26eb5eb2ce0f203a84553853667ae69ca29ce/data";
 
-type PendleTokens = Extract<SupportedToken, "sUSDe">;
-
 
 export async function getPendleAPY(network: NetworkType): Promise<APYResult> {
   if (network != "Mainnet") {
@@ -31,14 +29,14 @@ export async function getPendleAPY(network: NetworkType): Promise<APYResult> {
 
     let result: APYResult = {};
     let currentTokens = tokenDataByNetwork[network];
-    let sUSDe = currentTokens?.["sUSDe"];
+    let pendle = currentTokens?.["PENDLE"];
 
-    result[sUSDe] = {
-      symbol: "sUSDe",
+    result[pendle] = {
+      symbol: "PENDLE",
       apys: [{
         value: numberToAPY(Number(rate)),
-        reward: sUSDe,
-        symbol: "sUSDe",
+        reward: pendle,
+        symbol: "PENDLE",
       }]
     };
     //
@@ -49,7 +47,5 @@ export async function getPendleAPY(network: NetworkType): Promise<APYResult> {
 }
 
 function numberToAPY(baseApy: number) {
-  return Math.round(
-    baseApy * Number(PERCENTAGE_DECIMALS),
-  );
+  return baseApy * Number(PERCENTAGE_DECIMALS);
 }

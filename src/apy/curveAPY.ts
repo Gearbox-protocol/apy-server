@@ -192,8 +192,8 @@ export async function getCurveAPY(network: NetworkType): Promise<APYResult> {
     mainnetVolumeByAddress[(gearPool?.address || "").toLowerCase()];
 
   const gearAPY = [{
-    reward: currentTokens?.["GEAR"],
-    symbol: "GEAR",
+    reward: GEAR_POOL as Address,
+    symbol: gearPool.symbol,
     value: curveAPYToBn(gearVolume?.latestDailyApyPcent || 0),
   },
   {
@@ -211,7 +211,7 @@ export async function getCurveAPY(network: NetworkType): Promise<APYResult> {
     }
   )];
 
-  curveAPY[currentTokens?.["GEAR"]] = getTokenAPY("GEAR", gearAPY);
+  curveAPY[GEAR_POOL as Address] = getTokenAPY(gearPool.symbol, gearAPY);
 
   return curveAPY;
 }

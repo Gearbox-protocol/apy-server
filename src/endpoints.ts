@@ -32,7 +32,7 @@ export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
     }
     let data: OutputDetails = {
         chainId: chainId,
-        address: tokenAddress,
+        address: tokenAddress.toLowerCase(),
         symbol: "",
         rewards: {
             apy: [],
@@ -90,7 +90,7 @@ export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
         let apys = fetcher.cache[entry.chain_id]?.[entry.token_address as Address];
         data.push({
             chainId: entry.chain_id,
-            address: entry.token_address,
+            address: entry.token_address.toLowerCase(),
             symbol: apys.symbol,
             rewards: {
                 apy: apys.apys,
@@ -130,7 +130,7 @@ function checkTokenAddress(data: any): [Response, string] {
             description: `Invalid token_address: ${data}`
         }, ""]
     }
-    return [{ status: "ok" }, (notUndefined as Address).toLowerCase()];
+    return [{ status: "ok" }, (notUndefined as Address).toString()];
 }
 
 export function checkResp(res: Response, out: any): boolean {

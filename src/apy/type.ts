@@ -8,6 +8,7 @@ export interface ApyDetails {
     symbol: string,
     value: number,
     lastUpdated?: string
+    protocol?: string
 }
 export interface TokenAPY {
     symbol: string,
