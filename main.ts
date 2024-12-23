@@ -1,11 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import { Fetcher, } from './src/fetcher';
-import { ApyDetails } from './src/apy';
-import {
-    isSupportedNetwork,
-} from "@gearbox-protocol/sdk-gov";
-import { Address, isAddress } from 'viem';
+import cors from "cors";
 dotenv.config();
 
 import { checkResp, getAll, getByChainAndToken, getRewardList } from './src/endpoints'
@@ -13,6 +9,12 @@ import { checkResp, getAll, getByChainAndToken, getRewardList } from './src/endp
 const app = express();
 const port = process.env.PORT ?? 8000;
 app.use(express.json());
+app.use(cors({
+    origin: '*',
+    credentials: true,
+    methods: 'GET,PUT,POST,OPTIONS',
+    allowedHeaders: 'Content-Type,Authorization'
+}));
 
 let f = new Fetcher();
 (async function run() {
