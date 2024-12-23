@@ -7,6 +7,7 @@ import {
   tokenDataByNetwork,
   TypedObjectUtils,
   CHAINS,
+  NOT_DEPLOYED,
 } from "@gearbox-protocol/sdk-gov";
 import { APYResult, ApyDetails, getTokenAPY } from "./type";
 import { CurveLPToken } from "@gearbox-protocol/sdk-gov/lib/tokens/curveLP";
@@ -141,6 +142,9 @@ export async function getCurveAPY(network: NetworkType): Promise<APYResult> {
   let curveAPY = TypedObjectUtils.entries(curveTokens).reduce<APYResult>(
     (acc, [curveSymbol]) => {
       const address = (currentTokens?.[curveSymbol] || "").toLowerCase();
+      if (address == NOT_DEPLOYED) {
+        return acc;
+      }
 
       const pool = poolDataByAddress[address];
       const volume = volumeByAddress[(pool?.address || "").toLowerCase()];
