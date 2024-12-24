@@ -1,0 +1,35 @@
+{
+    "branches": [
+        {
+            "name": "main"
+        }
+    ],
+    "plugins": [
+        "@semantic-release/commit-analyzer",
+        "@semantic-release/release-notes-generator",
+        [
+            "@semantic-release/github",
+            {
+                "successComment": false,
+                "failTitle": false
+            }
+        ],
+        [
+            "@codedependant/semantic-release-docker",
+            {
+                "dockerTags": [
+                    "{{#if prerelease.[0]}}{{prerelease.[0]}}{{else}}latest{{/if}}",
+                    "{{version}}"
+                ],
+                "dockerArgs": {
+                    "PACKAGE_VERSION": "{{version}}"
+                },
+                "dockerImage": "apy-server",
+                "dockerRegistry": "ghcr.io",
+                "dockerProject": "gearbox-protocol",
+                "dockerBuildQuiet": false,
+                "dockerLogin": false
+            }
+        ]
+    ]
+}

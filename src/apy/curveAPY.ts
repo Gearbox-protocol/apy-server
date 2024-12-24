@@ -165,11 +165,13 @@ export async function getCurveAPY(network: NetworkType, store: TokenStore): Prom
         reward: pool.lpTokenAddress,
         symbol: curveSymbol,
         value: curveAPYToBn(baseAPY),
-      }, {
-        reward: crv.address,
-        symbol: crv.symbol,
-        value: curveAPYToBn(maxCrv),
-      }, ...extraRewards];
+      },
+        // {
+        //   reward: crv.address,
+        //   symbol: crv.symbol,
+        //   value: curveAPYToBn(maxCrv),
+        // }, ...extraRewards,
+      ];
       acc[pool.lpTokenAddress] = getTokenAPY(curveSymbol, curveAPYs);
       return acc;
     },
@@ -199,20 +201,21 @@ export async function getCurveAPY(network: NetworkType, store: TokenStore): Prom
     symbol: gearPool.symbol,
     value: curveAPYToBn(gearVolume?.latestDailyApyPcent || 0),
   },
-  {
-    reward: crv.address,
-    symbol: crv.symbol,
-    value: curveAPYToBn(Math.max(...(gearPool?.gaugeCrvApy || []), 0)),
-  },
-  ...(gearPool?.gaugeRewards || []).map(
-    ({ apy = 0, symbol, tokenAddress }): ApyDetails => {
-      return {
-        reward: tokenAddress,
-        symbol: symbol,
-        value: curveAPYToBn(apy),
-      }
-    }
-  )];
+    // {
+    //   reward: crv.address,
+    //   symbol: crv.symbol,
+    //   value: curveAPYToBn(Math.max(...(gearPool?.gaugeCrvApy || []), 0)),
+    // },
+    // ...(gearPool?.gaugeRewards || []).map(
+    //   ({ apy = 0, symbol, tokenAddress }): ApyDetails => {
+    //     return {
+    //       reward: tokenAddress,
+    //       symbol: symbol,
+    //       value: curveAPYToBn(apy),
+    //     }
+    //   }
+    // ),
+  ];
 
   curveAPY[GEAR_POOL as Address] = getTokenAPY(gearPool.symbol, gearAPY);
 

@@ -18,7 +18,7 @@ export const CHAINS = {
     Arbitrum: 42161,
     Optimism: 10,
 };
-export declare const NOT_DEPLOYED = "0xNOT DEPLOYED";
+export const NOT_DEPLOYED = "0xNOT DEPLOYED";
 
 export function isSupportedNetwork(chainId: number) {
     return Object.values(CHAINS).includes(chainId);
