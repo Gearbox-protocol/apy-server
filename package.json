@@ -1,6 +1,6 @@
 {
   "name": "apy-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Gearbox SDK",
   "main": "index.js",
   "license": "MIT",

@@ -29,6 +29,7 @@ RUN --mount=type=cache,id=yarn,target=/root/.yarn \
 
 FROM gcr.io/distroless/nodejs20-debian12
 
+EXPOSE 8000
 WORKDIR /app
 COPY --from=dev /app /app
 CMD ["--enable-source-maps", "/app/build/main.mjs"]
