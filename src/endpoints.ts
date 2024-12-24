@@ -1,7 +1,4 @@
-import { ApyDetails } from './apy';
-import {
-    isSupportedNetwork,
-} from "@gearbox-protocol/sdk-gov";
+import { ApyDetails, isSupportedNetwork } from './apy';
 import { Address, isAddress } from 'viem';
 import { Fetcher } from './fetcher';
 

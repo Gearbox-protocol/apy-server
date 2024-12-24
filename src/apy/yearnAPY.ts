@@ -1,17 +1,12 @@
 import {
   CHAINS,
   NetworkType,
-  PartialRecord,
   PERCENTAGE_DECIMALS,
-  PERCENTAGE_FACTOR,
-  tokenDataByNetwork,
-  TypedObjectUtils,
-  YearnLPToken,
-  yearnTokens,
-} from "@gearbox-protocol/sdk-gov";
+} from './type';
+
 import axios from "axios";
 import { Address } from "viem";
-import { APYResult, ApyDetails, getTokenAPY } from "./type";
+import { APYResult, getTokenAPY } from "./type";
 
 interface YearnAPYData {
   apr: {
@@ -28,37 +23,37 @@ type Response = Array<YearnAPYData>;
 const getUrl = (chainId: number) =>
   `https://ydaemon.yearn.finance/vaults/all?chainids=${chainId}&limit=2500`;
 
-export type YearnAPYResult = PartialRecord<YearnLPToken, number>;
+
+const yearnTokens = ["yvDAI", "yvUSDC", "yvUSDC_e", "yvWETH", "yvWBTC", "yvUSDT", "yvOP", "yvCurve-stETH", "yvCurve-FRAX"];
 
 export async function getYearnAPY(
   network: NetworkType,
 ): Promise<APYResult> {
   try {
     const chainId = CHAINS[network];
-    const currentTokens = tokenDataByNetwork[network];
 
     const { data } = await axios.get<Response>(getUrl(chainId));
 
     const dataByAddress = data.reduce<Record<string, YearnAPYData>>(
       (acc, d) => {
-        acc[d.address.toLowerCase()] = d;
+        acc[d.symbol.toLowerCase()] = d;
         return acc;
       },
       {},
     );
 
-    const yearnAPY = TypedObjectUtils.entries(
-      yearnTokens,
-    ).reduce<APYResult>((acc, [yearnSymbol]) => {
-      const address = (currentTokens?.[yearnSymbol] || "").toLowerCase();
+    const yearnAPY = yearnTokens.reduce<APYResult>((acc, yearnSymbol) => {
 
-      const data = dataByAddress[address];
+      const data = dataByAddress[yearnSymbol.toLowerCase()];
+      if (!data) {
+        return acc;
+      }
       const { apr: apy } = data || {};
       const { netAPR } = apy || {};
       const netApy = netAPR || 0;
 
-      acc[address as Address] = getTokenAPY(yearnSymbol, [{
-        reward: address as Address,
+      acc[data.address as Address] = getTokenAPY(yearnSymbol, [{
+        reward: data.address as Address,
         symbol: yearnSymbol,
         value: numberToAPY(netApy),
       }]);

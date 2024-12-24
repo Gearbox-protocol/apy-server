@@ -1,11 +1,8 @@
 import {
   NetworkType,
-  PartialRecord,
   PERCENTAGE_DECIMALS,
-  PERCENTAGE_FACTOR,
-  SupportedToken,
-  tokenDataByNetwork,
-} from "@gearbox-protocol/sdk-gov";
+} from "./type";
+import { TokenStore } from "./token_store";
 import { APYResult, getTokenAPY } from "./type";
 import axios from "axios";
 
@@ -21,7 +18,7 @@ const getAPYURL = () => "https://info-sky.blockanalitica.com/api/v1/overall/";
 // type SkyTokens = Extract<SupportedToken, "sUSDS" | "stkUSDS">;
 
 
-export async function getSkyAPY(network: NetworkType): Promise<APYResult> {
+export async function getSkyAPY(network: NetworkType, store: TokenStore): Promise<APYResult> {
   if (network != "Mainnet") {
     return {};
   }
@@ -31,19 +28,19 @@ export async function getSkyAPY(network: NetworkType): Promise<APYResult> {
 
     const savingsRate = apyInfo?.sky_savings_rate_apy || 0;
     const farmRate = apyInfo?.sky_farm_apy || 0;
-    let currentTokens = tokenDataByNetwork[network];
-    let sUSDS = currentTokens?.["sUSDS"];
-    let stkUSDS = currentTokens?.["stkUSDS"];
+    let sUSDS = store.getBysymbol(network, "sUSDS");
+    let stkUSDS = store.getBysymbol(network, "stkUSDS");
     let response: APYResult = {};
-    response[sUSDS] = getTokenAPY("sUSDS", [{
-      reward: sUSDS,
-      symbol: "sUSDS",
+    //
+    response[sUSDS.address] = getTokenAPY(sUSDS.symbol, [{
+      reward: sUSDS.address,
+      symbol: sUSDS.symbol,
       value: numberToAPY(Number(savingsRate)),
     }]);
-
-    response[stkUSDS] = getTokenAPY("stkUSDS", [{
-      reward: stkUSDS,
-      symbol: "stkUSDS",
+    //
+    response[stkUSDS.address] = getTokenAPY(stkUSDS.symbol, [{
+      reward: stkUSDS.address,
+      symbol: stkUSDS.symbol,
       value: numberToAPY(Number(farmRate)),
     }]);
     return response;

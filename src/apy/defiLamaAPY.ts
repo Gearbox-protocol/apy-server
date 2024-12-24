@@ -1,15 +1,12 @@
 import {
   NetworkType,
-  PartialRecord,
-  PERCENTAGE_FACTOR,
-  TypedObjectUtils,
-  tokenDataByNetwork,
   NOT_DEPLOYED,
-} from "@gearbox-protocol/sdk-gov";
+} from "./type";
 import axios from "axios";
 
 // import { GearboxBackendApi } from "../core/endpoint";
-import { APYResult, getTokenAPY, TokensWithAPY } from ".";
+import { APYResult, getTokenAPY } from ".";
+import { TokenStore } from "./token_store";
 
 interface LamaItem {
   apy: number;
@@ -29,7 +26,7 @@ interface LamaResponse {
 }
 
 export async function getDefiLamaAPY(
-  network: NetworkType,
+  network: NetworkType, store: TokenStore
 ): Promise<APYResult> {
   const currentNormal = NORMAL_TO_LAMA[network];
   const idList = Object.values(currentNormal);
@@ -46,30 +43,28 @@ export async function getDefiLamaAPY(
 
 
 
-  const currentTokens = tokenDataByNetwork[network];
 
-  const allAPY = TypedObjectUtils.entries(
-    currentNormal as Record<TokensWithAPY, string>,
-  ).reduce<APYResult>((acc, [symbol, pool]) => {
-    const { apy = 0 } = itemsRecord[pool] || {};
-    let address = currentTokens?.[symbol];
-    if (address != NOT_DEPLOYED) {
-      acc[address] = getTokenAPY(symbol, [{
-        reward: address,
-        symbol: symbol,
-        value: apy,
-      }]);
-    }
+  const allAPY =
+    Object.entries(currentNormal).reduce<APYResult>((acc, [symbol, pool]) => {
+      const { apy = 0 } = itemsRecord[pool] || {};
+      let token = store.getBysymbol(network, symbol);
+      if (token.address != NOT_DEPLOYED) {
+        acc[token.address] = getTokenAPY(token.symbol, [{
+          reward: token.address,
+          symbol: symbol,
+          value: apy,
+        }]);
+      }
 
-    return acc;
-  }, {});
+      return acc;
+    }, {});
 
   return allAPY;
 }
 
 const NORMAL_TO_LAMA: Record<
   NetworkType,
-  PartialRecord<TokensWithAPY, string>
+  Record<string, string> // symbol to pool
 > = {
   Mainnet: {
     sDAI: "c8a24fee-ec00-4f38-86c0-9f6daebc4225",
@@ -107,6 +102,6 @@ const NORMAL_TO_LAMA: Record<
 
     sfrxETH: "77020688-e1f9-443c-9388-e51ace15cc32",
   },
-  Base: {},
+  // Base: {},
 };
 

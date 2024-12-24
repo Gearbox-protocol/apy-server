@@ -1,7 +1,3 @@
-import {
-    NetworkType,
-    PartialRecord,
-} from "@gearbox-protocol/sdk-gov";
 import { Address } from "viem";
 export interface ApyDetails {
     reward: Address,
@@ -10,10 +6,29 @@ export interface ApyDetails {
     lastUpdated?: string
     protocol?: string
 }
+
+export const supportedChains = [
+    "Mainnet",
+    "Arbitrum",
+    "Optimism",
+] as const;
+export type NetworkType = (typeof supportedChains)[number];
+export const CHAINS = {
+    Mainnet: 1,
+    Arbitrum: 42161,
+    Optimism: 10,
+};
+export declare const NOT_DEPLOYED = "0xNOT DEPLOYED";
+
+export function isSupportedNetwork(chainId: number) {
+    return Object.values(CHAINS).includes(chainId);
+}
 export interface TokenAPY {
     symbol: string,
     apys: ApyDetails[]
 }
+
+export const PERCENTAGE_DECIMALS = 100;
 
 export function getTokenAPY(sym: string, apys: ApyDetails[]) {
     return {
@@ -21,4 +36,4 @@ export function getTokenAPY(sym: string, apys: ApyDetails[]) {
         apys: apys,
     }
 }
-export type APYResult = PartialRecord<Address, TokenAPY>;
+export type APYResult = Record<Address, TokenAPY>;
