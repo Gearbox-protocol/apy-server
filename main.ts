@@ -18,7 +18,7 @@ app.use(cors({
 
 let f = new Fetcher();
 (async function run() {
-    await f.run();
+    await f.loop();
 }());
 
 app.get('/api/rewards/all/', (req, res) => {

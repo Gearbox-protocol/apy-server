@@ -70,6 +70,7 @@ export class Fetcher {
 
 
     async run() {
+        console.log("updating fetcher")
         for (var network of Object.values(supportedChains)) {
             let chainId = CHAINS[network as NetworkType];
             let apys = await this.getnetworkTokens(network as NetworkType);
@@ -77,7 +78,10 @@ export class Fetcher {
         }
     }
 
-
+    async loop() {
+        this.run();
+        setInterval(this.run.bind(this), 60 * 60 * 1000); // 1 hr
+    }
 }
 
 
