@@ -5,7 +5,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "build": "node esbuild.config.mjs"
+    "build": "node esbuild.config.mjs",
+    "docker": "npx ts-node ./build.mjs"
   },
   "dependencies": {
     "axios": "^1.7.9",
@@ -20,6 +21,8 @@
     "@gearbox-protocol/prettier-config": "^2.0.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
-    "esbuild": "^0.24.0"
+    "esbuild": "^0.24.0",
+    "esbuild-plugin-tsc": "^0.4.0",
+    "typescript": "^5.7.2"
   }
 }

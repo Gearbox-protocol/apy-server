@@ -1,0 +1,24 @@
+FROM node:20.14 as dev
+
+ENV YARN_CACHE_FOLDER=/root/.yarn
+
+WORKDIR /app
+
+COPY . .
+
+RUN --mount=type=cache,id=yarn,target=/root/.yarn \
+ yarn install --frozen-lockfile --ignore-engines \
+ && yarn docker
+
+# Production npm modules
+
+
+
+# Final image
+
+FROM gcr.io/distroless/nodejs20-debian12 as app
+
+EXPOSE 8000
+WORKDIR /app
+COPY --from=dev /app /app
+CMD ["--enable-source-maps", "/app/build/main.js"]
