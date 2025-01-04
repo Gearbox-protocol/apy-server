@@ -1,8 +1,8 @@
 import axios from "axios";
 
 import type { TokenStore } from "./token_store";
-import type { APYResult, NetworkType } from "./type";
-import { PERCENTAGE_DECIMALS } from "./type";
+import type { APYResult, NetworkType } from "../utils";
+import { PERCENTAGE_DECIMALS } from "../utils";
 interface APYResponse {
   underlyingInterestApy: number;
 }

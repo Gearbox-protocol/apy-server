@@ -1,9 +1,9 @@
 import axios from "axios";
 import type { Address } from "viem";
 
+import type { APYResult, NetworkType } from "../utils";
+import { getTokenAPY, NOT_DEPLOYED } from "../utils";
 import type { TokenStore } from "./token_store";
-import type { APYResult, NetworkType } from "./type";
-import { getTokenAPY, NOT_DEPLOYED } from "./type";
 
 interface Apy {
   timeUnix: number;

@@ -2,8 +2,8 @@ import axios from "axios";
 import type { Address } from "viem";
 
 import type { TokenStore } from "./token_store";
-import type { ApyDetails, APYResult, NetworkType } from "./type";
-import { getTokenAPY, NOT_DEPLOYED } from "./type";
+import type { ApyDetails, APYResult, NetworkType } from "../utils";
+import { getTokenAPY, NOT_DEPLOYED } from "../utils";
 
 interface VolumesResponse {
   data: {

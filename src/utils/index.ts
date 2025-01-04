@@ -1,4 +1,5 @@
-import type { Address } from "viem";
+export type Address = `0x${string}`;
+
 export interface ApyDetails {
   reward: Address;
   symbol: string;

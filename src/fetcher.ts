@@ -11,8 +11,8 @@ import {
   getYearnAPY,
 } from "./apy";
 import { TokenStore } from "./apy/token_store";
-import type { APYResult, NetworkType } from "./apy/type";
-import { CHAINS, supportedChains } from "./apy/type";
+import type { APYResult, NetworkType } from "./utils";
+import { CHAINS, supportedChains } from "./utils";
 
 function log(
   network: NetworkType,

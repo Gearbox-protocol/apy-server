@@ -4,8 +4,8 @@ import axios from "axios";
 import type { APYResult } from ".";
 import { getTokenAPY } from ".";
 import type { TokenStore } from "./token_store";
-import type { NetworkType } from "./type";
-import { NOT_DEPLOYED } from "./type";
+import type { NetworkType } from "../utils";
+import { NOT_DEPLOYED } from "../utils";
 
 interface LamaItem {
   apy: number;

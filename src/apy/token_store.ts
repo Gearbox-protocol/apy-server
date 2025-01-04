@@ -1,7 +1,7 @@
 import type { Address } from "viem";
 
-import type { NetworkType } from "./type";
-import { NOT_DEPLOYED } from "./type";
+import type { NetworkType } from "../utils";
+import { NOT_DEPLOYED } from "../utils";
 
 interface Token {
   symbol: string;

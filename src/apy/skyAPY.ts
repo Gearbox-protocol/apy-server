@@ -1,8 +1,8 @@
 import axios from "axios";
 
+import type { APYResult, NetworkType } from "../utils";
+import { getTokenAPY, PERCENTAGE_DECIMALS } from "../utils";
 import type { TokenStore } from "./token_store";
-import type { APYResult, NetworkType } from "./type";
-import { getTokenAPY, PERCENTAGE_DECIMALS } from "./type";
 
 type APYResponse = [
   {

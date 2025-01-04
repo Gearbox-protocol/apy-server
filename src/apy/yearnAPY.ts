@@ -1,8 +1,8 @@
 import axios from "axios";
 import type { Address } from "viem";
 
-import type { APYResult, NetworkType } from "./type";
-import { CHAINS, getTokenAPY, PERCENTAGE_DECIMALS } from "./type";
+import type { APYResult, NetworkType } from "../utils";
+import { CHAINS, getTokenAPY, PERCENTAGE_DECIMALS } from "../utils";
 
 interface YearnAPYData {
   apr: {
