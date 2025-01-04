@@ -1,9 +1,8 @@
 import axios from "axios";
 import type { Address } from "viem";
 
-import type { TokenStore } from "./token_store";
-import type { ApyDetails, APYResult, NetworkType } from "../utils";
-import { getTokenAPY, NOT_DEPLOYED } from "../utils";
+import type { APYHandler, APYResult, NetworkType } from "../../utils";
+import { GEAR_POOL, PROTOCOL, TOKENS } from "./constants";
 
 interface VolumesResponse {
   data: {
@@ -76,13 +75,10 @@ interface CurvePoolDataResponse {
 type PoolRecord = Record<string, CurvePoolData>;
 type VolumeRecord = Record<string, VolumesResponse["data"]["pools"][number]>;
 
-const GEAR_POOL = "0x5Be6C45e2d074fAa20700C49aDA3E88a1cc0025d".toLowerCase();
-
 const CURVE_CHAINS: Record<NetworkType, string> = {
   Arbitrum: "arbitrum",
   Mainnet: "ethereum",
   Optimism: "optimism",
-  // Base: "base",
 };
 
 // const CRYPTO = "https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/crypto";
@@ -103,12 +99,13 @@ const getFactoryCrvUsdURL = (n: NetworkType) =>
 const getFactoryStableNgURL = (n: NetworkType) =>
   `https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/factory-stable-ng`;
 
-export async function getCurveAPY(
-  network: NetworkType,
-  _: TokenStore,
-): Promise<APYResult> {
+const getAPY: APYHandler = async network => {
   const { mainnetVolumes, mainnetFactoryPools, volumes, pools } =
     await getCurvePools(network);
+
+  const tokens = Object.fromEntries(
+    Object.entries(TOKENS[network]).map(([k, v]) => [k.toLowerCase(), v]),
+  ) as Record<Address, string>;
 
   const volumeByAddress = volumes.data.data.pools.reduce<VolumeRecord>(
     (acc, v) => {
@@ -122,44 +119,35 @@ export async function getCurveAPY(
     const { poolData = [] } = poolCategory?.data?.data || {};
 
     poolData.forEach(p => {
-      // if (p.lpTokenAddress.toLowerCase() === "0xed4064f376cb8d68f770fb1ff088a3d0f3ff5c4d") {
-      //   console.log(p)
-      // }
-      if (!p.symbol || p.usdTotal === 0) {
-        return;
-      }
-      let sym = p.symbol.toLowerCase();
-      acc[sym] = p;
-      if (sym.endsWith("-f")) {
-        acc[sym.slice(0, -2)] = p;
-      }
+      acc[p.lpTokenAddress.toLowerCase()] = p;
     });
 
     return acc;
   }, {});
 
-  let curveAPY = curveTokens.reduce<APYResult>((acc, curveSymbol) => {
-    const pool = poolDataByAddress[curveSymbol.toLowerCase()];
-    if (!pool) {
-      return acc;
-    }
-    const volume = volumeByAddress[(pool?.address || "").toLowerCase()];
+  const result = Object.entries(tokens).reduce<APYResult>((acc, [addr]) => {
+    const address = addr as Address;
 
+    const pool = poolDataByAddress[address];
+    if (!pool) return acc;
+
+    const volume = volumeByAddress[pool.address.toLowerCase()];
     const baseAPY = volume?.latestDailyApyPcent || 0;
 
-    let curveAPYs = [
-      {
-        reward: pool.lpTokenAddress,
-        symbol: curveSymbol,
-        value: curveAPYToBn(baseAPY),
-      },
-      // {
-      //   reward: crv.address,
-      //   symbol: crv.symbol,
-      //   value: curveAPYToBn(maxCrv),
-      // }, ...extraRewards,
-    ];
-    acc[pool.lpTokenAddress] = getTokenAPY(curveSymbol, curveAPYs);
+    acc[pool.lpTokenAddress] = {
+      address: pool.lpTokenAddress,
+      symbol: pool.symbol,
+
+      apys: [
+        {
+          reward: pool.lpTokenAddress,
+          symbol: pool.symbol,
+          protocol: PROTOCOL,
+          value: baseAPY,
+        },
+      ],
+    };
+
     return acc;
   }, {} as APYResult);
 
@@ -167,7 +155,6 @@ export async function getCurveAPY(
     mainnetFactoryPools?.data?.data?.poolData || []
   ).reduce<PoolRecord>((acc, p) => {
     acc[p.lpTokenAddress.toLowerCase()] = p;
-
     return acc;
   }, {});
 
@@ -181,32 +168,22 @@ export async function getCurveAPY(
   const gearVolume =
     mainnetVolumeByAddress[(gearPool?.address || "").toLowerCase()];
 
-  const gearAPY = [
-    {
-      reward: GEAR_POOL as Address,
-      symbol: gearPool.symbol,
-      value: curveAPYToBn(gearVolume?.latestDailyApyPcent || 0),
-    },
-    // {
-    //   reward: crv.address,
-    //   symbol: crv.symbol,
-    //   value: curveAPYToBn(Math.max(...(gearPool?.gaugeCrvApy || []), 0)),
-    // },
-    // ...(gearPool?.gaugeRewards || []).map(
-    //   ({ apy = 0, symbol, tokenAddress }): ApyDetails => {
-    //     return {
-    //       reward: tokenAddress,
-    //       symbol: symbol,
-    //       value: curveAPYToBn(apy),
-    //     }
-    //   }
-    // ),
-  ];
+  result[GEAR_POOL] = {
+    address: gearPool.lpTokenAddress,
+    symbol: gearPool.symbol,
 
-  curveAPY[GEAR_POOL as Address] = getTokenAPY(gearPool.symbol, gearAPY);
+    apys: [
+      {
+        reward: gearPool.lpTokenAddress,
+        symbol: gearPool.symbol,
+        protocol: PROTOCOL,
+        value: gearVolume?.latestDailyApyPcent || 0,
+      },
+    ],
+  };
 
-  return curveAPY;
-}
+  return result;
+};
 
 async function getCurvePools(network: NetworkType) {
   switch (network) {
@@ -273,66 +250,4 @@ async function getCurvePools(network: NetworkType) {
   }
 }
 
-function curveAPYToBn(baseApy: number) {
-  return baseApy; // .6% as .6
-}
-
-export async function getCurveGearPool(): Promise<CurvePoolData | undefined> {
-  const resp = await axios.get<CurvePoolDataResponse>(
-    getFactoryCryptoURL("Mainnet"),
-  );
-  const { poolData = [] } = resp?.data?.data || {};
-
-  const poolDataByAddress = poolData.reduce<PoolRecord>((acc, p) => {
-    acc[p.lpTokenAddress.toLowerCase()] = p;
-    return acc;
-  }, {});
-
-  const gearPool = poolDataByAddress[GEAR_POOL];
-  return gearPool;
-}
-
-const curveTokens = [
-  "3Crv",
-  "steCRV",
-  "crvPlain3andSUSD",
-  "crvFRAX",
-  "crvCRVETH",
-  "crvCVXETH",
-  "crvUSDTWBTCWETH",
-  "LDOETH",
-  "crvUSDUSDC",
-  "crvUSDUSDT",
-  "crvUSDFRAX",
-  "crvUSDETHCRV",
-  "rETH-f",
-  "USDeUSDC",
-  "FRAXUSDe",
-  "USDecrvUSD",
-  "USDeDAI",
-  "MtEthena",
-  "GHOUSDe",
-  "pufETHwstE",
-  "GHOcrvUSD",
-  "ezETHWETH",
-  "ezpzETH",
-  "LBTCWBTC",
-  "eBTCWBTC",
-  "pumpBTCWBTC",
-  "TriBTC",
-  "FRAXsDAI",
-  "DOLAsUSDe",
-  "DOLAFRAXBP3CRV-f",
-  "crvUSDDOLA-f",
-  "crvUsUSDe",
-  "llamathena",
-  "2CRV",
-  "3c-crvUSD",
-  "crvUSDC",
-  "crvUSDT",
-  "crvUSDC-e",
-  "USDEUSDC",
-  "3CRV",
-  "wstETHCRV",
-  "gusd3CRV", // for mainnet
-];
+export { getAPY as getAPYCurve };
