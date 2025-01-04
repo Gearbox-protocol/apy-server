@@ -67,6 +67,7 @@ export class Fetcher {
 
         result[address] = {
           ...tokenAPY,
+          address,
           apys: [...(result[address]?.apys || []), ...apyList],
         };
       });
