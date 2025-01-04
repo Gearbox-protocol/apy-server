@@ -1,14 +1,13 @@
 import type { Address } from "viem";
 import { isAddress } from "viem";
 
-import type { ApyDetails } from "./apy";
-import { isSupportedNetwork } from "./apy";
-import type { Fetcher } from "./fetcher";
+import type { ApyDetails, Fetcher } from "./fetcher";
+import { isSupportedNetwork } from "./utils";
 
 interface Response {
   status: string;
   description?: string;
-  data?: OutputDetails[] | OutputDetails;
+  data?: Array<OutputDetails> | OutputDetails;
 }
 
 interface OutputDetails {
@@ -16,20 +15,22 @@ interface OutputDetails {
   address: string;
   symbol: string;
   rewards: {
-    apy: ApyDetails[];
+    apy: Array<ApyDetails>;
   };
 }
 
 export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
-  let [isChainIdValid, chainId] = checkChainId(req.params.chainId);
+  const [isChainIdValid, chainId] = checkChainId(req.params.chainId);
   if (!checkResp(isChainIdValid, res)) {
     return;
   }
-  let [isTokenValid, tokenAddress] = checkTokenAddress(req.params.tokenAddress);
+  const [isTokenValid, tokenAddress] = checkTokenAddress(
+    req.params.tokenAddress,
+  );
   if (!checkResp(isTokenValid, res)) {
     return;
   }
-  let data: OutputDetails = {
+  const data: OutputDetails = {
     chainId: chainId,
     address: tokenAddress.toLowerCase(),
     symbol: "",
@@ -49,11 +50,11 @@ export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
 }
 
 export async function getAll(req: any, res: any, fetcher: Fetcher) {
-  let [isChainIdValid, chainId] = checkChainId(req.query.chain_id);
+  const [isChainIdValid, chainId] = checkChainId(req.query.chain_id);
   if (!checkResp(isChainIdValid, res)) {
     return;
   }
-  let data: OutputDetails[] = [];
+  const data: Array<OutputDetails> = [];
   Object.entries(fetcher.cache).forEach(([key, apys]) => {
     if (chainId === 0 || Number(key) === chainId) {
       for (const [token, apy] of Object.entries(apys)) {
@@ -82,14 +83,15 @@ export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
       res,
     );
   }
-  let [isTokenList, tokenList] = checkTokenList(JSON.stringify(req.body));
+  const [isTokenList, tokenList] = checkTokenList(JSON.stringify(req.body));
   if (!checkResp(isTokenList, res)) {
     return;
   }
 
-  let data: OutputDetails[] = [];
-  for (let entry of tokenList) {
-    let apys = fetcher.cache[entry.chain_id]?.[entry.token_address as Address];
+  const data: Array<OutputDetails> = [];
+  for (const entry of tokenList) {
+    const apys =
+      fetcher.cache[entry.chain_id]?.[entry.token_address as Address];
     data.push({
       chainId: entry.chain_id,
       address: entry.token_address.toLowerCase(),
@@ -105,7 +107,7 @@ export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
 }
 
 function checkChainId(data: any): [Response, number] {
-  let notUndefined = data ?? "0";
+  const notUndefined = data ?? "0";
   if (isNaN(Number(notUndefined))) {
     return [
       {
@@ -115,7 +117,7 @@ function checkChainId(data: any): [Response, number] {
       0,
     ];
   }
-  let chainId = Number(notUndefined);
+  const chainId = Number(notUndefined);
 
   if (chainId !== 0 && !isSupportedNetwork(chainId)) {
     return [
@@ -130,7 +132,7 @@ function checkChainId(data: any): [Response, number] {
 }
 
 function checkTokenAddress(data: any): [Response, string] {
-  let notUndefined = data ?? "0x";
+  const notUndefined = data ?? "0x";
   if (!isAddress(notUndefined)) {
     return [
       {
@@ -152,13 +154,13 @@ export function checkResp(res: Response, out: any): boolean {
   return true;
 }
 interface TokenRequest {
-  token_ids: TokenList[];
+  token_ids: Array<TokenList>;
 }
 interface TokenList {
   token_address: string;
   chain_id: number;
 }
-function checkTokenList(reqBody: string): [Response, TokenList[]] {
+function checkTokenList(reqBody: string): [Response, Array<TokenList>] {
   let parsedBody: TokenRequest;
   // try {
   parsedBody = JSON.parse(reqBody);
@@ -166,9 +168,9 @@ function checkTokenList(reqBody: string): [Response, TokenList[]] {
   //     return [{ status: "error", "description": "Invalid request body" }, []];
   // }
 
-  let tokenList: TokenList[] = [];
-  for (let entry of parsedBody.token_ids) {
-    let [resp, chainId] = checkChainId(entry.chain_id.toString());
+  const tokenList: Array<TokenList> = [];
+  for (const entry of parsedBody.token_ids) {
+    const [resp, chainId] = checkChainId(entry.chain_id.toString());
     if (resp.status === "error") {
       return [resp, []];
     }
@@ -181,7 +183,7 @@ function checkTokenList(reqBody: string): [Response, TokenList[]] {
         [],
       ];
     }
-    let [respTokenAddr, tokenAddr] = checkTokenAddress(entry.token_address);
+    const [respTokenAddr, tokenAddr] = checkTokenAddress(entry.token_address);
     if (respTokenAddr.status === "error") {
       return [respTokenAddr, []];
     }

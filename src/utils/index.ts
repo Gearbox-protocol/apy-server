@@ -1,6 +1,6 @@
 import type { Address } from "viem";
 
-interface Apy {
+export interface Apy {
   reward: Address;
   symbol: string;
   protocol: string;
@@ -8,11 +8,11 @@ interface Apy {
   value: number;
 }
 
-interface TokenAPY {
+export interface TokenAPY<A = Apy> {
   address: Address;
   symbol: string;
 
-  apys: Apy[];
+  apys: Array<A>;
 }
 
 export type APYResult = Record<Address, TokenAPY>;

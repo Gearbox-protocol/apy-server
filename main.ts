@@ -24,7 +24,7 @@ app.use(
   }),
 );
 
-let f = new Fetcher();
+const f = new Fetcher();
 void (async function run() {
   await f.loop();
 })();

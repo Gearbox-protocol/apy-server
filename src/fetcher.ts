@@ -1,31 +1,28 @@
 import moment from "moment";
 import type { Address } from "viem";
 
-import type { ApyDetails, TokenAPY } from "./apy";
 import {
-  getCurveAPY,
-  getDefiLamaAPY,
-  getLidoAPY,
-  getPendleAPY,
-  getSkyAPY,
-  getYearnAPY,
+  getAPYCurve,
+  getAPYEthena,
+  getAPYLama,
+  getAPYLido,
+  getAPYSky,
+  getAPYYearn,
 } from "./apy";
-import { TokenStore } from "./apy/token_store";
-import type { APYResult, NetworkType } from "./utils";
-import { CHAINS, supportedChains } from "./utils";
+import type { Apy, APYResult, NetworkType, TokenAPY } from "./utils";
+import { getChainId, supportedChains } from "./utils";
 
-function log(
-  network: NetworkType,
-  protocols: string[],
-  allProtocolAPYs: APYResult[],
-) {
+export type ApyDetails = Apy & { lastUpdated: string };
+type TokenDetails = TokenAPY<ApyDetails>;
+
+function log(network: NetworkType, allProtocolAPYs: APYResult[]) {
   // logs
 
-  const list = allProtocolAPYs.map((apyRes, index) => {
-    const tokens = Object.entries(apyRes)
-      .map(([_, v]) => v.symbol)
-      .join(", ");
-    const protocol = protocols[index];
+  const list = allProtocolAPYs.map(apyRes => {
+    const entries = Object.entries(apyRes);
+    const tokens = entries.map(([_, v]) => v.symbol).join(", ");
+
+    const protocol = entries[0]?.[1]?.apys?.[0]?.protocol || "unknown";
 
     if (tokens !== "") {
       console.log(`${protocol}: ${tokens}`);
@@ -37,51 +34,52 @@ function log(
   console.log(`Fetched ${list} for ${network}`);
 }
 export class Fetcher {
-  public cache: Record<number, Record<Address, TokenAPY>>;
-  store: TokenStore;
+  public cache: Record<number, Record<Address, TokenDetails>>;
 
   constructor() {
     this.cache = {};
-    this.store = new TokenStore();
   }
-  async getnetworkTokens(network: NetworkType) {
-    let ans: Record<Address, TokenAPY> = {};
+  async getNetworkTokens(network: NetworkType) {
     const [...allProtocolAPYs] = await Promise.all([
-      getCurveAPY(network, this.store),
-      getYearnAPY(network),
-      getSkyAPY(network, this.store),
-      getPendleAPY(network, this.store),
-      getLidoAPY(network, this.store),
-      getDefiLamaAPY(network, this.store),
+      getAPYCurve(network),
+      getAPYEthena(network),
+      getAPYLama(network),
+      getAPYLido(network),
+      getAPYSky(network),
+      getAPYYearn(network),
     ]);
-    let protocols = ["Curve", "Yearn", "Sky", "Pendle", "Lido", "Defillama"];
-    log(network, protocols, allProtocolAPYs);
+    log(network, allProtocolAPYs);
 
-    let time = moment().utc().format();
-    allProtocolAPYs.forEach((networkAPY, networkInd) => {
-      Object.entries(networkAPY).forEach(([token, newAPYs]) => {
-        newAPYs?.apys.forEach((entry: ApyDetails) => {
-          entry.lastUpdated = time;
-          entry.protocol = protocols[networkInd];
-          entry.reward = entry.reward.toLowerCase() as Address;
-        });
-        //
-        let tokenAddr = token.toLowerCase() as Address;
-        if (tokenAddr in ans) {
-          ans[tokenAddr]?.apys.push(...(newAPYs?.apys || []));
-        } else {
-          ans[tokenAddr] = newAPYs!;
-        }
+    const result: Record<Address, TokenDetails> = {};
+    const time = moment().utc().format();
+
+    allProtocolAPYs.forEach(networkAPY => {
+      Object.entries(networkAPY).forEach(([addr, tokenAPY]) => {
+        const address = addr.toLowerCase() as Address;
+
+        const apyList = tokenAPY?.apys.map(
+          ({ reward, ...rest }): ApyDetails => ({
+            ...rest,
+            lastUpdated: time,
+            reward: reward.toLowerCase() as Address,
+          }),
+        );
+
+        result[address] = {
+          ...tokenAPY,
+          apys: [...(result[address]?.apys || []), ...apyList],
+        };
       });
     });
-    return ans;
+
+    return result;
   }
 
   async run() {
     console.log("updating fetcher");
-    for (let network of Object.values(supportedChains)) {
-      let chainId = CHAINS[network as NetworkType];
-      let apys = await this.getnetworkTokens(network as NetworkType);
+    for (const network of Object.values(supportedChains)) {
+      const chainId = getChainId(network);
+      const apys = await this.getNetworkTokens(network as NetworkType);
       this.cache[chainId] = apys;
     }
   }
