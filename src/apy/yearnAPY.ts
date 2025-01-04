@@ -1,12 +1,8 @@
-import {
-  CHAINS,
-  NetworkType,
-  PERCENTAGE_DECIMALS,
-} from './type';
-
 import axios from "axios";
-import { Address } from "viem";
-import { APYResult, getTokenAPY } from "./type";
+import type { Address } from "viem";
+
+import type { APYResult, NetworkType } from "./type";
+import { CHAINS, getTokenAPY, PERCENTAGE_DECIMALS } from "./type";
 
 interface YearnAPYData {
   apr: {
@@ -23,12 +19,19 @@ type Response = Array<YearnAPYData>;
 const getUrl = (chainId: number) =>
   `https://ydaemon.yearn.finance/vaults/all?chainids=${chainId}&limit=2500`;
 
+const yearnTokens = [
+  "yvDAI",
+  "yvUSDC",
+  "yvUSDC_e",
+  "yvWETH",
+  "yvWBTC",
+  "yvUSDT",
+  "yvOP",
+  "yvCurve-stETH",
+  "yvCurve-FRAX",
+];
 
-const yearnTokens = ["yvDAI", "yvUSDC", "yvUSDC_e", "yvWETH", "yvWBTC", "yvUSDT", "yvOP", "yvCurve-stETH", "yvCurve-FRAX"];
-
-export async function getYearnAPY(
-  network: NetworkType,
-): Promise<APYResult> {
+export async function getYearnAPY(network: NetworkType): Promise<APYResult> {
   try {
     const chainId = CHAINS[network];
 
@@ -43,7 +46,6 @@ export async function getYearnAPY(
     );
 
     const yearnAPY = yearnTokens.reduce<APYResult>((acc, yearnSymbol) => {
-
       const data = dataByAddress[yearnSymbol.toLowerCase()];
       if (!data) {
         return acc;
@@ -52,11 +54,13 @@ export async function getYearnAPY(
       const { netAPR } = apy || {};
       const netApy = netAPR || 0;
 
-      acc[data.address as Address] = getTokenAPY(yearnSymbol, [{
-        reward: data.address as Address,
-        symbol: yearnSymbol,
-        value: numberToAPY(netApy),
-      }]);
+      acc[data.address as Address] = getTokenAPY(yearnSymbol, [
+        {
+          reward: data.address as Address,
+          symbol: yearnSymbol,
+          value: numberToAPY(netApy),
+        },
+      ]);
 
       return acc;
     }, {});
@@ -68,5 +72,5 @@ export async function getYearnAPY(
 }
 
 function numberToAPY(baseApy: number) {
-  return baseApy * Number(PERCENTAGE_DECIMALS)
+  return baseApy * Number(PERCENTAGE_DECIMALS);
 }

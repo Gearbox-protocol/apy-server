@@ -6,7 +6,13 @@
   "license": "MIT",
   "scripts": {
     "build": "node esbuild.config.mjs",
-    "docker": "npx ts-node ./build.mjs"
+    "docker": "npx ts-node ./build.mjs",
+    "prepare": "husky",
+    "prettier": "prettier --write .",
+    "prettier:ci": "npx prettier --check .",
+    "lint": "eslint \"**/*.ts\" --fix",
+    "lint:ci": "eslint \"**/*.ts\"",
+    "typecheck:ci": "tsc --noEmit"
   },
   "dependencies": {
     "axios": "^1.7.9",
@@ -18,11 +24,18 @@
   },
   "prettier": "@gearbox-protocol/prettier-config",
   "devDependencies": {
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@gearbox-protocol/eslint-config": "^2.0.0-next.2",
     "@gearbox-protocol/prettier-config": "^2.0.0",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "esbuild": "^0.24.0",
     "esbuild-plugin-tsc": "^0.4.0",
+    "eslint": "^8.57.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.11",
+    "prettier": "^3.4.2",
     "typescript": "^5.7.2"
   }
 }

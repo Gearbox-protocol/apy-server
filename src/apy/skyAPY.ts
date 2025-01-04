@@ -1,10 +1,8 @@
-import {
-  NetworkType,
-  PERCENTAGE_DECIMALS,
-} from "./type";
-import { TokenStore } from "./token_store";
-import { APYResult, getTokenAPY } from "./type";
 import axios from "axios";
+
+import type { TokenStore } from "./token_store";
+import type { APYResult, NetworkType } from "./type";
+import { getTokenAPY, PERCENTAGE_DECIMALS } from "./type";
 
 type APYResponse = [
   {
@@ -17,9 +15,11 @@ const getAPYURL = () => "https://info-sky.blockanalitica.com/api/v1/overall/";
 
 // type SkyTokens = Extract<SupportedToken, "sUSDS" | "stkUSDS">;
 
-
-export async function getSkyAPY(network: NetworkType, store: TokenStore): Promise<APYResult> {
-  if (network != "Mainnet") {
+export async function getSkyAPY(
+  network: NetworkType,
+  store: TokenStore,
+): Promise<APYResult> {
+  if (network !== "Mainnet") {
     return {};
   }
   try {
@@ -32,17 +32,21 @@ export async function getSkyAPY(network: NetworkType, store: TokenStore): Promis
     let stkUSDS = store.getBysymbol(network, "stkUSDS");
     let response: APYResult = {};
     //
-    response[sUSDS.address] = getTokenAPY(sUSDS.symbol, [{
-      reward: sUSDS.address,
-      symbol: sUSDS.symbol,
-      value: numberToAPY(Number(savingsRate)),
-    }]);
+    response[sUSDS.address] = getTokenAPY(sUSDS.symbol, [
+      {
+        reward: sUSDS.address,
+        symbol: sUSDS.symbol,
+        value: numberToAPY(Number(savingsRate)),
+      },
+    ]);
     //
-    response[stkUSDS.address] = getTokenAPY(stkUSDS.symbol, [{
-      reward: stkUSDS.address,
-      symbol: stkUSDS.symbol,
-      value: numberToAPY(Number(farmRate)),
-    }]);
+    response[stkUSDS.address] = getTokenAPY(stkUSDS.symbol, [
+      {
+        reward: stkUSDS.address,
+        symbol: stkUSDS.symbol,
+        value: numberToAPY(Number(farmRate)),
+      },
+    ]);
     return response;
   } catch (e) {
     return {};
@@ -50,7 +54,5 @@ export async function getSkyAPY(network: NetworkType, store: TokenStore): Promis
 }
 
 function numberToAPY(baseApy: number) {
-  return Math.round(
-    baseApy * Number(PERCENTAGE_DECIMALS),
-  );
+  return Math.round(baseApy * Number(PERCENTAGE_DECIMALS));
 }

@@ -1,10 +1,9 @@
-import {
-  APYResult, ApyDetails, getTokenAPY, NetworkType,
-  NOT_DEPLOYED,
-} from "./type";
-import { TokenStore } from "./token_store";
 import axios from "axios";
-import { Address } from "viem";
+import type { Address } from "viem";
+
+import type { TokenStore } from "./token_store";
+import type { ApyDetails, APYResult, NetworkType } from "./type";
+import { getTokenAPY, NOT_DEPLOYED } from "./type";
 
 interface VolumesResponse {
   data: {
@@ -77,7 +76,6 @@ interface CurvePoolDataResponse {
 type PoolRecord = Record<string, CurvePoolData>;
 type VolumeRecord = Record<string, VolumesResponse["data"]["pools"][number]>;
 
-
 const GEAR_POOL = "0x5Be6C45e2d074fAa20700C49aDA3E88a1cc0025d".toLowerCase();
 
 const CURVE_CHAINS: Record<NetworkType, string> = {
@@ -105,8 +103,10 @@ const getFactoryCrvUsdURL = (n: NetworkType) =>
 const getFactoryStableNgURL = (n: NetworkType) =>
   `https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/factory-stable-ng`;
 
-
-export async function getCurveAPY(network: NetworkType, store: TokenStore): Promise<APYResult> {
+export async function getCurveAPY(
+  network: NetworkType,
+  _: TokenStore,
+): Promise<APYResult> {
   const { mainnetVolumes, mainnetFactoryPools, volumes, pools } =
     await getCurvePools(network);
 
@@ -122,10 +122,10 @@ export async function getCurveAPY(network: NetworkType, store: TokenStore): Prom
     const { poolData = [] } = poolCategory?.data?.data || {};
 
     poolData.forEach(p => {
-      // if (p.lpTokenAddress.toLowerCase() == "0xed4064f376cb8d68f770fb1ff088a3d0f3ff5c4d") {
+      // if (p.lpTokenAddress.toLowerCase() === "0xed4064f376cb8d68f770fb1ff088a3d0f3ff5c4d") {
       //   console.log(p)
       // }
-      if (!p.symbol || p.usdTotal == 0) {
+      if (!p.symbol || p.usdTotal === 0) {
         return;
       }
       let sym = p.symbol.toLowerCase();
@@ -138,45 +138,30 @@ export async function getCurveAPY(network: NetworkType, store: TokenStore): Prom
     return acc;
   }, {});
 
-  let crv = store.getBysymbol(network, "CRV");
-  let curveAPY = curveTokens.reduce<APYResult>(
-    (acc, curveSymbol) => {
+  let curveAPY = curveTokens.reduce<APYResult>((acc, curveSymbol) => {
+    const pool = poolDataByAddress[curveSymbol.toLowerCase()];
+    if (!pool) {
+      return acc;
+    }
+    const volume = volumeByAddress[(pool?.address || "").toLowerCase()];
 
-      const pool = poolDataByAddress[curveSymbol.toLowerCase()];
-      if (!pool) {
-        return acc;
-      }
-      const volume = volumeByAddress[(pool?.address || "").toLowerCase()];
+    const baseAPY = volume?.latestDailyApyPcent || 0;
 
-      const baseAPY = volume?.latestDailyApyPcent || 0;
-      const maxCrv = Math.max(...(pool?.gaugeCrvApy || []), 0);
-
-      const extraRewards = (pool?.gaugeRewards || []).map(
-        ({ apy = 0, symbol, tokenAddress }): ApyDetails => {
-          return {
-            reward: tokenAddress,
-            symbol: symbol,
-            value: curveAPYToBn(apy),
-          }
-        }
-      );
-
-      let curveAPYs = [{
+    let curveAPYs = [
+      {
         reward: pool.lpTokenAddress,
         symbol: curveSymbol,
         value: curveAPYToBn(baseAPY),
       },
-        // {
-        //   reward: crv.address,
-        //   symbol: crv.symbol,
-        //   value: curveAPYToBn(maxCrv),
-        // }, ...extraRewards,
-      ];
-      acc[pool.lpTokenAddress] = getTokenAPY(curveSymbol, curveAPYs);
-      return acc;
-    },
-    {} as APYResult,
-  );
+      // {
+      //   reward: crv.address,
+      //   symbol: crv.symbol,
+      //   value: curveAPYToBn(maxCrv),
+      // }, ...extraRewards,
+    ];
+    acc[pool.lpTokenAddress] = getTokenAPY(curveSymbol, curveAPYs);
+    return acc;
+  }, {} as APYResult);
 
   const poolFactoryByAddress = (
     mainnetFactoryPools?.data?.data?.poolData || []
@@ -196,11 +181,12 @@ export async function getCurveAPY(network: NetworkType, store: TokenStore): Prom
   const gearVolume =
     mainnetVolumeByAddress[(gearPool?.address || "").toLowerCase()];
 
-  const gearAPY = [{
-    reward: GEAR_POOL as Address,
-    symbol: gearPool.symbol,
-    value: curveAPYToBn(gearVolume?.latestDailyApyPcent || 0),
-  },
+  const gearAPY = [
+    {
+      reward: GEAR_POOL as Address,
+      symbol: gearPool.symbol,
+      value: curveAPYToBn(gearVolume?.latestDailyApyPcent || 0),
+    },
     // {
     //   reward: crv.address,
     //   symbol: crv.symbol,
@@ -305,7 +291,6 @@ export async function getCurveGearPool(): Promise<CurvePoolData | undefined> {
   const gearPool = poolDataByAddress[GEAR_POOL];
   return gearPool;
 }
-
 
 const curveTokens = [
   "3Crv",

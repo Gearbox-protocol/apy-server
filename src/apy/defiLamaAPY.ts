@@ -1,12 +1,11 @@
-import {
-  NetworkType,
-  NOT_DEPLOYED,
-} from "./type";
 import axios from "axios";
 
 // import { GearboxBackendApi } from "../core/endpoint";
-import { APYResult, getTokenAPY } from ".";
-import { TokenStore } from "./token_store";
+import type { APYResult } from ".";
+import { getTokenAPY } from ".";
+import type { TokenStore } from "./token_store";
+import type { NetworkType } from "./type";
+import { NOT_DEPLOYED } from "./type";
 
 interface LamaItem {
   apy: number;
@@ -26,7 +25,8 @@ interface LamaResponse {
 }
 
 export async function getDefiLamaAPY(
-  network: NetworkType, store: TokenStore
+  network: NetworkType,
+  store: TokenStore,
 ): Promise<APYResult> {
   const currentNormal = NORMAL_TO_LAMA[network];
   const idList = Object.values(currentNormal);
@@ -41,23 +41,24 @@ export async function getDefiLamaAPY(
     {},
   );
 
-
-
-
-  const allAPY =
-    Object.entries(currentNormal).reduce<APYResult>((acc, [symbol, pool]) => {
+  const allAPY = Object.entries(currentNormal).reduce<APYResult>(
+    (acc, [symbol, pool]) => {
       const { apy = 0 } = itemsRecord[pool] || {};
       let token = store.getBysymbol(network, symbol);
-      if (token.address != NOT_DEPLOYED) {
-        acc[token.address] = getTokenAPY(token.symbol, [{
-          reward: token.address,
-          symbol: symbol,
-          value: apy,
-        }]);
+      if (token.address !== NOT_DEPLOYED) {
+        acc[token.address] = getTokenAPY(token.symbol, [
+          {
+            reward: token.address,
+            symbol: symbol,
+            value: apy,
+          },
+        ]);
       }
 
       return acc;
-    }, {});
+    },
+    {},
+  );
 
   return allAPY;
 }
@@ -104,4 +105,3 @@ const NORMAL_TO_LAMA: Record<
   },
   // Base: {},
 };
-

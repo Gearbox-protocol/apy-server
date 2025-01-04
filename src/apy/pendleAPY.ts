@@ -1,9 +1,8 @@
-import {
-  APYResult, PERCENTAGE_DECIMALS,
-  NetworkType,
-} from "./type";
 import axios from "axios";
-import { TokenStore } from "./token_store";
+
+import type { TokenStore } from "./token_store";
+import type { APYResult, NetworkType } from "./type";
+import { PERCENTAGE_DECIMALS } from "./type";
 interface APYResponse {
   underlyingInterestApy: number;
 }
@@ -11,9 +10,11 @@ interface APYResponse {
 const getAPYURL = () =>
   "https://api-v2.pendle.finance/core/v2/1/markets/0xcdd26eb5eb2ce0f203a84553853667ae69ca29ce/data";
 
-
-export async function getPendleAPY(network: NetworkType, store: TokenStore): Promise<APYResult> {
-  if (network != "Mainnet") {
+export async function getPendleAPY(
+  network: NetworkType,
+  store: TokenStore,
+): Promise<APYResult> {
+  if (network !== "Mainnet") {
     return {};
   }
   try {
@@ -27,11 +28,13 @@ export async function getPendleAPY(network: NetworkType, store: TokenStore): Pro
 
     result[pendle.address] = {
       symbol: pendle.symbol,
-      apys: [{
-        value: numberToAPY(Number(rate)),
-        reward: pendle.address,
-        symbol: pendle.symbol,
-      }]
+      apys: [
+        {
+          value: numberToAPY(Number(rate)),
+          reward: pendle.address,
+          symbol: pendle.symbol,
+        },
+      ],
     };
     //
     return result;
