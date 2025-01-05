@@ -9,6 +9,7 @@ import {
   checkResp,
   getAll,
   getByChainAndToken,
+  getGearAPY,
   getRewardList,
 } from "./src/endpoints";
 
@@ -46,6 +47,9 @@ app.get("/api/rewards/list", (req, res) => {
     },
     res,
   );
+});
+app.get("/api/rewards/gear-apy", (req, res) => {
+  void getGearAPY(req, res, f);
 });
 app.listen(port, () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

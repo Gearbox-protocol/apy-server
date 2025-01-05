@@ -1,6 +1,7 @@
 import moment from "moment";
 import type { Address } from "viem";
 
+import type { GearAPY } from "./apy";
 import {
   getAPYCurve,
   getAPYEthena,
@@ -8,6 +9,7 @@ import {
   getAPYLido,
   getAPYSky,
   getAPYYearn,
+  getGearAPY,
 } from "./apy";
 import type { Apy, APYResult, NetworkType, TokenAPY } from "./utils";
 import { getChainId, supportedChains } from "./utils";
@@ -15,9 +17,15 @@ import { getChainId, supportedChains } from "./utils";
 export type ApyDetails = Apy & { lastUpdated: string };
 type TokenDetails = TokenAPY<ApyDetails>;
 
+interface NetworkState {
+  tokens: Record<Address, TokenDetails>;
+  gear: GearAPY;
+}
+
 function log(
   network: NetworkType,
   allProtocolAPYs: Array<PromiseSettledResult<APYResult>>,
+  gearAPY: PromiseSettledResult<GearAPY>,
 ) {
   const list = allProtocolAPYs.map(apyRes => {
     const entries =
@@ -37,15 +45,24 @@ function log(
   });
 
   console.log(`Fetched ${list} for ${network}`);
+
+  if (gearAPY.status === "fulfilled") {
+    console.log(`Gear: ${JSON.stringify(gearAPY.value)}`);
+  } else {
+    console.log(`Gear error: ${gearAPY.reason}`);
+  }
 }
+
 export class Fetcher {
-  public cache: Record<number, Record<Address, TokenDetails>>;
+  public cache: Record<number, NetworkState>;
 
   constructor() {
     this.cache = {};
   }
-  async getNetworkTokens(network: NetworkType) {
-    const allProtocolAPYs = await Promise.allSettled([
+
+  private async getNetworkState(network: NetworkType): Promise<NetworkState> {
+    const [gearAPY, ...allProtocolAPYs] = await Promise.allSettled([
+      getGearAPY(network),
       getAPYCurve(network),
       getAPYEthena(network),
       getAPYLama(network),
@@ -53,7 +70,7 @@ export class Fetcher {
       getAPYSky(network),
       getAPYYearn(network),
     ]);
-    log(network, allProtocolAPYs);
+    log(network, allProtocolAPYs, gearAPY);
 
     const result: Record<Address, TokenDetails> = {};
     const time = moment().utc().format();
@@ -80,15 +97,21 @@ export class Fetcher {
       }
     });
 
-    return result;
+    return {
+      gear:
+        gearAPY.status === "fulfilled"
+          ? gearAPY.value
+          : { base: 0, crv: 0, gear: 0 },
+      tokens: result,
+    };
   }
 
   async run() {
     console.log("updating fetcher");
     for (const network of Object.values(supportedChains)) {
       const chainId = getChainId(network);
-      const apys = await this.getNetworkTokens(network as NetworkType);
-      this.cache[chainId] = apys;
+      const state = await this.getNetworkState(network as NetworkType);
+      this.cache[chainId] = state;
     }
   }
 

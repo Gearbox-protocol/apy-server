@@ -100,8 +100,7 @@ const getFactoryStableNgURL = (n: NetworkType) =>
   `https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/factory-stable-ng`;
 
 const getAPY: APYHandler = async network => {
-  const { mainnetVolumes, mainnetFactoryPools, volumes, pools } =
-    await getCurvePools(network);
+  const { volumes, pools } = await getCurvePools(network);
 
   const tokens = Object.fromEntries(
     Object.entries(TOKENS[network]).map(([k, v]) => [k.toLowerCase(), v]),
@@ -154,6 +153,70 @@ const getAPY: APYHandler = async network => {
     {} as APYResult,
   );
 
+  return result;
+};
+
+async function getCurvePools(network: NetworkType) {
+  switch (network) {
+    case "Mainnet": {
+      const [volumes, ...pools] = await Promise.all([
+        axios.get<VolumesResponse>(getVolumesURL(network)),
+
+        axios.get<CurvePoolDataResponse>(getFactoryCryptoURL(network)),
+
+        axios.get<CurvePoolDataResponse>(getMainURL(network)),
+        axios.get<CurvePoolDataResponse>(getCryptoURL(network)),
+        axios.get<CurvePoolDataResponse>(getFactoryTriCryptoURL(network)),
+        axios.get<CurvePoolDataResponse>(getFactoryCrvUsdURL(network)),
+        axios.get<CurvePoolDataResponse>(getFactoryStableNgURL(network)),
+      ]);
+      return {
+        volumes,
+        pools: pools,
+      };
+    }
+    case "Arbitrum": {
+      const [volumes, ...pools] = await Promise.all([
+        axios.get<VolumesResponse>(getVolumesURL(network)),
+        axios.get<CurvePoolDataResponse>(getMainURL(network)),
+        axios.get<CurvePoolDataResponse>(getFactoryStableNgURL(network)),
+      ]);
+
+      return {
+        volumes,
+        pools,
+      };
+    }
+
+    case "Optimism": {
+      const [volumes, ...pools] = await Promise.all([
+        axios.get<VolumesResponse>(getVolumesURL(network)),
+        axios.get<CurvePoolDataResponse>(getMainURL(network)),
+        axios.get<CurvePoolDataResponse>(getFactoryStableNgURL(network)),
+      ]);
+
+      return {
+        volumes,
+        pools,
+      };
+    }
+    default:
+      throw new Error(`Unknown network ${network}`);
+  }
+}
+
+interface GearAPY {
+  base: number;
+  crv: number;
+  gear: number;
+}
+
+async function getGearAPY(_: NetworkType): Promise<GearAPY> {
+  const [mainnetVolumes, mainnetFactoryPools] = await Promise.all([
+    axios.get<VolumesResponse>(getVolumesURL("Mainnet")),
+    axios.get<CurvePoolDataResponse>(getFactoryCryptoURL("Mainnet")),
+  ]);
+
   const poolFactoryByAddress = (
     mainnetFactoryPools?.data?.data?.poolData || []
   ).reduce<PoolRecord>((acc, p) => {
@@ -171,86 +234,17 @@ const getAPY: APYHandler = async network => {
   const gearVolume =
     mainnetVolumeByAddress[(gearPool?.address || "").toLowerCase()];
 
-  result[GEAR_POOL] = {
-    address: gearPool.lpTokenAddress,
-    symbol: gearPool.symbol,
+  const gear = (gearPool?.gaugeRewards || [])
+    .filter(({ symbol }) => symbol.toLowerCase() === "gear")
+    .map(({ apy = 0 }) => apy);
 
-    apys: [
-      {
-        reward: gearPool.lpTokenAddress,
-        symbol: gearPool.symbol,
-        protocol: PROTOCOL,
-        value: gearVolume?.latestDailyApyPcent || 0,
-      },
-    ],
+  const gearAPY: GearAPY = {
+    base: gearVolume?.latestDailyApyPcent || 0,
+    crv: Math.max(...(gearPool?.gaugeCrvApy || []), 0),
+    gear: Math.max(...gear, 0),
   };
 
-  return result;
-};
-
-async function getCurvePools(network: NetworkType) {
-  switch (network) {
-    case "Mainnet": {
-      const [volumes, mainnetFactoryPools, ...pools] = await Promise.all([
-        axios.get<VolumesResponse>(getVolumesURL(network)),
-        axios.get<CurvePoolDataResponse>(getFactoryCryptoURL(network)),
-
-        axios.get<CurvePoolDataResponse>(getMainURL(network)),
-        axios.get<CurvePoolDataResponse>(getCryptoURL(network)),
-        axios.get<CurvePoolDataResponse>(getFactoryTriCryptoURL(network)),
-        axios.get<CurvePoolDataResponse>(getFactoryCrvUsdURL(network)),
-        axios.get<CurvePoolDataResponse>(getFactoryStableNgURL(network)),
-      ]);
-      return {
-        mainnetVolumes: volumes,
-        mainnetFactoryPools,
-
-        volumes,
-        pools: [mainnetFactoryPools, ...pools],
-      };
-    }
-    case "Arbitrum": {
-      const [mainnetVolumes, mainnetFactoryPools, volumes, ...pools] =
-        await Promise.all([
-          axios.get<VolumesResponse>(getVolumesURL("Mainnet")),
-          axios.get<CurvePoolDataResponse>(getFactoryCryptoURL("Mainnet")),
-
-          axios.get<VolumesResponse>(getVolumesURL(network)),
-          axios.get<CurvePoolDataResponse>(getMainURL(network)),
-          axios.get<CurvePoolDataResponse>(getFactoryStableNgURL(network)),
-        ]);
-
-      return {
-        mainnetVolumes,
-        mainnetFactoryPools,
-
-        volumes,
-        pools,
-      };
-    }
-
-    case "Optimism": {
-      const [mainnetVolumes, mainnetFactoryPools, volumes, ...pools] =
-        await Promise.all([
-          axios.get<VolumesResponse>(getVolumesURL("Mainnet")),
-          axios.get<CurvePoolDataResponse>(getFactoryCryptoURL("Mainnet")),
-
-          axios.get<VolumesResponse>(getVolumesURL(network)),
-          axios.get<CurvePoolDataResponse>(getMainURL(network)),
-          axios.get<CurvePoolDataResponse>(getFactoryStableNgURL(network)),
-        ]);
-
-      return {
-        mainnetVolumes,
-        mainnetFactoryPools,
-
-        volumes,
-        pools,
-      };
-    }
-    default:
-      throw new Error(`Unknown network ${network}`);
-  }
+  return gearAPY;
 }
 
-export { getAPY as getAPYCurve };
+export { GearAPY, getAPY as getAPYCurve, getGearAPY };

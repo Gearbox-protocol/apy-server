@@ -1,13 +1,14 @@
 import type { Address } from "viem";
 import { isAddress } from "viem";
 
+import type { GearAPY } from "./apy";
 import type { ApyDetails, Fetcher } from "./fetcher";
 import { isSupportedNetwork } from "./utils";
 
 interface Response {
   status: string;
   description?: string;
-  data?: Array<OutputDetails> | OutputDetails;
+  data?: Array<OutputDetails> | OutputDetails | GearAPY;
 }
 
 interface OutputDetails {
@@ -38,12 +39,13 @@ export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
       apy: [],
     },
   };
-  Object.entries(fetcher.cache[chainId]).forEach(([key, apys]) => {
-    if (key === tokenAddress) {
-      data.rewards.apy = apys.apys;
-      data.symbol = apys.symbol;
-    }
-  });
+
+  const d = fetcher.cache[chainId]?.tokens?.[tokenAddress as Address];
+  if (d) {
+    data.rewards.apy = d.apys;
+    data.symbol = d.symbol;
+  }
+
   res.set({ "Content-Type": "application/json" });
   res.send(JSON.stringify({ data: data, status: "ok" } as Response));
   //
@@ -55,24 +57,22 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
     return;
   }
   const data: Array<OutputDetails> = [];
-  Object.entries(fetcher.cache).forEach(([key, apys]) => {
-    if (chainId === 0 || Number(key) === chainId) {
-      for (const [token, apy] of Object.entries(apys)) {
-        data.push({
-          chainId: Number(key),
-          address: token,
-          symbol: apy.symbol,
-          rewards: {
-            apy: apy.apys,
-          },
-        });
-      }
-    }
+
+  Object.entries(fetcher.cache[chainId]?.tokens).forEach(([token, apy]) => {
+    data.push({
+      chainId: chainId,
+      address: token,
+      symbol: apy.symbol,
+      rewards: {
+        apy: apy.apys,
+      },
+    });
   });
 
   res.set({ "Content-Type": "application/json" });
   res.send(JSON.stringify({ data: data, status: "ok" } as Response));
 }
+
 export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
   if (req.header("Content-Type") !== "application/json") {
     checkResp(
@@ -91,7 +91,7 @@ export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
   const data: Array<OutputDetails> = [];
   for (const entry of tokenList) {
     const apys =
-      fetcher.cache[entry.chain_id]?.[entry.token_address as Address];
+      fetcher.cache[entry.chain_id]?.tokens?.[entry.token_address as Address];
     data.push({
       chainId: entry.chain_id,
       address: entry.token_address.toLowerCase(),
@@ -104,6 +104,21 @@ export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
 
   res.set({ "Content-Type": "application/json" });
   res.send(JSON.stringify({ data: data, status: "ok" } as Response));
+}
+
+export async function getGearAPY(req: any, res: any, fetcher: Fetcher) {
+  const [isChainIdValid, chainId] = checkChainId(req.query.chain_id);
+  if (!checkResp(isChainIdValid, res)) {
+    return;
+  }
+
+  res.set({ "Content-Type": "application/json" });
+  res.send(
+    JSON.stringify({
+      data: fetcher.cache[chainId]?.gear,
+      status: "ok",
+    } as Response),
+  );
 }
 
 function checkChainId(data: any): [Response, number] {
@@ -162,11 +177,8 @@ interface TokenList {
 }
 function checkTokenList(reqBody: string): [Response, Array<TokenList>] {
   let parsedBody: TokenRequest;
-  // try {
+
   parsedBody = JSON.parse(reqBody);
-  // } catch {
-  //     return [{ status: "error", "description": "Invalid request body" }, []];
-  // }
 
   const tokenList: Array<TokenList> = [];
   for (const entry of parsedBody.token_ids) {
