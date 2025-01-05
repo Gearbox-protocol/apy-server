@@ -7,6 +7,7 @@
   "scripts": {
     "build": "node esbuild.config.mjs",
     "docker": "npx ts-node ./build.mjs",
+    "dev": "npx ts-node main.ts",
     "prepare": "husky",
     "prettier": "prettier --write .",
     "prettier:ci": "npx prettier --check .",

@@ -52,7 +52,6 @@ export const TOKENS: Record<NetworkType, Record<Address, string>> = {
     "0xabaf76590478F2fE0b396996f55F0b61101e9502": "TriBTC",
   },
   Optimism: {
-    // CURVE LP TOKENS
     "0x15F52286C0FF1d7A7dDbC9E300dd66628D46D4e6": "3CRV",
     "0xEfDE221f306152971D8e9f181bFe998447975810": "wstETHCRV",
   },

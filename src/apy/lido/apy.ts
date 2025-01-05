@@ -44,7 +44,7 @@ const getAPY: APYHandler = async network => {
             reward: address,
             symbol: symbol,
             protocol: PROTOCOL,
-            value: Number(smaApr) * 100,
+            value: smaApr,
           },
         ],
       };
