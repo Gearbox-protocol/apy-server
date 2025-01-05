@@ -15,20 +15,25 @@ import { getChainId, supportedChains } from "./utils";
 export type ApyDetails = Apy & { lastUpdated: string };
 type TokenDetails = TokenAPY<ApyDetails>;
 
-function log(network: NetworkType, allProtocolAPYs: APYResult[]) {
-  // logs
-
+function log(
+  network: NetworkType,
+  allProtocolAPYs: Array<PromiseSettledResult<APYResult>>,
+) {
   const list = allProtocolAPYs.map(apyRes => {
-    const entries = Object.entries(apyRes);
-    const tokens = entries.map(([_, v]) => v.symbol).join(", ");
+    const entries =
+      apyRes.status === "fulfilled" ? Object.entries(apyRes.value) : [];
 
+    const tokens = entries.map(([_, v]) => v.symbol).join(", ");
     const protocol = entries[0]?.[1]?.apys?.[0]?.protocol || "unknown";
 
     if (tokens !== "") {
       console.log(`${protocol}: ${tokens}`);
     }
+    if (apyRes.status === "rejected") {
+      console.log(`${protocol}: ${apyRes.reason}`);
+    }
 
-    return `${protocol}: ${Object.keys(apyRes).length}`;
+    return `${protocol}: ${entries.length}`;
   });
 
   console.log(`Fetched ${list} for ${network}`);
@@ -40,7 +45,7 @@ export class Fetcher {
     this.cache = {};
   }
   async getNetworkTokens(network: NetworkType) {
-    const allProtocolAPYs = await Promise.all([
+    const allProtocolAPYs = await Promise.allSettled([
       getAPYCurve(network),
       getAPYEthena(network),
       getAPYLama(network),
@@ -53,24 +58,26 @@ export class Fetcher {
     const result: Record<Address, TokenDetails> = {};
     const time = moment().utc().format();
 
-    allProtocolAPYs.forEach(networkAPY => {
-      Object.entries(networkAPY).forEach(([addr, tokenAPY]) => {
-        const address = addr.toLowerCase() as Address;
+    allProtocolAPYs.forEach(apyRes => {
+      if (apyRes.status === "fulfilled") {
+        Object.entries(apyRes.value).forEach(([addr, tokenAPY]) => {
+          const address = addr.toLowerCase() as Address;
 
-        const apyList = tokenAPY?.apys.map(
-          ({ reward, ...rest }): ApyDetails => ({
-            ...rest,
-            lastUpdated: time,
-            reward: reward.toLowerCase() as Address,
-          }),
-        );
+          const apyList = tokenAPY?.apys.map(
+            ({ reward, ...rest }): ApyDetails => ({
+              ...rest,
+              lastUpdated: time,
+              reward: reward.toLowerCase() as Address,
+            }),
+          );
 
-        result[address] = {
-          ...tokenAPY,
-          address,
-          apys: [...(result[address]?.apys || []), ...apyList],
-        };
-      });
+          result[address] = {
+            ...tokenAPY,
+            address,
+            apys: [...(result[address]?.apys || []), ...apyList],
+          };
+        });
+      }
     });
 
     return result;
