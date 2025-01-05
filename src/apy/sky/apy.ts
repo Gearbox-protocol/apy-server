@@ -1,0 +1,57 @@
+import axios from "axios";
+
+import type { APYHandler, APYResult } from "../../utils";
+import { PROTOCOL, TOKENS } from "./constants";
+
+type Response = [
+  {
+    sky_savings_rate_apy: string;
+    sky_farm_apy: string;
+  },
+];
+
+const getURL = () => "https://info-sky.blockanalitica.com/api/v1/overall/";
+
+const getAPY: APYHandler = async network => {
+  if (network !== "Mainnet") return {};
+
+  const resp = await axios.get<Response>(getURL());
+  const apyInfo = resp?.data?.[0];
+
+  const tokens = TOKENS[network];
+
+  const savingsRate = apyInfo?.sky_savings_rate_apy || 0;
+  const farmRate = apyInfo?.sky_farm_apy || 0;
+
+  const result: APYResult = {
+    [tokens.sUSDS]: {
+      address: tokens.sUSDS,
+      symbol: "sUSDS",
+
+      apys: [
+        {
+          reward: tokens.sUSDS,
+          symbol: "sUSDS",
+          protocol: PROTOCOL,
+          value: Number(savingsRate) * 100,
+        },
+      ],
+    },
+    [tokens.stkUSDS]: {
+      address: tokens.stkUSDS,
+      symbol: "stkUSDS",
+      apys: [
+        {
+          reward: tokens.stkUSDS,
+          symbol: "stkUSDS",
+          protocol: PROTOCOL,
+          value: Number(farmRate) * 100,
+        },
+      ],
+    },
+  };
+
+  return result;
+};
+
+export { getAPY as getAPYSky };
