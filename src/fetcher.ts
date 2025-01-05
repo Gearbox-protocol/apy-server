@@ -40,7 +40,7 @@ export class Fetcher {
     this.cache = {};
   }
   async getNetworkTokens(network: NetworkType) {
-    const [...allProtocolAPYs] = await Promise.all([
+    const allProtocolAPYs = await Promise.all([
       getAPYCurve(network),
       getAPYEthena(network),
       getAPYLama(network),

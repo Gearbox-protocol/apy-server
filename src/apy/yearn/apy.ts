@@ -31,17 +31,18 @@ const getAPY: APYHandler = async network => {
   const result = data.reduce<APYResult>((acc, d) => {
     const addr = d.address.toLowerCase() as Address;
 
-    if (tokens[addr]) {
+    const symbol = tokens[addr];
+    if (symbol) {
       const netApy = d?.apr?.netAPR || 0;
 
       acc[d.address] = {
         address: d.address,
-        symbol: d.symbol,
+        symbol,
 
         apys: [
           {
             reward: d.address,
-            symbol: d.symbol,
+            symbol,
             protocol: PROTOCOL,
             value: Number(netApy) * 100,
           },

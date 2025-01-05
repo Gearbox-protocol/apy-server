@@ -125,31 +125,34 @@ const getAPY: APYHandler = async network => {
     return acc;
   }, {});
 
-  const result = Object.entries(tokens).reduce<APYResult>((acc, [addr]) => {
-    const address = addr as Address;
+  const result = Object.entries(tokens).reduce<APYResult>(
+    (acc, [addr, symbol]) => {
+      const address = addr as Address;
 
-    const pool = poolDataByAddress[address];
-    if (!pool) return acc;
+      const pool = poolDataByAddress[address];
+      if (!pool) return acc;
 
-    const volume = volumeByAddress[pool.address.toLowerCase()];
-    const baseAPY = volume?.latestDailyApyPcent || 0;
+      const volume = volumeByAddress[pool.address.toLowerCase()];
+      const baseAPY = volume?.latestDailyApyPcent || 0;
 
-    acc[pool.lpTokenAddress] = {
-      address: pool.lpTokenAddress,
-      symbol: pool.symbol,
+      acc[pool.lpTokenAddress] = {
+        address: pool.lpTokenAddress,
+        symbol,
 
-      apys: [
-        {
-          reward: pool.lpTokenAddress,
-          symbol: pool.symbol,
-          protocol: PROTOCOL,
-          value: baseAPY,
-        },
-      ],
-    };
+        apys: [
+          {
+            reward: pool.lpTokenAddress,
+            symbol,
+            protocol: PROTOCOL,
+            value: baseAPY,
+          },
+        ],
+      };
 
-    return acc;
-  }, {} as APYResult);
+      return acc;
+    },
+    {} as APYResult,
+  );
 
   const poolFactoryByAddress = (
     mainnetFactoryPools?.data?.data?.poolData || []

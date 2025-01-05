@@ -32,19 +32,19 @@ const getAPY: APYHandler = async network => {
     return acc;
   }, {});
 
-  const allAPY = tokensList.reduce<APYResult>((acc, [addr, poolId]) => {
+  const allAPY = tokensList.reduce<APYResult>((acc, [addr, p]) => {
     const address = addr as Address;
-    const pool = poolById[poolId] || {};
+    const pool = poolById[p.id] || {};
 
     if (pool) {
       acc[address] = {
         address,
-        symbol: pool.symbol,
+        symbol: p.symbol,
 
         apys: [
           {
             reward: address,
-            symbol: pool.symbol,
+            symbol: p.symbol,
             protocol: PROTOCOL,
             value: pool.apy || 0,
           },
