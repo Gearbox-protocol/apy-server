@@ -3,6 +3,7 @@ import type { Address } from "viem";
 
 import type { GearAPY } from "./apy";
 import {
+  getAPYConstant,
   getAPYCurve,
   getAPYEthena,
   getAPYLama,
@@ -69,6 +70,7 @@ export class Fetcher {
       getAPYLido(network),
       getAPYSky(network),
       getAPYYearn(network),
+      getAPYConstant(network),
     ]);
     log(network, allProtocolAPYs, gearAPY);
 

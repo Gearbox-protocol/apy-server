@@ -65,6 +65,10 @@ export const TOKENS: Record<
       id: "5fd328af-4203-471b-bd16-1705c726d926",
       symbol: "scrvUSD",
     },
+    // "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497": {
+    //   id: "66985a81-9c51-46ca-9977-42b4fe7bc6df",
+    //   symbol: "sUSDe",
+    // },
   },
   Optimism: {
     "0x9Bcef72be871e61ED4fBbc7630889beE758eb81D": {
