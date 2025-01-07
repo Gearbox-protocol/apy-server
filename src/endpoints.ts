@@ -3,6 +3,7 @@ import { isAddress } from "viem";
 
 import type { GearAPY } from "./apy";
 import type { ApyDetails, Fetcher } from "./fetcher";
+import type { PointsInfo } from "./points/constants";
 import { isSupportedNetwork } from "./utils";
 
 interface Response {
@@ -40,10 +41,10 @@ export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
     },
   };
 
-  const d = fetcher.cache[chainId]?.tokens?.[tokenAddress as Address];
-  if (d) {
-    data.rewards.apy = d.apys;
-    data.symbol = d.symbol;
+  const a = fetcher.cache[chainId]?.apyList?.[tokenAddress as Address];
+  if (a) {
+    data.rewards.apy = a.apys;
+    data.symbol = a.symbol;
   }
 
   res.set({ "Content-Type": "application/json" });
@@ -58,13 +59,13 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
   }
   const data: Array<OutputDetails> = [];
 
-  Object.entries(fetcher.cache[chainId]?.tokens).forEach(([token, apy]) => {
+  Object.entries(fetcher.cache[chainId]?.apyList || {}).forEach(([t, a]) => {
     data.push({
       chainId: chainId,
-      address: token,
-      symbol: apy.symbol,
+      address: t,
+      symbol: a.symbol,
       rewards: {
-        apy: apy.apys,
+        apy: a.apys,
       },
     });
   });
@@ -89,15 +90,15 @@ export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
   }
 
   const data: Array<OutputDetails> = [];
-  for (const entry of tokenList) {
-    const apys =
-      fetcher.cache[entry.chain_id]?.tokens?.[entry.token_address as Address];
+  for (const t of tokenList) {
+    const a = fetcher.cache[t.chain_id]?.apyList?.[t.token_address as Address];
+
     data.push({
-      chainId: entry.chain_id,
-      address: entry.token_address.toLowerCase(),
-      symbol: apys.symbol,
+      chainId: t.chain_id,
+      address: t.token_address.toLowerCase(),
+      symbol: a.symbol,
       rewards: {
-        apy: apys.apys,
+        apy: a.apys,
       },
     });
   }
