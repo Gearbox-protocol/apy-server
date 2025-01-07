@@ -9,7 +9,18 @@ const getPoints: PointsHandler = async network => {
   const result = points.reduce<PointsResult>((acc, p) => {
     const address = p.address.toLowerCase() as Address;
 
-    acc[address] = { ...p, address };
+    acc[address] = {
+      ...p,
+      address,
+      ...(p.debtRewards
+        ? {
+            debtRewards: p.debtRewards.map(r => ({
+              ...r,
+              cms: r.cms?.map(cm => cm.toLowerCase() as Address),
+            })),
+          }
+        : {}),
+    };
 
     return acc;
   }, {});

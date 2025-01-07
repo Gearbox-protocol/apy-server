@@ -4,7 +4,7 @@ import { isAddress } from "viem";
 import type { GearAPY } from "./apy";
 import type { ApyDetails, Fetcher } from "./fetcher";
 import type { PointsInfo } from "./points/constants";
-import { isSupportedNetwork } from "./utils";
+import { isSupportedNetwork, toJSONWithBigint } from "./utils";
 
 interface Response {
   status: string;
@@ -18,6 +18,7 @@ interface OutputDetails {
   symbol: string;
   rewards: {
     apy: Array<ApyDetails>;
+    points: Array<PointsInfo>;
   };
 }
 
@@ -32,23 +33,22 @@ export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
   if (!checkResp(isTokenValid, res)) {
     return;
   }
+
+  const a = fetcher.cache[chainId]?.apyList?.[tokenAddress as Address];
+  const p = fetcher.cache[chainId]?.pointsList?.[tokenAddress as Address];
+
   const data: OutputDetails = {
     chainId: chainId,
     address: tokenAddress.toLowerCase(),
-    symbol: "",
+    symbol: a?.symbol || p?.symbol || "",
     rewards: {
-      apy: [],
+      apy: a.apys || [],
+      points: p ? [p] : [],
     },
   };
 
-  const a = fetcher.cache[chainId]?.apyList?.[tokenAddress as Address];
-  if (a) {
-    data.rewards.apy = a.apys;
-    data.symbol = a.symbol;
-  }
-
   res.set({ "Content-Type": "application/json" });
-  res.send(JSON.stringify({ data: data, status: "ok" } as Response));
+  res.send(toJSONWithBigint({ data: data, status: "ok" } as Response));
   //
 }
 
@@ -57,21 +57,45 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
   if (!checkResp(isChainIdValid, res)) {
     return;
   }
-  const data: Array<OutputDetails> = [];
 
-  Object.entries(fetcher.cache[chainId]?.apyList || {}).forEach(([t, a]) => {
-    data.push({
+  const data = Object.entries(fetcher.cache[chainId]?.apyList || {}).reduce<
+    Record<Address, OutputDetails>
+  >((acc, [t, a]) => {
+    acc[t as Address] = {
       chainId: chainId,
       address: t,
       symbol: a.symbol,
       rewards: {
         apy: a.apys,
+        points: [],
       },
-    });
+    };
+
+    return acc;
+  }, {});
+
+  Object.entries(fetcher.cache[chainId]?.pointsList || {}).forEach(([t, p]) => {
+    const token = t as Address;
+
+    if (data[token]) {
+      data[token].rewards.points.push(p);
+    } else {
+      data[token] = {
+        chainId: chainId,
+        address: t,
+        symbol: p.symbol,
+        rewards: {
+          apy: [],
+          points: [p],
+        },
+      };
+    }
   });
 
   res.set({ "Content-Type": "application/json" });
-  res.send(JSON.stringify({ data: data, status: "ok" } as Response));
+  res.send(
+    toJSONWithBigint({ data: Object.values(data), status: "ok" } as Response),
+  );
 }
 
 export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
@@ -84,7 +108,7 @@ export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
       res,
     );
   }
-  const [isTokenList, tokenList] = checkTokenList(JSON.stringify(req.body));
+  const [isTokenList, tokenList] = checkTokenList(toJSONWithBigint(req.body));
   if (!checkResp(isTokenList, res)) {
     return;
   }
@@ -92,19 +116,22 @@ export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
   const data: Array<OutputDetails> = [];
   for (const t of tokenList) {
     const a = fetcher.cache[t.chain_id]?.apyList?.[t.token_address as Address];
+    const p =
+      fetcher.cache[t.chain_id]?.pointsList?.[t.token_address as Address];
 
     data.push({
       chainId: t.chain_id,
       address: t.token_address.toLowerCase(),
       symbol: a.symbol,
       rewards: {
-        apy: a.apys,
+        apy: a.apys || [],
+        points: p ? [p] : [],
       },
     });
   }
 
   res.set({ "Content-Type": "application/json" });
-  res.send(JSON.stringify({ data: data, status: "ok" } as Response));
+  res.send(toJSONWithBigint({ data: data, status: "ok" } as Response));
 }
 
 export async function getGearAPY(req: any, res: any, fetcher: Fetcher) {
@@ -115,7 +142,7 @@ export async function getGearAPY(req: any, res: any, fetcher: Fetcher) {
 
   res.set({ "Content-Type": "application/json" });
   res.send(
-    JSON.stringify({
+    toJSONWithBigint({
       data: fetcher.cache[chainId]?.gear,
       status: "ok",
     } as Response),
@@ -158,13 +185,13 @@ function checkTokenAddress(data: any): [Response, string] {
       "",
     ];
   }
-  return [{ status: "ok" }, (notUndefined as Address).toString()];
+  return [{ status: "ok" }, notUndefined.toString()];
 }
 
 export function checkResp(res: Response, out: any): boolean {
   if (res.status === "error") {
     out.set({ "Content-Type": "application/json" });
-    out.send(JSON.stringify(res));
+    out.send(toJSONWithBigint(res));
     return false;
   }
   return true;
