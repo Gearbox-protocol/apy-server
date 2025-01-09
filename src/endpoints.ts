@@ -122,9 +122,9 @@ export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
     data.push({
       chainId: t.chain_id,
       address: t.token_address.toLowerCase(),
-      symbol: a.symbol,
+      symbol: a?.symbol,
       rewards: {
-        apy: a.apys || [],
+        apy: a?.apys || [],
         points: p ? [p] : [],
       },
     });
