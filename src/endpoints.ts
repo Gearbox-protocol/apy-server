@@ -42,7 +42,7 @@ export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
     address: tokenAddress.toLowerCase(),
     symbol: a?.symbol || p?.symbol || "",
     rewards: {
-      apy: a.apys || [],
+      apy: a?.apys || [],
       points: p ? [p] : [],
     },
   };

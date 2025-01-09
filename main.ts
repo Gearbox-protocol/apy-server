@@ -39,6 +39,9 @@ app.get("/api/rewards/:chainId/:tokenAddress", (req, res) => {
 app.post("/api/rewards/list", (req, res) => {
   void getRewardList(req, res, f);
 });
+app.get("/api/health", (req, res) => {
+  res.sendStatus(200);
+});
 app.get("/api/rewards/list", (req, res) => {
   checkResp(
     {
