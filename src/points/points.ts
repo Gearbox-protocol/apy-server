@@ -16,7 +16,7 @@ const getPoints: PointsHandler = async network => {
         ? {
             debtRewards: p.debtRewards.map(r => ({
               ...r,
-              cms: r.cms?.map(cm => cm.toLowerCase() as Address),
+              cm: r.cm.toLowerCase() as Address,
             })),
           }
         : {}),

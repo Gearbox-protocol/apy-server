@@ -18,13 +18,19 @@ type PointsType =
   | "karak"
   | "pumpBTC";
 
-export interface PointsReward {
+interface PointsReward {
   name: string;
   units: string;
   multiplier: bigint | "soon";
   type: PointsType;
-  cms?: Array<Address>;
 }
+
+interface DebtReward extends PointsReward {
+  cm: Address;
+}
+
+type CommonReward<CM extends DebtReward["cm"] | undefined> =
+  CM extends undefined ? PointsReward : DebtReward;
 
 const REWARDS_BASE_INFO = {
   eigenlayer: (multiplier: PointsReward["multiplier"]): PointsReward => ({
@@ -63,16 +69,18 @@ const REWARDS_BASE_INFO = {
     multiplier,
     type: "puffer",
   }),
-  ethena: (
+  ethena: <CM extends DebtReward["cm"] | undefined = undefined>(
     multiplier: PointsReward["multiplier"],
-    cms?: PointsReward["cms"],
-  ): PointsReward => ({
-    name: "Ethena",
-    units: "sats",
-    multiplier,
-    type: "ethena",
-    cms,
-  }),
+    cm?: CM,
+  ): CommonReward<CM> => {
+    return {
+      name: "Ethena",
+      units: "sats",
+      multiplier,
+      type: "ethena",
+      ...(cm ? { cm } : {}),
+    } as CommonReward<CM>;
+  },
 
   symbiotic: (multiplier: PointsReward["multiplier"]): PointsReward => ({
     name: "Symbiotic",
@@ -125,7 +133,7 @@ export interface PointsInfo {
   symbol: string;
   address: Address;
   rewards: Array<PointsReward>;
-  debtRewards?: Array<PointsReward>;
+  debtRewards?: Array<DebtReward>;
 }
 
 export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
@@ -176,9 +184,10 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
       symbol: "sUSDe",
       rewards: [REWARDS_BASE_INFO.ethena(500n)],
       debtRewards: [
-        REWARDS_BASE_INFO.ethena(500n, [
+        REWARDS_BASE_INFO.ethena(
+          500n,
           "0x58c8e983d9479b69b64970f79e8965ea347189c9",
-        ]),
+        ),
       ],
     },
     {
@@ -186,9 +195,10 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
       symbol: "USDe",
       rewards: [REWARDS_BASE_INFO.ethena(2000n)],
       debtRewards: [
-        REWARDS_BASE_INFO.ethena(500n, [
+        REWARDS_BASE_INFO.ethena(
+          500n,
           "0x58c8e983d9479b69b64970f79e8965ea347189c9",
-        ]),
+        ),
       ],
     },
 
