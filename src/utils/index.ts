@@ -1,7 +1,5 @@
 import type { Address } from "viem";
 
-import type { PointsInfo } from "../points/constants";
-
 export interface Apy {
   reward: Address;
   symbol: string;
@@ -18,10 +16,8 @@ export interface TokenAPY<A = Apy> {
 }
 
 export type APYResult = Record<Address, TokenAPY>;
-export type APYHandler = (network: NetworkType) => Promise<APYResult>;
 
-export type PointsResult = Record<Address, PointsInfo>;
-export type PointsHandler = (network: NetworkType) => Promise<PointsResult>;
+export type APYHandler = (network: NetworkType) => Promise<APYResult>;
 
 export const supportedChains = ["Mainnet", "Arbitrum", "Optimism"] as const;
 export type NetworkType = (typeof supportedChains)[number];
@@ -37,12 +33,4 @@ export function getChainId(network: NetworkType) {
 
 export function isSupportedNetwork(chainId: number) {
   return Object.values(CHAINS).includes(chainId);
-}
-
-export function toJSONWithBigint(o: any) {
-  const r = JSON.stringify(o, (_, v) =>
-    typeof v === "bigint" ? v.toString() : v,
-  );
-
-  return r;
 }
