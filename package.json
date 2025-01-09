@@ -23,7 +23,6 @@
     "moment": "^2.30.1",
     "viem": "^2.4.0"
   },
-  "prettier": "@gearbox-protocol/prettier-config",
   "devDependencies": {
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
@@ -38,5 +37,13 @@
     "lint-staged": "^15.2.11",
     "prettier": "^3.4.2",
     "typescript": "^5.7.2"
+  },
+  "prettier": "@gearbox-protocol/prettier-config",
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md}": "prettier --write"
   }
 }
