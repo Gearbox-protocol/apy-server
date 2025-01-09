@@ -12,6 +12,8 @@ import {
   getAPYYearn,
   getGearAPY,
 } from "./apy";
+import { getPoints } from "./points";
+import type { PointsInfo } from "./points/constants";
 import type { Apy, APYResult, NetworkType, TokenAPY } from "./utils";
 import { getChainId, supportedChains } from "./utils";
 
@@ -19,13 +21,15 @@ export type ApyDetails = Apy & { lastUpdated: string };
 type TokenDetails = TokenAPY<ApyDetails>;
 
 interface NetworkState {
-  tokens: Record<Address, TokenDetails>;
+  apyList: Record<Address, TokenDetails>;
+  pointsList: Record<Address, PointsInfo>;
   gear: GearAPY;
 }
 
 function log(
   network: NetworkType,
   allProtocolAPYs: Array<PromiseSettledResult<APYResult>>,
+  pointsList: PromiseSettledResult<Record<Address, PointsInfo>>,
   gearAPY: PromiseSettledResult<GearAPY>,
 ) {
   const list = allProtocolAPYs.map(apyRes => {
@@ -52,6 +56,16 @@ function log(
   } else {
     console.log(`Gear error: ${gearAPY.reason}`);
   }
+
+  if (pointsList.status === "fulfilled") {
+    console.log(
+      `Fetched points for ${Object.values(pointsList.value)
+        .map(p => p.symbol)
+        .join(", ")} for ${network}`,
+    );
+  } else {
+    console.log(`Points error: ${pointsList.reason}`);
+  }
 }
 
 export class Fetcher {
@@ -62,8 +76,11 @@ export class Fetcher {
   }
 
   private async getNetworkState(network: NetworkType): Promise<NetworkState> {
-    const [gearAPY, ...allProtocolAPYs] = await Promise.allSettled([
+    const [gearAPY, points, ...allProtocolAPYs] = await Promise.allSettled([
       getGearAPY(network),
+
+      getPoints(network),
+
       getAPYCurve(network),
       getAPYEthena(network),
       getAPYLama(network),
@@ -72,39 +89,46 @@ export class Fetcher {
       getAPYYearn(network),
       getAPYConstant(network),
     ]);
-    log(network, allProtocolAPYs, gearAPY);
+    log(network, allProtocolAPYs, points, gearAPY);
 
-    const result: Record<Address, TokenDetails> = {};
     const time = moment().utc().format();
 
-    allProtocolAPYs.forEach(apyRes => {
-      if (apyRes.status === "fulfilled") {
-        Object.entries(apyRes.value).forEach(([addr, tokenAPY]) => {
-          const address = addr.toLowerCase() as Address;
+    const apyList = allProtocolAPYs.reduce<Record<Address, TokenDetails>>(
+      (acc, apyRes) => {
+        if (apyRes.status === "fulfilled") {
+          Object.entries(apyRes.value).forEach(([addr, tokenAPY]) => {
+            const address = addr.toLowerCase() as Address;
 
-          const apyList = tokenAPY?.apys.map(
-            ({ reward, ...rest }): ApyDetails => ({
-              ...rest,
-              lastUpdated: time,
-              reward: reward.toLowerCase() as Address,
-            }),
-          );
+            const apyList = tokenAPY?.apys.map(
+              ({ reward, ...rest }): ApyDetails => ({
+                ...rest,
+                lastUpdated: time,
+                reward: reward.toLowerCase() as Address,
+              }),
+            );
 
-          result[address] = {
-            ...tokenAPY,
-            address,
-            apys: [...(result[address]?.apys || []), ...apyList],
-          };
-        });
-      }
-    });
+            acc[address] = {
+              ...tokenAPY,
+              address,
+              apys: [...(acc[address]?.apys || []), ...apyList],
+            };
+          });
+        }
+
+        return acc;
+      },
+      {},
+    );
+
+    const pointsList = points.status === "fulfilled" ? points.value : {};
 
     return {
       gear:
         gearAPY.status === "fulfilled"
           ? gearAPY.value
           : { base: 0, crv: 0, gear: 0 },
-      tokens: result,
+      apyList,
+      pointsList,
     };
   }
 
