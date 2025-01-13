@@ -1,6 +1,7 @@
 import type { Address } from "viem";
 
 import type { PointsInfo } from "../points/constants";
+import type { PoolPointsInfo } from "../poolRewards/constants";
 
 export interface Apy {
   reward: Address;
@@ -22,6 +23,15 @@ export type APYHandler = (network: NetworkType) => Promise<APYResult>;
 
 export type PointsResult = Record<Address, PointsInfo>;
 export type PointsHandler = (network: NetworkType) => Promise<PointsResult>;
+
+export interface PoolPointsResult {
+  [pool: Address]: {
+    [token: Address]: PoolPointsInfo;
+  };
+}
+export type PoolPointsHandler = (
+  network: NetworkType,
+) => Promise<PoolPointsResult>;
 
 export const supportedChains = ["Mainnet", "Arbitrum", "Optimism"] as const;
 export type NetworkType = (typeof supportedChains)[number];
