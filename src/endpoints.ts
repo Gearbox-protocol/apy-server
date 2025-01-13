@@ -4,15 +4,10 @@ import { isAddress } from "viem";
 import type { GearAPY } from "./apy";
 import type { ApyDetails, Fetcher } from "./fetcher";
 import type { PointsInfo } from "./points/constants";
+import type { PoolPointsInfo } from "./poolRewards/constants";
 import { isSupportedNetwork, toJSONWithBigint } from "./utils";
 
-interface Response {
-  status: string;
-  description?: string;
-  data?: Array<OutputDetails> | OutputDetails | GearAPY;
-}
-
-interface OutputDetails {
+interface TokenOutputDetails {
   chainId: number;
   address: string;
   symbol: string;
@@ -20,6 +15,26 @@ interface OutputDetails {
     apy: Array<ApyDetails>;
     points: Array<PointsInfo>;
   };
+}
+
+interface PoolOutputDetails {
+  chainId: number;
+  pool: Address;
+
+  rewards: {
+    points: Array<PoolPointsInfo>;
+  };
+}
+
+interface Response {
+  status: string;
+  description?: string;
+  data?:
+    | Array<TokenOutputDetails>
+    | TokenOutputDetails
+    | Array<PoolOutputDetails>
+    | PoolOutputDetails
+    | GearAPY;
 }
 
 export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
@@ -37,7 +52,7 @@ export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
   const a = fetcher.cache[chainId]?.apyList?.[tokenAddress as Address];
   const p = fetcher.cache[chainId]?.pointsList?.[tokenAddress as Address];
 
-  const data: OutputDetails = {
+  const data: TokenOutputDetails = {
     chainId: chainId,
     address: tokenAddress.toLowerCase(),
     symbol: a?.symbol || p?.symbol || "",
@@ -59,7 +74,7 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
   }
 
   const data = Object.entries(fetcher.cache[chainId]?.apyList || {}).reduce<
-    Record<Address, OutputDetails>
+    Record<Address, TokenOutputDetails>
   >((acc, [t, a]) => {
     acc[t as Address] = {
       chainId: chainId,
@@ -113,7 +128,7 @@ export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
     return;
   }
 
-  const data: Array<OutputDetails> = [];
+  const data: Array<TokenOutputDetails> = [];
   for (const t of tokenList) {
     const a = fetcher.cache[t.chain_id]?.apyList?.[t.token_address as Address];
     const p =
@@ -144,6 +159,38 @@ export async function getGearAPY(req: any, res: any, fetcher: Fetcher) {
   res.send(
     toJSONWithBigint({
       data: fetcher.cache[chainId]?.gear,
+      status: "ok",
+    } as Response),
+  );
+}
+
+export async function getPoolRewards(req: any, res: any, fetcher: Fetcher) {
+  const [isChainIdValid, chainId] = checkChainId(req.query.chain_id);
+  if (!checkResp(isChainIdValid, res)) {
+    return;
+  }
+
+  const data = Object.entries(
+    fetcher.cache[chainId]?.poolPointsList || {},
+  ).reduce<Record<Address, PoolOutputDetails>>((acc, [p, r]) => {
+    const pool = p as Address;
+
+    acc[pool] = {
+      chainId: chainId,
+      pool: pool,
+
+      rewards: {
+        points: r,
+      },
+    };
+
+    return acc;
+  }, {});
+
+  res.set({ "Content-Type": "application/json" });
+  res.send(
+    toJSONWithBigint({
+      data: Object.values(data),
       status: "ok",
     } as Response),
   );
