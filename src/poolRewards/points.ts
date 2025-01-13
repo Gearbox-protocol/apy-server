@@ -10,10 +10,7 @@ const getPoolPoints: PoolPointsHandler = async network => {
     const token = p.token.toLowerCase() as Address;
     const pool = p.pool.toLowerCase() as Address;
 
-    acc[pool] = {
-      ...(acc[pool] || {}),
-      [token]: { ...p, pool, token },
-    };
+    acc[pool] = [...(acc[pool] || []), { ...p, pool, token }];
 
     return acc;
   }, {});

@@ -24,11 +24,7 @@ export type APYHandler = (network: NetworkType) => Promise<APYResult>;
 export type PointsResult = Record<Address, PointsInfo>;
 export type PointsHandler = (network: NetworkType) => Promise<PointsResult>;
 
-export interface PoolPointsResult {
-  [pool: Address]: {
-    [token: Address]: PoolPointsInfo;
-  };
-}
+export type PoolPointsResult = Record<Address, Array<PoolPointsInfo>>;
 export type PoolPointsHandler = (
   network: NetworkType,
 ) => Promise<PoolPointsResult>;

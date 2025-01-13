@@ -78,8 +78,9 @@ function log(
 
   if (poolPointsList.status === "fulfilled") {
     console.log(
-      `Fetched points for ${Object.values(poolPointsList.value)
-        .map(p => p.symbol)
+      `Fetched pool points for ${Object.values(poolPointsList.value)
+        .map(p => p.map(t => `${t.pool}: ${t.symbol}`))
+        .flat(1)
         .join(", ")} for ${network}`,
     );
   } else {
