@@ -2,6 +2,9 @@ import type { Address } from "viem";
 
 import type { NetworkType } from "../utils";
 
+export type PointsResult = Record<Address, PointsInfo>;
+export type PointsHandler = (network: NetworkType) => Promise<PointsResult>;
+
 type PointsType =
   | "eigenlayer"
   | "renzo"

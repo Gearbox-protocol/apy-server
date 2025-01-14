@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import type { APYHandler, APYResult, NetworkType } from "../../utils";
+import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
 interface Response {

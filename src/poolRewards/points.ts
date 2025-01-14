@@ -1,6 +1,6 @@
 import type { Address } from "viem";
 
-import type { PoolPointsHandler, PoolPointsResult } from "../utils";
+import type { PoolPointsHandler, PoolPointsResult } from "./constants";
 import { POOL_POINTS } from "./constants";
 
 const getPoolPoints: PoolPointsHandler = async network => {

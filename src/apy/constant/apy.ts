@@ -1,6 +1,6 @@
 import type { Address } from "viem";
 
-import type { APYHandler, APYResult } from "../../utils";
+import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
 const getAPY: APYHandler = async network => {
