@@ -277,6 +277,12 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
         REWARDS_BASE_INFO.pumpBTC(200n),
       ],
     },
+
+    {
+      address: "0x72eD19788Bce2971A5ed6401662230ee57e254B7",
+      symbol: "stkcvxllamathena",
+      rewards: [REWARDS_BASE_INFO.ethena(30_00n)],
+    },
   ],
   Arbitrum: [
     {
