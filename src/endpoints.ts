@@ -5,6 +5,7 @@ import type { GearAPY } from "./apy";
 import type { ApyDetails, Fetcher } from "./fetcher";
 import type { PointsInfo } from "./points";
 import type { PoolPointsInfo } from "./poolRewards";
+import type { FarmInfo } from "./tokenExtraRewards";
 import { isSupportedNetwork, toJSONWithBigint } from "./utils";
 
 interface TokenOutputDetails {
@@ -14,6 +15,7 @@ interface TokenOutputDetails {
   rewards: {
     apy: Array<ApyDetails>;
     points: Array<PointsInfo>;
+    extraRewards: Array<FarmInfo>;
   };
 }
 
@@ -51,6 +53,8 @@ export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
 
   const a = fetcher.cache[chainId]?.tokenApyList?.[tokenAddress as Address];
   const p = fetcher.cache[chainId]?.tokenPointsList?.[tokenAddress as Address];
+  const extra =
+    fetcher.cache[chainId]?.tokenExtraRewards?.[tokenAddress as Address];
 
   const data: TokenOutputDetails = {
     chainId: chainId,
@@ -59,12 +63,12 @@ export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
     rewards: {
       apy: a?.apys || [],
       points: p ? [p] : [],
+      extraRewards: extra || [],
     },
   };
 
   res.set({ "Content-Type": "application/json" });
   res.send(toJSONWithBigint({ data: data, status: "ok" } as Response));
-  //
 }
 
 export async function getAll(req: any, res: any, fetcher: Fetcher) {
@@ -83,6 +87,7 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
       rewards: {
         apy: a.apys,
         points: [],
+        extraRewards: [],
       },
     };
 
@@ -103,8 +108,32 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
           rewards: {
             apy: [],
             points: [p],
+            extraRewards: [],
           },
         };
+      }
+    },
+  );
+
+  Object.entries(fetcher.cache[chainId]?.tokenExtraRewards || {}).forEach(
+    ([t, ex]) => {
+      const token = t as Address;
+
+      if (ex.length > 0) {
+        if (data[token]) {
+          data[token].rewards.extraRewards.push(...ex);
+        } else {
+          data[token] = {
+            chainId: chainId,
+            address: t,
+            symbol: ex[0].symbol,
+            rewards: {
+              apy: [],
+              points: [],
+              extraRewards: ex,
+            },
+          };
+        }
       }
     },
   );
@@ -136,6 +165,10 @@ export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
       fetcher.cache[t.chain_id]?.tokenApyList?.[t.token_address as Address];
     const p =
       fetcher.cache[t.chain_id]?.tokenPointsList?.[t.token_address as Address];
+    const extra =
+      fetcher.cache[t.chain_id]?.tokenExtraRewards?.[
+        t.token_address as Address
+      ];
 
     data.push({
       chainId: t.chain_id,
@@ -144,6 +177,7 @@ export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
       rewards: {
         apy: a?.apys || [],
         points: p ? [p] : [],
+        extraRewards: extra || [],
       },
     });
   }

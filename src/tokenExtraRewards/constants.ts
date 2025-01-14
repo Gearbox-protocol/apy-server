@@ -9,6 +9,7 @@ export type TokenExtraRewardsHandler = (
 
 export interface FarmInfo {
   token: Address;
+  symbol: string;
 
   rewardToken: Address;
   rewardSymbol: string;
@@ -26,7 +27,8 @@ export const EXTRA_REWARDS_INFO: Record<NetworkType, Array<FarmInfo>> = {
   Mainnet: [],
   Optimism: [
     {
-      token: "0x2416092f143378750bb29b79eD961ab195CcEea5", // ezETH
+      token: "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      symbol: "ezETH",
       rewardToken: "0x4200000000000000000000000000000000000042",
       rewardSymbol: "OP",
 
