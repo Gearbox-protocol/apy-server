@@ -49,8 +49,8 @@ export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
     return;
   }
 
-  const a = fetcher.cache[chainId]?.apyList?.[tokenAddress as Address];
-  const p = fetcher.cache[chainId]?.pointsList?.[tokenAddress as Address];
+  const a = fetcher.cache[chainId]?.tokenApyList?.[tokenAddress as Address];
+  const p = fetcher.cache[chainId]?.tokenPointsList?.[tokenAddress as Address];
 
   const data: TokenOutputDetails = {
     chainId: chainId,
@@ -73,9 +73,9 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
     return;
   }
 
-  const data = Object.entries(fetcher.cache[chainId]?.apyList || {}).reduce<
-    Record<Address, TokenOutputDetails>
-  >((acc, [t, a]) => {
+  const data = Object.entries(
+    fetcher.cache[chainId]?.tokenApyList || {},
+  ).reduce<Record<Address, TokenOutputDetails>>((acc, [t, a]) => {
     acc[t as Address] = {
       chainId: chainId,
       address: t,
@@ -89,23 +89,25 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
     return acc;
   }, {});
 
-  Object.entries(fetcher.cache[chainId]?.pointsList || {}).forEach(([t, p]) => {
-    const token = t as Address;
+  Object.entries(fetcher.cache[chainId]?.tokenPointsList || {}).forEach(
+    ([t, p]) => {
+      const token = t as Address;
 
-    if (data[token]) {
-      data[token].rewards.points.push(p);
-    } else {
-      data[token] = {
-        chainId: chainId,
-        address: t,
-        symbol: p.symbol,
-        rewards: {
-          apy: [],
-          points: [p],
-        },
-      };
-    }
-  });
+      if (data[token]) {
+        data[token].rewards.points.push(p);
+      } else {
+        data[token] = {
+          chainId: chainId,
+          address: t,
+          symbol: p.symbol,
+          rewards: {
+            apy: [],
+            points: [p],
+          },
+        };
+      }
+    },
+  );
 
   res.set({ "Content-Type": "application/json" });
   res.send(
@@ -130,9 +132,10 @@ export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
 
   const data: Array<TokenOutputDetails> = [];
   for (const t of tokenList) {
-    const a = fetcher.cache[t.chain_id]?.apyList?.[t.token_address as Address];
+    const a =
+      fetcher.cache[t.chain_id]?.tokenApyList?.[t.token_address as Address];
     const p =
-      fetcher.cache[t.chain_id]?.pointsList?.[t.token_address as Address];
+      fetcher.cache[t.chain_id]?.tokenPointsList?.[t.token_address as Address];
 
     data.push({
       chainId: t.chain_id,
