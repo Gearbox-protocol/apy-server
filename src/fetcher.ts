@@ -1,7 +1,7 @@
 import moment from "moment";
 import type { Address } from "viem";
 
-import type { GearAPY } from "./apy";
+import type { Apy, APYResult, GearAPY, TokenAPY } from "./apy";
 import {
   getAPYConstant,
   getAPYCurve,
@@ -12,17 +12,11 @@ import {
   getAPYYearn,
   getGearAPY,
 } from "./apy";
+import type { PointsResult } from "./points";
 import { getPoints } from "./points";
-import type { PointsInfo } from "./points/constants";
+import type { PoolPointsResult } from "./poolRewards";
 import { getPoolPoints } from "./poolRewards";
-import type {
-  Apy,
-  APYResult,
-  NetworkType,
-  PointsResult,
-  PoolPointsResult,
-  TokenAPY,
-} from "./utils";
+import type { NetworkType } from "./utils";
 import { getChainId, supportedChains } from "./utils";
 
 export type ApyDetails = Apy & { lastUpdated: string };

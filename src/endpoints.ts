@@ -3,8 +3,8 @@ import { isAddress } from "viem";
 
 import type { GearAPY } from "./apy";
 import type { ApyDetails, Fetcher } from "./fetcher";
-import type { PointsInfo } from "./points/constants";
-import type { PoolPointsInfo } from "./poolRewards/constants";
+import type { PointsInfo } from "./points";
+import type { PoolPointsInfo } from "./poolRewards";
 import { isSupportedNetwork, toJSONWithBigint } from "./utils";
 
 interface TokenOutputDetails {

@@ -40,7 +40,7 @@ app.get("/api/rewards/gear-apy", (req, res) => {
 app.get("/api/rewards/pools/all", (req, res) => {
   void getPoolRewards(req, res, f);
 });
-app.get("/api/rewards/tokens/all/", (req, res) => {
+app.get("/api/rewards/tokens/all", (req, res) => {
   void getAll(req, res, f);
 });
 app.post("/api/rewards/tokens/list", (req, res) => {
