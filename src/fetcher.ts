@@ -1,3 +1,4 @@
+import e from "cors";
 import moment from "moment";
 import type { Address } from "viem";
 
@@ -63,41 +64,59 @@ function log(
   console.log(`Fetched ${list} for ${network}`);
 
   if (gearAPY.status === "fulfilled") {
-    console.log(`Gear: ${JSON.stringify(gearAPY.value)}`);
+    console.log(`\nGear: ${JSON.stringify(gearAPY.value)}`);
   } else {
-    console.log(`Gear error: ${gearAPY.reason}`);
+    console.log(`\nGear error: ${gearAPY.reason}`);
   }
 
   if (pointsList.status === "fulfilled") {
-    console.log(
-      `Fetched points for ${Object.values(pointsList.value)
-        .map(p => p.symbol)
-        .join(", ")} for ${network}`,
-    );
+    const points = Object.values(pointsList.value);
+
+    if (points.length > 0) {
+      console.log(
+        `\nFetched points for ${points
+          .map(p => p.symbol)
+          .join(", ")} for ${network}`,
+      );
+    } else {
+      console.log(`\nFetched no points for ${network}`);
+    }
   } else {
-    console.log(`Points error: ${pointsList.reason}`);
+    console.log(`\nPoints error: ${pointsList.reason}`);
   }
 
   if (tokenExtraRewards.status === "fulfilled") {
-    console.log(
-      `Fetched points for ${Object.values(tokenExtraRewards.value)
-        .map(p => p.map(t => `${t.token}: ${t.rewardSymbol}`))
-        .flat(1)
-        .join(", ")} for ${network}`,
-    );
+    const extraRewards = Object.values(tokenExtraRewards.value);
+
+    if (extraRewards.length > 0) {
+      console.log(
+        `\nFetched extra rewards for ${extraRewards
+          .map(p => p.map(t => `${t.symbol}: ${t.rewardSymbol}`))
+          .flat(1)
+          .join(", ")} for ${network}`,
+      );
+    } else {
+      console.log(`\nFetched no extra rewards for ${network}`);
+    }
   } else {
-    console.log(`Points error: ${tokenExtraRewards.reason}`);
+    console.log(`\nPoints error: ${tokenExtraRewards.reason}`);
   }
 
   if (poolPointsList.status === "fulfilled") {
-    console.log(
-      `Fetched pool points for ${Object.values(poolPointsList.value)
-        .map(p => p.map(t => `${t.pool}: ${t.symbol}`))
-        .flat(1)
-        .join(", ")} for ${network}`,
-    );
+    const points = Object.values(poolPointsList.value);
+
+    if (points.length > 0) {
+      console.log(
+        `\nFetched pool points for ${points
+          .map(p => p.map(t => `${t.pool}: ${t.symbol}`))
+          .flat(1)
+          .join(", ")} for ${network}`,
+      );
+    } else {
+      console.log(`\nFetched no pool points for ${network}`);
+    }
   } else {
-    console.log(`Points error: ${poolPointsList.reason}`);
+    console.log(`\nPoints error: ${poolPointsList.reason}`);
   }
 }
 
