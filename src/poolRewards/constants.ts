@@ -2,6 +2,11 @@ import type { Address } from "viem";
 
 import type { NetworkType } from "../utils";
 
+export type PoolPointsResult = Record<Address, Array<PoolPointsInfo>>;
+export type PoolPointsHandler = (
+  network: NetworkType,
+) => Promise<PoolPointsResult>;
+
 export interface PoolPointsInfo {
   pool: Address;
   token: Address;

@@ -1,6 +1,6 @@
 import type { Address } from "viem";
 
-import type { PointsHandler, PointsResult } from "../utils";
+import type { PointsHandler, PointsResult } from "./constants";
 import { POINTS_INFO_BY_NETWORK } from "./constants";
 
 const getPoints: PointsHandler = async network => {

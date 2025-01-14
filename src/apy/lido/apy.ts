@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { Address } from "viem";
 
-import type { APYHandler, APYResult } from "../../utils";
+import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
 interface Apy {
