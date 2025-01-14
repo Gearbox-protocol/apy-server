@@ -1,3 +1,4 @@
+import e from "cors";
 import moment from "moment";
 import type { Address } from "viem";
 
@@ -16,6 +17,8 @@ import type { PointsResult } from "./points";
 import { getPoints } from "./points";
 import type { PoolPointsResult } from "./poolRewards";
 import { getPoolPoints } from "./poolRewards";
+import type { TokenExtraRewardsResult } from "./tokenExtraRewards";
+import { getTokenExtraRewards } from "./tokenExtraRewards";
 import type { NetworkType } from "./utils";
 import { getChainId, supportedChains } from "./utils";
 
@@ -23,9 +26,12 @@ export type ApyDetails = Apy & { lastUpdated: string };
 type TokenDetails = TokenAPY<ApyDetails>;
 
 interface NetworkState {
-  apyList: Record<Address, TokenDetails>;
-  pointsList: PointsResult;
+  tokenApyList: Record<Address, TokenDetails>;
+  tokenExtraRewards: TokenExtraRewardsResult;
+  tokenPointsList: PointsResult;
+
   poolPointsList: PoolPointsResult;
+
   gear: GearAPY;
 }
 
@@ -33,7 +39,10 @@ function log(
   network: NetworkType,
   allProtocolAPYs: Array<PromiseSettledResult<APYResult>>,
   pointsList: PromiseSettledResult<PointsResult>,
+  tokenExtraRewards: PromiseSettledResult<TokenExtraRewardsResult>,
+
   poolPointsList: PromiseSettledResult<PoolPointsResult>,
+
   gearAPY: PromiseSettledResult<GearAPY>,
 ) {
   const list = allProtocolAPYs.map(apyRes => {
@@ -55,30 +64,59 @@ function log(
   console.log(`Fetched ${list} for ${network}`);
 
   if (gearAPY.status === "fulfilled") {
-    console.log(`Gear: ${JSON.stringify(gearAPY.value)}`);
+    console.log(`\nGear: ${JSON.stringify(gearAPY.value)}`);
   } else {
-    console.log(`Gear error: ${gearAPY.reason}`);
+    console.log(`\nGear error: ${gearAPY.reason}`);
   }
 
   if (pointsList.status === "fulfilled") {
-    console.log(
-      `Fetched points for ${Object.values(pointsList.value)
-        .map(p => p.symbol)
-        .join(", ")} for ${network}`,
-    );
+    const points = Object.values(pointsList.value);
+
+    if (points.length > 0) {
+      console.log(
+        `\nFetched points for ${points
+          .map(p => p.symbol)
+          .join(", ")} for ${network}`,
+      );
+    } else {
+      console.log(`\nFetched no points for ${network}`);
+    }
   } else {
-    console.log(`Points error: ${pointsList.reason}`);
+    console.log(`\nPoints error: ${pointsList.reason}`);
+  }
+
+  if (tokenExtraRewards.status === "fulfilled") {
+    const extraRewards = Object.values(tokenExtraRewards.value);
+
+    if (extraRewards.length > 0) {
+      console.log(
+        `\nFetched extra rewards for ${extraRewards
+          .map(p => p.map(t => `${t.symbol}: ${t.rewardSymbol}`))
+          .flat(1)
+          .join(", ")} for ${network}`,
+      );
+    } else {
+      console.log(`\nFetched no extra rewards for ${network}`);
+    }
+  } else {
+    console.log(`\nPoints error: ${tokenExtraRewards.reason}`);
   }
 
   if (poolPointsList.status === "fulfilled") {
-    console.log(
-      `Fetched pool points for ${Object.values(poolPointsList.value)
-        .map(p => p.map(t => `${t.pool}: ${t.symbol}`))
-        .flat(1)
-        .join(", ")} for ${network}`,
-    );
+    const points = Object.values(poolPointsList.value);
+
+    if (points.length > 0) {
+      console.log(
+        `\nFetched pool points for ${points
+          .map(p => p.map(t => `${t.pool}: ${t.symbol}`))
+          .flat(1)
+          .join(", ")} for ${network}`,
+      );
+    } else {
+      console.log(`\nFetched no pool points for ${network}`);
+    }
   } else {
-    console.log(`Points error: ${poolPointsList.reason}`);
+    console.log(`\nPoints error: ${poolPointsList.reason}`);
   }
 }
 
@@ -90,13 +128,15 @@ export class Fetcher {
   }
 
   private async getNetworkState(network: NetworkType): Promise<NetworkState> {
-    const [gearAPY, points, poolPoints, ...allProtocolAPYs] =
+    const [gearAPY, points, poolPoints, extraRewards, ...allProtocolAPYs] =
       await Promise.allSettled([
         getGearAPY(network),
 
         getPoints(network),
 
         getPoolPoints(network),
+
+        getTokenExtraRewards(network),
 
         getAPYCurve(network),
         getAPYEthena(network),
@@ -106,11 +146,11 @@ export class Fetcher {
         getAPYYearn(network),
         getAPYConstant(network),
       ]);
-    log(network, allProtocolAPYs, points, poolPoints, gearAPY);
+    log(network, allProtocolAPYs, points, extraRewards, poolPoints, gearAPY);
 
     const time = moment().utc().format();
 
-    const apyList = allProtocolAPYs.reduce<Record<Address, TokenDetails>>(
+    const tokenApyList = allProtocolAPYs.reduce<Record<Address, TokenDetails>>(
       (acc, apyRes) => {
         if (apyRes.status === "fulfilled") {
           Object.entries(apyRes.value).forEach(([addr, tokenAPY]) => {
@@ -137,19 +177,23 @@ export class Fetcher {
       {},
     );
 
-    const pointsList = points.status === "fulfilled" ? points.value : {};
+    const tokenPointsList = points.status === "fulfilled" ? points.value : {};
 
     const poolPointsList =
       poolPoints.status === "fulfilled" ? poolPoints.value : {};
+
+    const tokenExtraRewards =
+      extraRewards.status === "fulfilled" ? extraRewards.value : {};
 
     return {
       gear:
         gearAPY.status === "fulfilled"
           ? gearAPY.value
           : { base: 0, crv: 0, gear: 0 },
-      apyList,
-      pointsList,
+      tokenApyList,
+      tokenPointsList,
       poolPointsList,
+      tokenExtraRewards,
     };
   }
 
