@@ -21,7 +21,11 @@ type PointsType =
   | "karak"
   | "pumpBTC"
   | "obol"
-  | "ssv";
+  | "ssv"
+  | "berachain"
+  | "kodiak"
+  | "dolomite"
+  | "beraWave";
 
 interface PointsReward {
   name: string;
@@ -144,6 +148,30 @@ const REWARDS_BASE_INFO = {
     units: "points",
     multiplier,
     type: "ssv",
+  }),
+  berachain: (multiplier: PointsReward["multiplier"]): PointsReward => ({
+    name: "Berachain",
+    units: "points",
+    multiplier,
+    type: "berachain",
+  }),
+  kodiak: (multiplier: PointsReward["multiplier"]): PointsReward => ({
+    name: "Kodiak",
+    units: "points",
+    multiplier,
+    type: "kodiak",
+  }),
+  beraWave: (multiplier: PointsReward["multiplier"]): PointsReward => ({
+    name: "Bera-wave",
+    units: "points",
+    multiplier,
+    type: "beraWave",
+  }),
+  dolomite: (multiplier: PointsReward["multiplier"]): PointsReward => ({
+    name: "Dolomite",
+    units: "points",
+    multiplier,
+    type: "dolomite",
   }),
 };
 
@@ -306,6 +334,17 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
         REWARDS_BASE_INFO.mellow(2_00n),
         REWARDS_BASE_INFO.obol(1_00n),
         REWARDS_BASE_INFO.ssv(1_00n),
+      ],
+    },
+
+    {
+      address: "0x97Ad75064b20fb2B2447feD4fa953bF7F007a706",
+      symbol: "beraSTONE",
+      rewards: [
+        REWARDS_BASE_INFO.berachain(1_00n),
+        REWARDS_BASE_INFO.kodiak(1_00n),
+        REWARDS_BASE_INFO.dolomite(1_00n),
+        REWARDS_BASE_INFO.beraWave(1_00n),
       ],
     },
   ],
