@@ -187,42 +187,27 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
     {
       address: "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
       symbol: "weETH",
-      rewards: [
-        REWARDS_BASE_INFO.eigenlayer(100n),
-        REWARDS_BASE_INFO.etherfi(200n),
-      ],
+      rewards: [REWARDS_BASE_INFO.etherfi(200n)],
     },
     {
       address: "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
       symbol: "ezETH",
-      rewards: [
-        REWARDS_BASE_INFO.eigenlayer(100n),
-        REWARDS_BASE_INFO.renzo(300n),
-      ],
+      rewards: [REWARDS_BASE_INFO.renzo(300n)],
     },
     {
       address: "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
       symbol: "rsETH",
-      rewards: [
-        REWARDS_BASE_INFO.eigenlayer(100n),
-        REWARDS_BASE_INFO.kelp(200n),
-      ],
+      rewards: [REWARDS_BASE_INFO.kelp(200n)],
     },
     {
       address: "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
       symbol: "rswETH",
-      rewards: [
-        REWARDS_BASE_INFO.eigenlayer(100n),
-        REWARDS_BASE_INFO.swell(450n),
-      ],
+      rewards: [REWARDS_BASE_INFO.swell(450n)],
     },
     {
       address: "0xD9A442856C234a39a81a089C06451EBAa4306a72",
       symbol: "pufETH",
-      rewards: [
-        REWARDS_BASE_INFO.eigenlayer(100n),
-        REWARDS_BASE_INFO.puffer(100n),
-      ],
+      rewards: [REWARDS_BASE_INFO.puffer(100n)],
     },
 
     {
