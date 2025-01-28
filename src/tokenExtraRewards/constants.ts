@@ -21,22 +21,8 @@ export interface FarmInfo {
   balance: bigint;
 }
 
-const MAX_TIMESTAMP = 1738022400n;
-
 export const EXTRA_REWARDS_INFO: Record<NetworkType, Array<FarmInfo>> = {
   Mainnet: [],
-  Optimism: [
-    {
-      token: "0x2416092f143378750bb29b79eD961ab195CcEea5",
-      symbol: "ezETH",
-      rewardToken: "0x4200000000000000000000000000000000000042",
-      rewardSymbol: "OP",
-
-      finished: MAX_TIMESTAMP,
-      duration: BigInt(45 * 24 * 60 * 60),
-      reward: 5000n * 10n ** 18n,
-      balance: 0n,
-    },
-  ],
+  Optimism: [],
   Arbitrum: [],
 };
