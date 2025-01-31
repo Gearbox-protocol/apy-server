@@ -25,7 +25,8 @@ type PointsType =
   | "berachain"
   | "kodiak"
   | "dolomite"
-  | "beraWave";
+  | "beraWave"
+  | "treehouseNuts";
 
 interface PointsReward {
   name: string;
@@ -172,6 +173,12 @@ const REWARDS_BASE_INFO = {
     units: "points",
     multiplier,
     type: "dolomite",
+  }),
+  treehouseNuts: (multiplier: PointsReward["multiplier"]): PointsReward => ({
+    name: "Treehouse nuts",
+    units: "points",
+    multiplier,
+    type: "treehouseNuts",
   }),
 };
 
@@ -331,6 +338,12 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
         REWARDS_BASE_INFO.dolomite(1_00n),
         REWARDS_BASE_INFO.beraWave(1_00n),
       ],
+    },
+
+    {
+      address: "0xD11c452fc99cF405034ee446803b6F6c1F6d5ED8",
+      symbol: "tETH",
+      rewards: [REWARDS_BASE_INFO.treehouseNuts(1_00n)],
     },
   ],
   Arbitrum: [
