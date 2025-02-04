@@ -175,8 +175,8 @@ const REWARDS_BASE_INFO = {
     type: "dolomite",
   }),
   treehouseNuts: (multiplier: PointsReward["multiplier"]): PointsReward => ({
-    name: "Treehouse nuts",
-    units: "points",
+    name: "Treehouse",
+    units: "nuts",
     multiplier,
     type: "treehouseNuts",
   }),
