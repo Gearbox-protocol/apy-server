@@ -10,6 +10,7 @@ import {
   getAPYLama,
   getAPYLido,
   getAPYSky,
+  getAPYTreehouse,
   getAPYYearn,
   getGearAPY,
 } from "./apy";
@@ -144,6 +145,7 @@ export class Fetcher {
         getAPYLido(network),
         getAPYSky(network),
         getAPYYearn(network),
+        getAPYTreehouse(network),
         getAPYConstant(network),
       ]);
     log(network, allProtocolAPYs, points, extraRewards, poolPoints, gearAPY);
