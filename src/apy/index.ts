@@ -5,4 +5,5 @@ export * from "./ethena";
 export * from "./lido";
 export * from "./llama";
 export * from "./sky";
+export * from "./treehouse";
 export * from "./yearn";
