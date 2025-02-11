@@ -379,4 +379,6 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
       ],
     },
   ],
+  Base: [],
+  Sonic: [],
 };

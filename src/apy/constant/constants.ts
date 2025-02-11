@@ -42,6 +42,8 @@ export const TOKENS: Record<
     "0x4186BFC76E2E237523CBC30FD220FE055156b41F": rsETH,
     "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe": weETH,
   },
+  Base: {},
+  Sonic: {},
 } as const;
 
 export const PROTOCOL = "constant";

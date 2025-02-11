@@ -64,4 +64,6 @@ export const TOKENS: Record<NetworkType, Record<Address, string>> = {
     "0x3aDf984c937FA6846E5a24E0A68521Bdaf767cE1": "crvUSDC_e",
     "0x1c34204FCFE5314Dcf53BE2671C02c35DB58B4e3": "USDEUSDC",
   },
+  Base: {},
+  Sonic: {},
 };
