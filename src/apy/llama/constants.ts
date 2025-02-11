@@ -94,4 +94,6 @@ export const TOKENS: Record<
       symbol: "sfrxETH",
     },
   },
+  Base: {},
+  Sonic: {},
 };

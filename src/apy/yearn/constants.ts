@@ -21,6 +21,8 @@ export const TOKENS: Record<NetworkType, Record<Address, string>> = {
     "0x7D2382b1f8Af621229d33464340541Db362B4907": "yvOP",
   },
   Arbitrum: {},
+  Base: {},
+  Sonic: {},
 };
 
 export const PROTOCOL = "yearn";

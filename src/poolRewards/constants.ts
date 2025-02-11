@@ -61,4 +61,6 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
   ],
   Arbitrum: [],
   Optimism: [],
+  Base: [],
+  Sonic: [],
 };

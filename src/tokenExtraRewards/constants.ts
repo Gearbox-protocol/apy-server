@@ -25,4 +25,6 @@ export const EXTRA_REWARDS_INFO: Record<NetworkType, Array<FarmInfo>> = {
   Mainnet: [],
   Optimism: [],
   Arbitrum: [],
+  Base: [],
+  Sonic: [],
 };

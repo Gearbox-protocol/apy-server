@@ -20,6 +20,8 @@ export const TOKENS: Record<NetworkType, Record<Address, string>> = {
   Arbitrum: {
     "0x5979D7b546E38E414F7E9822514be443A4800529": "wstETH",
   },
+  Base: {},
+  Sonic: {},
 };
 
 export const PROTOCOL = "lido";

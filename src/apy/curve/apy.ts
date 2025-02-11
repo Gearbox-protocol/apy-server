@@ -80,6 +80,8 @@ const CURVE_CHAINS: Record<NetworkType, string> = {
   Arbitrum: "arbitrum",
   Mainnet: "ethereum",
   Optimism: "optimism",
+  Base: "base",
+  Sonic: "sonic",
 };
 
 // const CRYPTO = "https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/crypto";
@@ -101,6 +103,9 @@ const getFactoryStableNgURL = (n: NetworkType) =>
   `https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/factory-stable-ng`;
 
 const getAPY: APYHandler = async network => {
+  // !& sonic filter
+  if (network === "Sonic" || network === "Base") return {};
+
   const { volumes, pools } = await getCurvePools(network);
 
   const tokens = Object.fromEntries(
@@ -201,6 +206,20 @@ async function getCurvePools(network: NetworkType) {
         pools,
       };
     }
+
+    case "Base": {
+      const [volumes, ...pools] = await Promise.all([
+        axios.get<VolumesResponse>(getVolumesURL(network)),
+        axios.get<CurvePoolDataResponse>(getMainURL(network)),
+        axios.get<CurvePoolDataResponse>(getFactoryStableNgURL(network)),
+      ]);
+
+      return {
+        volumes,
+        pools,
+      };
+    }
+
     default:
       throw new Error(`Unknown network ${network}`);
   }
