@@ -69,6 +69,12 @@ export const TOKENS: Record<
       id: "18d68b7b-1674-4616-b5a8-65bbfb3723cd",
       symbol: "stkcvxllamathena",
     },
+
+    "0xb7de5dFCb74d25c2f21841fbd6230355C50d9308": {
+      id: "606e53bf-ea88-4d4e-92b8-fcd6e97e4106",
+      symbol: "PT_sUSDe_29MAY2025",
+    },
+
     // "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497": {
     //   id: "66985a81-9c51-46ca-9977-42b4fe7bc6df",
     //   symbol: "sUSDe",
