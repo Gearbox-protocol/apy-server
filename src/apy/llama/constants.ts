@@ -75,6 +75,11 @@ export const TOKENS: Record<
       symbol: "PT_sUSDe_29MAY2025",
     },
 
+    "0x40b7B4aB1E95e28DF06971581276966FDF95688E": {
+      id: "ae4bbad0-1e74-43fd-8013-c00230e456b9",
+      symbol: "PT_beraSTONE_10APR2025",
+    },
+
     // "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497": {
     //   id: "66985a81-9c51-46ca-9977-42b4fe7bc6df",
     //   symbol: "sUSDe",
