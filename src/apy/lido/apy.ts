@@ -29,7 +29,7 @@ const getAPY: APYHandler = async network => {
   const res = await axios.get<Response>(LIDO_URL);
   const { smaApr = 0 } = res?.data?.data || {};
 
-  const tokens = TOKENS[network];
+  const tokens = TOKENS[network] || {};
 
   const result = Object.entries(tokens).reduce<APYResult>(
     (acc, [addr, symbol]) => {

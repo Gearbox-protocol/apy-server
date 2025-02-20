@@ -4,6 +4,8 @@ export const TOKENS = {
   },
   Optimism: {},
   Arbitrum: {},
+  Base: {},
+  Sonic: {},
 } as const;
 
 export const PROTOCOL = "ethena";

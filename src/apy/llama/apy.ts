@@ -22,7 +22,7 @@ interface LamaResponse {
 }
 
 const getAPY: APYHandler = async network => {
-  const tokens = TOKENS[network];
+  const tokens = TOKENS[network] || {};
   const tokensList = Object.entries(tokens);
   if (tokensList.length === 0) return {};
 

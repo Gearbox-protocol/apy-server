@@ -12,11 +12,11 @@ interface Response {
 const getUrl = () => "https://api.treehouse.finance/apy";
 
 const getAPY: APYHandler = async network => {
-  if (network !== "Mainnet") return {};
+  const tokens = TOKENS[network];
+  if (!tokens || !("tETH" in tokens)) return {};
 
   const { data } = await axios.get<Response>(getUrl());
 
-  const tokens = TOKENS[network];
   const rate = data?.total_apr_teth || 0;
 
   const result: APYResult = {
