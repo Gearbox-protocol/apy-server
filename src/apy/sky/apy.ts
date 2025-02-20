@@ -13,12 +13,11 @@ type Response = [
 const getURL = () => "https://info-sky.blockanalitica.com/api/v1/overall/";
 
 const getAPY: APYHandler = async network => {
-  if (network !== "Mainnet") return {};
+  const tokens = TOKENS[network];
+  if (!("sUSDS" in tokens)) return {};
 
   const resp = await axios.get<Response>(getURL());
   const apyInfo = resp?.data?.[0];
-
-  const tokens = TOKENS[network];
 
   const savingsRate = apyInfo?.sky_savings_rate_apy || 0;
   const farmRate = apyInfo?.sky_farm_apy || 0;

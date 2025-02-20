@@ -12,6 +12,7 @@ import {
   getAPYSky,
   getAPYTreehouse,
   getAPYYearn,
+  getBalancer,
   getGearAPY,
 } from "./apy";
 import type { PointsResult } from "./points";
@@ -147,6 +148,7 @@ export class Fetcher {
         getAPYYearn(network),
         getAPYTreehouse(network),
         getAPYConstant(network),
+        getBalancer(network),
       ]);
     log(network, allProtocolAPYs, points, extraRewards, poolPoints, gearAPY);
 

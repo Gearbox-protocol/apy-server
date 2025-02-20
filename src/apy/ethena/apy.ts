@@ -12,13 +12,13 @@ const getAPYURL = () =>
   "https://api-v2.pendle.finance/core/v2/1/markets/0xcdd26eb5eb2ce0f203a84553853667ae69ca29ce/data";
 
 const getAPY: APYHandler = async network => {
-  if (network !== "Mainnet") return {};
+  const tokens = TOKENS[network];
+  if (!("sUSDe" in tokens)) return {};
 
   const resp = await axios.get<Response>(getAPYURL());
   const apyInfo = resp?.data;
 
   const rate = apyInfo?.underlyingInterestApy || 0;
-  const tokens = TOKENS[network];
 
   const result: APYResult = {
     [tokens.sUSDe]: {
