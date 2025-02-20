@@ -13,7 +13,7 @@ const getUrl = () => "https://api.treehouse.finance/apy";
 
 const getAPY: APYHandler = async network => {
   const tokens = TOKENS[network];
-  if (!("tETH" in tokens)) return {};
+  if (!tokens || !("tETH" in tokens)) return {};
 
   const { data } = await axios.get<Response>(getUrl());
 

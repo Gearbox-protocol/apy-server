@@ -13,7 +13,7 @@ const getAPYURL = () =>
 
 const getAPY: APYHandler = async network => {
   const tokens = TOKENS[network];
-  if (!("sUSDe" in tokens)) return {};
+  if (!tokens || !("sUSDe" in tokens)) return {};
 
   const resp = await axios.get<Response>(getAPYURL());
   const apyInfo = resp?.data;

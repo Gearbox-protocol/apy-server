@@ -14,7 +14,7 @@ const PAYLOAD = {
 
 const getAPY: APYHandler = async network => {
   const tokens = TOKENS[network];
-  if (!("stS" in tokens)) return {};
+  if (!tokens || !("stS" in tokens)) return {};
 
   const res = await axios.post<Response>(URL, PAYLOAD);
   const { stsGetGqlStakedSonicData } = res?.data.data || {};

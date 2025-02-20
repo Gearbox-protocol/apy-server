@@ -14,7 +14,7 @@ const getURL = () => "https://info-sky.blockanalitica.com/api/v1/overall/";
 
 const getAPY: APYHandler = async network => {
   const tokens = TOKENS[network];
-  if (!("sUSDS" in tokens)) return {};
+  if (!tokens || !("sUSDS" in tokens)) return {};
 
   const resp = await axios.get<Response>(getURL());
   const apyInfo = resp?.data?.[0];
