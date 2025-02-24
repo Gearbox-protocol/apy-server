@@ -25,6 +25,9 @@ const WBTC_V3_TRADE_ETH: Address = "0xda00010eda646913f273e10e7a5d1f659242757d";
 const LBTC_ETH: Address = "0x8236a87084f8B84306f72007F36F2618A5634494";
 const PUMPBTC_ETH: Address = "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e";
 
+const WC_V3_SONIC = "0xcf4d737c38ef2ac9c7bdb4dbbc954b1932ea4a40";
+const USDC_E_V3_SONIC = "0xcf4d737c38ef2ac9c7bdb4dbbc954b1932ea4a40";
+
 export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
   Mainnet: [
     {
@@ -51,9 +54,9 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
     {
       pool: WBTC_V3_TRADE_ETH,
       token: PUMPBTC_ETH,
+      symbol: "pumpBTC",
 
       amount: 172_800n * 10000n,
-      symbol: "pumpBTC",
       duration: "day",
       name: "Pump BTC",
       estimation: "absolute",
@@ -62,5 +65,26 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
   Arbitrum: [],
   Optimism: [],
   Base: [],
-  Sonic: [],
+  Sonic: [
+    {
+      pool: USDC_E_V3_SONIC,
+      token: "0x0",
+      symbol: "none",
+
+      amount: 10n * 10000n,
+      duration: "day",
+      name: "Sonic points",
+      estimation: "absolute",
+    },
+    {
+      pool: WC_V3_SONIC,
+      token: "0x0",
+      symbol: "none",
+
+      amount: 8n * 10000n,
+      duration: "day",
+      name: "Sonic points",
+      estimation: "absolute",
+    },
+  ],
 };

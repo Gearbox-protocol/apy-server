@@ -26,7 +26,9 @@ type PointsType =
   | "kodiak"
   | "dolomite"
   | "beraWave"
-  | "treehouseNuts";
+  | "treehouseNuts"
+  | "rings"
+  | "sonic";
 
 interface PointsReward {
   name: string;
@@ -179,6 +181,19 @@ const REWARDS_BASE_INFO = {
     units: "nuts",
     multiplier,
     type: "treehouseNuts",
+  }),
+
+  rings: (multiplier: PointsReward["multiplier"]): PointsReward => ({
+    name: "Rings",
+    units: "points",
+    multiplier,
+    type: "rings",
+  }),
+  sonic: (multiplier: PointsReward["multiplier"]): PointsReward => ({
+    name: "Sonic",
+    units: "points",
+    multiplier,
+    type: "sonic",
   }),
 };
 
@@ -380,5 +395,19 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
     },
   ],
   Base: [],
-  Sonic: [],
+  Sonic: [
+    {
+      address: "0xd3DCe716f3eF535C5Ff8d041c1A41C3bd89b97aE",
+      symbol: "scUSD",
+      rewards: [
+        REWARDS_BASE_INFO.rings(1_50n),
+        REWARDS_BASE_INFO.sonic(12_00n),
+      ],
+    },
+    {
+      address: "0xE5DA20F15420aD15DE0fa650600aFc998bbE3955",
+      symbol: "stS",
+      rewards: [REWARDS_BASE_INFO.sonic(8_00n)],
+    },
+  ],
 };
