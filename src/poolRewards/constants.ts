@@ -28,6 +28,8 @@ const PUMPBTC_ETH: Address = "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e";
 const WC_V3_SONIC = "0xcf4d737c38ef2ac9c7bdb4dbbc954b1932ea4a40";
 const USDC_E_V3_SONIC = "0xcf4d737c38ef2ac9c7bdb4dbbc954b1932ea4a40";
 
+const STS_SONIC = "0xE5DA20F15420aD15DE0fa650600aFc998bbE3955";
+
 export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
   Mainnet: [
     {
@@ -68,8 +70,8 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
   Sonic: [
     {
       pool: USDC_E_V3_SONIC,
-      token: "0x0",
-      symbol: "none",
+      token: STS_SONIC,
+      symbol: "stS",
 
       amount: 10n * 10000n,
       duration: "day",
@@ -78,8 +80,8 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
     },
     {
       pool: WC_V3_SONIC,
-      token: "0x0",
-      symbol: "none",
+      token: STS_SONIC,
+      symbol: "stS",
 
       amount: 8n * 10000n,
       duration: "day",
