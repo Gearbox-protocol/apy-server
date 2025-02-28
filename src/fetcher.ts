@@ -4,15 +4,16 @@ import type { Address } from "viem";
 
 import type { Apy, APYResult, GearAPY, TokenAPY } from "./apy";
 import {
+  getAPYCoinshift,
   getAPYConstant,
   getAPYCurve,
   getAPYEthena,
   getAPYLama,
   getAPYLido,
   getAPYSky,
+  getAPYSonic,
   getAPYTreehouse,
   getAPYYearn,
-  getBalancer,
   getGearAPY,
 } from "./apy";
 import type { PointsResult } from "./points";
@@ -148,7 +149,8 @@ export class Fetcher {
         getAPYYearn(network),
         getAPYTreehouse(network),
         getAPYConstant(network),
-        getBalancer(network),
+        getAPYSonic(network),
+        getAPYCoinshift(network),
       ]);
     log(network, allProtocolAPYs, points, extraRewards, poolPoints, gearAPY);
 

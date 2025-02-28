@@ -28,7 +28,8 @@ type PointsType =
   | "beraWave"
   | "treehouseNuts"
   | "rings"
-  | "sonic";
+  | "sonic"
+  | "shift";
 
 interface PointsReward {
   name: string;
@@ -195,6 +196,13 @@ const REWARDS_BASE_INFO = {
     multiplier,
     type: "sonic",
   }),
+
+  shift: (multiplier: PointsReward["multiplier"]): PointsReward => ({
+    name: "SHIFT",
+    units: "points",
+    multiplier,
+    type: "shift",
+  }),
 };
 
 export interface PointsInfo {
@@ -359,6 +367,12 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
       address: "0xD11c452fc99cF405034ee446803b6F6c1F6d5ED8",
       symbol: "tETH",
       rewards: [REWARDS_BASE_INFO.treehouseNuts(1_00n)],
+    },
+
+    {
+      address: "0xbEeFc011e94f43b8B7b455eBaB290C7Ab4E216f1",
+      symbol: "csUSDL",
+      rewards: [REWARDS_BASE_INFO.shift(1_00n)],
     },
   ],
   Arbitrum: [
