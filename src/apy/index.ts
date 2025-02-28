@@ -1,4 +1,3 @@
-export * from "./balancer";
 export * from "./constant";
 export * from "./constants";
 export * from "./curve";
@@ -6,5 +5,6 @@ export * from "./ethena";
 export * from "./lido";
 export * from "./llama";
 export * from "./sky";
+export * from "./sonic";
 export * from "./treehouse";
 export * from "./yearn";

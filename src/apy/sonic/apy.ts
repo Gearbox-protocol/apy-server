@@ -39,4 +39,4 @@ const getAPY: APYHandler = async network => {
   return result;
 };
 
-export { getAPY as getBalancer };
+export { getAPY as getAPYSonic };
