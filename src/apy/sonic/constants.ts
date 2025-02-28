@@ -8,4 +8,4 @@ export const TOKENS = {
   },
 } as const;
 
-export const PROTOCOL = "sonic";
+export const PROTOCOL = "beets";
