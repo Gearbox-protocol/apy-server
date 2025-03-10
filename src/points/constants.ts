@@ -22,7 +22,7 @@ type PointsType =
   | "pumpBTC"
   | "obol"
   | "ssv"
-  | "berachain"
+  | "boyco"
   | "kodiak"
   | "dolomite"
   | "beraWave"
@@ -153,11 +153,11 @@ const REWARDS_BASE_INFO = {
     multiplier,
     type: "ssv",
   }),
-  berachain: (multiplier: PointsReward["multiplier"]): PointsReward => ({
-    name: "Berachain",
-    units: "points",
+  boyco: (multiplier: PointsReward["multiplier"]): PointsReward => ({
+    name: "Boyco",
+    units: "rewards",
     multiplier,
-    type: "berachain",
+    type: "boyco",
   }),
   kodiak: (multiplier: PointsReward["multiplier"]): PointsReward => ({
     name: "Kodiak",
@@ -356,7 +356,7 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
       address: "0x97Ad75064b20fb2B2447feD4fa953bF7F007a706",
       symbol: "beraSTONE",
       rewards: [
-        REWARDS_BASE_INFO.berachain(1_00n),
+        REWARDS_BASE_INFO.boyco(1_00n),
         REWARDS_BASE_INFO.kodiak(1_00n),
         REWARDS_BASE_INFO.dolomite(1_00n),
         REWARDS_BASE_INFO.beraWave(1_00n),
