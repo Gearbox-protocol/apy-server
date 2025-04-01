@@ -26,7 +26,7 @@ jobs:
       - uses: superfly/flyctl-actions/setup-flyctl@master
         if: ${{ github.ref_name == 'main' }}
 
-      - run: flyctl deploy --strategy bluegreen --remote-only  --build-target app --dockerfile docker/Dockerfile.flyio --ha=false
+      - run: flyctl deploy --remote-only  --build-target app --dockerfile docker/Dockerfile.flyio --ha=false
         if: ${{ github.ref_name == 'main' }}
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
