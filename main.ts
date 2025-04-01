@@ -5,15 +5,6 @@ import express, { json } from "express";
 import { Fetcher } from "./src/fetcher";
 config();
 
-import { captureException, init } from "@sentry/node";
-
-init({
-  dsn: "https://068cd79b8537ac37326fd7e917c0df41@o4509052850470912.ingest.us.sentry.io/4509052850733057",
-
-  // Set sampling rate for profiling - this is evaluated only once per SDK.init
-  profileSessionSampleRate: 1.0,
-});
-
 import {
   checkResp,
   getAll,
@@ -73,10 +64,6 @@ app.get("/api/rewards/list", (req, res) => {
   );
 });
 
-try {
-  app.listen(port, () => {
-    console.log(`[server]: Server is running at http://localhost:${port}`);
-  });
-} catch (e) {
-  captureException(e);
-}
+app.listen(port, () => {
+  console.log(`[server]: Server is running at http://localhost:${port}`);
+});

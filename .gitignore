@@ -1,6 +1,3 @@
 build
 node_modules
 .env
-
-# Sentry Config File
-.env.sentry-build-plugin
