@@ -4,7 +4,7 @@ import type { NetworkType } from "../../utils";
 
 const ezETH = {
   symbol: "ezETH",
-  apy: 3.37,
+  apy: 3.79,
 };
 const rsETH = {
   symbol: "rsETH",
@@ -12,11 +12,11 @@ const rsETH = {
 };
 const weETH = {
   symbol: "weETH",
-  apy: 3.4,
+  apy: 3.7,
 };
 const rswETH = {
   symbol: "rswETH",
-  apy: 2.76,
+  apy: 2.77,
 };
 const pufETH = {
   symbol: "pufETH",
