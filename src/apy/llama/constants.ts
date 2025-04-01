@@ -80,11 +80,6 @@ export const TOKENS: Record<
       symbol: "PT_beraSTONE_10APR2025",
     },
 
-    "0x444FA0ffb033265591895b66c81c2e5fF606E097": {
-      id: "e91e23af-9099-45d9-8ba5-ea5b4638e453",
-      symbol: "stkcvxRLUSDUSDC",
-    },
-
     // "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497": {
     //   id: "66985a81-9c51-46ca-9977-42b4fe7bc6df",
     //   symbol: "sUSDe",
