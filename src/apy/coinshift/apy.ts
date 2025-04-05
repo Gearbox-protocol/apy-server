@@ -33,9 +33,8 @@ const getAPY: APYHandler = async network => {
   if (!tokens || !("csUSDL" in tokens)) return {};
 
   const res = await axios.post<Response>(URL, PAYLOAD);
-  const { state, asset } = res?.data.data?.vault || {};
+  const { state } = res?.data.data?.vault || {};
   const { netApy = 0 } = state || {};
-  const { apr = 0 } = asset?.yield || {};
 
   const result: APYResult = {
     [tokens.csUSDL]: {
@@ -47,7 +46,7 @@ const getAPY: APYHandler = async network => {
           reward: tokens.csUSDL,
           symbol: "csUSDL",
           protocol: PROTOCOL,
-          value: Number(netApy + apr) * 100,
+          value: Number(netApy) * 100,
         },
       ],
     },
