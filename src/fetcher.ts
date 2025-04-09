@@ -21,6 +21,8 @@ import type { PoolPointsResult } from "./poolRewards";
 import { getPoolPoints } from "./poolRewards";
 import type { TokenExtraCollateralAPYResult } from "./tokenExtraCollateralAPY";
 import { getTokenExtraCollateralAPY } from "./tokenExtraCollateralAPY";
+import type { TokenExtraCollateralPointsResult } from "./tokenExtraCollateralPoints";
+import { getTokenExtraCollateralPoints } from "./tokenExtraCollateralPoints";
 import type { TokenExtraRewardsResult } from "./tokenExtraRewards";
 import { getTokenExtraRewards } from "./tokenExtraRewards";
 import type { NetworkType } from "./utils";
@@ -34,6 +36,7 @@ interface NetworkState {
   tokenExtraCollateralAPY: TokenExtraCollateralAPYResult;
   tokenExtraRewards: TokenExtraRewardsResult;
   tokenPointsList: PointsResult;
+  tokenExtraCollateralPoints: TokenExtraCollateralPointsResult;
 
   poolPointsList: PoolPointsResult;
 
@@ -54,6 +57,7 @@ export class Fetcher {
       poolPoints,
       extraRewards,
       extraCollateralAPY,
+      extraCollateralPoints,
 
       ...allProtocolAPYs
     ] = await Promise.allSettled([
@@ -66,6 +70,8 @@ export class Fetcher {
       getTokenExtraRewards(network),
 
       getTokenExtraCollateralAPY(network),
+
+      getTokenExtraCollateralPoints(network),
 
       getAPYCurve(network),
       getAPYEthena(network),
@@ -84,6 +90,7 @@ export class Fetcher {
       pointsList: points,
       tokenExtraRewards: extraRewards,
       extraCollateralAPY,
+      extraCollateralPoints,
 
       poolPointsList: poolPoints,
 
@@ -130,6 +137,11 @@ export class Fetcher {
     const tokenExtraCollateralAPY =
       extraCollateralAPY.status === "fulfilled" ? extraCollateralAPY.value : {};
 
+    const tokenExtraCollateralPoints =
+      extraCollateralPoints.status === "fulfilled"
+        ? extraCollateralPoints.value
+        : {};
+
     return {
       gear:
         gearAPY.status === "fulfilled"
@@ -140,6 +152,7 @@ export class Fetcher {
       poolPointsList,
       tokenExtraRewards,
       tokenExtraCollateralAPY,
+      tokenExtraCollateralPoints,
     };
   }
 
@@ -164,6 +177,7 @@ interface LogProps {
   pointsList: PromiseSettledResult<PointsResult>;
   tokenExtraRewards: PromiseSettledResult<TokenExtraRewardsResult>;
   extraCollateralAPY: PromiseSettledResult<TokenExtraCollateralAPYResult>;
+  extraCollateralPoints: PromiseSettledResult<TokenExtraCollateralPointsResult>;
 
   poolPointsList: PromiseSettledResult<PoolPointsResult>;
 
@@ -176,6 +190,7 @@ function log({
   pointsList,
   tokenExtraRewards,
   extraCollateralAPY,
+  extraCollateralPoints,
 
   poolPointsList,
 
@@ -270,5 +285,23 @@ function log({
     }
   } else {
     console.log(`\nExtra collateral apy error: ${extraCollateralAPY.reason}`);
+  }
+
+  if (extraCollateralPoints.status === "fulfilled") {
+    const extraPoints = Object.values(extraCollateralPoints.value);
+
+    if (extraPoints.length > 0) {
+      console.log(
+        `\nFetched extra collateral points for ${extraPoints
+          .map(p => p.symbol)
+          .join(", ")} for ${network}`,
+      );
+    } else {
+      console.log(`\nFetched no extra collateral points for ${network}`);
+    }
+  } else {
+    console.log(
+      `\eExtra collateral points error: ${extraCollateralPoints.reason}`,
+    );
   }
 }
