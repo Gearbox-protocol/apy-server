@@ -6,6 +6,7 @@ import type {
 } from "./constants";
 import { EXTRA_REWARDS_INFO } from "./constants";
 
+// extra apy on top of base apy
 const getTokenExtraRewards: TokenExtraRewardsHandler = async network => {
   const rewards = EXTRA_REWARDS_INFO[network];
 

@@ -1,4 +1,3 @@
-import e from "cors";
 import moment from "moment";
 import type { Address } from "viem";
 
@@ -20,6 +19,8 @@ import type { PointsResult } from "./points";
 import { getPoints } from "./points";
 import type { PoolPointsResult } from "./poolRewards";
 import { getPoolPoints } from "./poolRewards";
+import type { TokenExtraCollateralAPYResult } from "./tokenExtraCollateralAPY";
+import { getTokenExtraCollateralAPY } from "./tokenExtraCollateralAPY";
 import type { TokenExtraRewardsResult } from "./tokenExtraRewards";
 import { getTokenExtraRewards } from "./tokenExtraRewards";
 import type { NetworkType } from "./utils";
@@ -30,6 +31,7 @@ type TokenDetails = TokenAPY<ApyDetails>;
 
 interface NetworkState {
   tokenApyList: Record<Address, TokenDetails>;
+  tokenExtraCollateralAPY: TokenExtraCollateralAPYResult;
   tokenExtraRewards: TokenExtraRewardsResult;
   tokenPointsList: PointsResult;
 
@@ -38,16 +40,147 @@ interface NetworkState {
   gear: GearAPY;
 }
 
-function log(
-  network: NetworkType,
-  allProtocolAPYs: Array<PromiseSettledResult<APYResult>>,
-  pointsList: PromiseSettledResult<PointsResult>,
-  tokenExtraRewards: PromiseSettledResult<TokenExtraRewardsResult>,
+export class Fetcher {
+  public cache: Record<number, NetworkState>;
 
-  poolPointsList: PromiseSettledResult<PoolPointsResult>,
+  constructor() {
+    this.cache = {};
+  }
 
-  gearAPY: PromiseSettledResult<GearAPY>,
-) {
+  private async getNetworkState(network: NetworkType): Promise<NetworkState> {
+    const [
+      gearAPY,
+      points,
+      poolPoints,
+      extraRewards,
+      extraCollateralAPY,
+
+      ...allProtocolAPYs
+    ] = await Promise.allSettled([
+      getGearAPY(network),
+
+      getPoints(network),
+
+      getPoolPoints(network),
+
+      getTokenExtraRewards(network),
+
+      getTokenExtraCollateralAPY(network),
+
+      getAPYCurve(network),
+      getAPYEthena(network),
+      getAPYLama(network),
+      getAPYLido(network),
+      getAPYSky(network),
+      getAPYYearn(network),
+      getAPYTreehouse(network),
+      getAPYConstant(network),
+      getAPYSonic(network),
+      getAPYCoinshift(network),
+    ]);
+    log({
+      network,
+      allProtocolAPYs,
+      pointsList: points,
+      tokenExtraRewards: extraRewards,
+      extraCollateralAPY,
+
+      poolPointsList: poolPoints,
+
+      gearAPY,
+    });
+
+    const time = moment().utc().format();
+
+    const tokenApyList = allProtocolAPYs.reduce<Record<Address, TokenDetails>>(
+      (acc, apyRes) => {
+        if (apyRes.status === "fulfilled") {
+          Object.entries(apyRes.value).forEach(([addr, tokenAPY]) => {
+            const address = addr.toLowerCase() as Address;
+
+            const apyList = tokenAPY?.apys.map(
+              ({ reward, ...rest }): ApyDetails => ({
+                ...rest,
+                lastUpdated: time,
+                reward: reward.toLowerCase() as Address,
+              }),
+            );
+
+            acc[address] = {
+              ...tokenAPY,
+              address,
+              apys: [...(acc[address]?.apys || []), ...apyList],
+            };
+          });
+        }
+
+        return acc;
+      },
+      {},
+    );
+
+    const tokenPointsList = points.status === "fulfilled" ? points.value : {};
+
+    const poolPointsList =
+      poolPoints.status === "fulfilled" ? poolPoints.value : {};
+
+    const tokenExtraRewards =
+      extraRewards.status === "fulfilled" ? extraRewards.value : {};
+
+    const tokenExtraCollateralAPY =
+      extraCollateralAPY.status === "fulfilled" ? extraCollateralAPY.value : {};
+
+    return {
+      gear:
+        gearAPY.status === "fulfilled"
+          ? gearAPY.value
+          : { base: 0, crv: 0, gear: 0 },
+      tokenApyList,
+      tokenPointsList,
+      poolPointsList,
+      tokenExtraRewards,
+      tokenExtraCollateralAPY,
+    };
+  }
+
+  async run() {
+    console.log("updating fetcher");
+    for (const network of Object.values(supportedChains)) {
+      const chainId = getChainId(network);
+      const state = await this.getNetworkState(network as NetworkType);
+      this.cache[chainId] = state;
+    }
+  }
+
+  async loop() {
+    void this.run();
+    setInterval(this.run.bind(this), 60 * 60 * 1000); // 1 hr
+  }
+}
+
+interface LogProps {
+  network: NetworkType;
+  allProtocolAPYs: Array<PromiseSettledResult<APYResult>>;
+  pointsList: PromiseSettledResult<PointsResult>;
+  tokenExtraRewards: PromiseSettledResult<TokenExtraRewardsResult>;
+  extraCollateralAPY: PromiseSettledResult<TokenExtraCollateralAPYResult>;
+
+  poolPointsList: PromiseSettledResult<PoolPointsResult>;
+
+  gearAPY: PromiseSettledResult<GearAPY>;
+}
+
+function log({
+  network,
+  allProtocolAPYs,
+  pointsList,
+  tokenExtraRewards,
+  extraCollateralAPY,
+
+  poolPointsList,
+
+  gearAPY,
+}: LogProps) {
   const list = allProtocolAPYs.map(apyRes => {
     const entries =
       apyRes.status === "fulfilled" ? Object.entries(apyRes.value) : [];
@@ -121,99 +254,21 @@ function log(
   } else {
     console.log(`\nPoints error: ${poolPointsList.reason}`);
   }
-}
 
-export class Fetcher {
-  public cache: Record<number, NetworkState>;
+  if (extraCollateralAPY.status === "fulfilled") {
+    const extraCollateral = Object.values(extraCollateralAPY.value);
 
-  constructor() {
-    this.cache = {};
-  }
-
-  private async getNetworkState(network: NetworkType): Promise<NetworkState> {
-    const [gearAPY, points, poolPoints, extraRewards, ...allProtocolAPYs] =
-      await Promise.allSettled([
-        getGearAPY(network),
-
-        getPoints(network),
-
-        getPoolPoints(network),
-
-        getTokenExtraRewards(network),
-
-        getAPYCurve(network),
-        getAPYEthena(network),
-        getAPYLama(network),
-        getAPYLido(network),
-        getAPYSky(network),
-        getAPYYearn(network),
-        getAPYTreehouse(network),
-        getAPYConstant(network),
-        getAPYSonic(network),
-        getAPYCoinshift(network),
-      ]);
-    log(network, allProtocolAPYs, points, extraRewards, poolPoints, gearAPY);
-
-    const time = moment().utc().format();
-
-    const tokenApyList = allProtocolAPYs.reduce<Record<Address, TokenDetails>>(
-      (acc, apyRes) => {
-        if (apyRes.status === "fulfilled") {
-          Object.entries(apyRes.value).forEach(([addr, tokenAPY]) => {
-            const address = addr.toLowerCase() as Address;
-
-            const apyList = tokenAPY?.apys.map(
-              ({ reward, ...rest }): ApyDetails => ({
-                ...rest,
-                lastUpdated: time,
-                reward: reward.toLowerCase() as Address,
-              }),
-            );
-
-            acc[address] = {
-              ...tokenAPY,
-              address,
-              apys: [...(acc[address]?.apys || []), ...apyList],
-            };
-          });
-        }
-
-        return acc;
-      },
-      {},
-    );
-
-    const tokenPointsList = points.status === "fulfilled" ? points.value : {};
-
-    const poolPointsList =
-      poolPoints.status === "fulfilled" ? poolPoints.value : {};
-
-    const tokenExtraRewards =
-      extraRewards.status === "fulfilled" ? extraRewards.value : {};
-
-    return {
-      gear:
-        gearAPY.status === "fulfilled"
-          ? gearAPY.value
-          : { base: 0, crv: 0, gear: 0 },
-      tokenApyList,
-      tokenPointsList,
-      poolPointsList,
-      tokenExtraRewards,
-    };
-  }
-
-  async run() {
-    console.log("updating fetcher");
-    for (const network of Object.values(supportedChains)) {
-      const chainId = getChainId(network);
-      const state = await this.getNetworkState(network as NetworkType);
-      this.cache[chainId] = state;
+    if (extraCollateral.length > 0) {
+      console.log(
+        `\nFetched extra collateral apy for ${extraCollateral
+          .map(p => p.map(t => `${t.pool}: ${t.symbol}`))
+          .flat(1)
+          .join(", ")} for ${network}`,
+      );
+    } else {
+      console.log(`\nFetched no extra collateral apy for ${network}`);
     }
-  }
-
-  async loop() {
-    void this.run();
-    setInterval(this.run.bind(this), 60 * 60 * 1000); // 1 hr
+  } else {
+    console.log(`\nExtra collateral apy error: ${extraCollateralAPY.reason}`);
   }
 }
