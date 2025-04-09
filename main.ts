@@ -47,6 +47,7 @@ app.get("/api/health", (req, res) => {
   try {
     res.sendStatus(200);
   } catch (e) {
+    res.sendStatus(500);
     captureException({ file: "/api/health", error: e });
   }
 });
@@ -54,6 +55,7 @@ app.get("/api/rewards/gear-apy", (req, res) => {
   try {
     void getGearAPY(req, res, f);
   } catch (e) {
+    res.sendStatus(500);
     captureException({ file: "/api/rewards/gear-apy", error: e });
   }
 });
@@ -61,6 +63,7 @@ app.get("/api/rewards/pools/all", (req, res) => {
   try {
     void getPoolRewards(req, res, f);
   } catch (e) {
+    res.sendStatus(500);
     captureException({ file: "/api/rewards/pools/all", error: e });
   }
 });
@@ -68,6 +71,7 @@ app.get("/api/rewards/tokens/all", (req, res) => {
   try {
     void getAll(req, res, f);
   } catch (e) {
+    res.sendStatus(500);
     captureException({ file: "/api/rewards/tokens/all", error: e });
   }
 });
@@ -75,6 +79,7 @@ app.post("/api/rewards/tokens/list", (req, res) => {
   try {
     void getRewardList(req, res, f);
   } catch (e) {
+    res.sendStatus(500);
     captureException({ file: "/api/rewards/tokens/list", error: e });
   }
 });
@@ -82,6 +87,7 @@ app.get("/api/rewards/tokens/:chainId/:tokenAddress", (req, res) => {
   try {
     void getByChainAndToken(req, res, f);
   } catch (e) {
+    res.sendStatus(500);
     captureException({
       file: "/api/rewards/tokens/:chainId/:tokenAddress",
       error: e,
