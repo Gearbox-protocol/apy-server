@@ -1,3 +1,4 @@
+import { captureException } from "@sentry/node";
 import type { Address } from "viem";
 import { isAddress } from "viem";
 
@@ -51,7 +52,7 @@ function removeSymbolAndAddress<T extends { address: Address; symbol: string }>(
   return l.map(({ symbol, address, ...rest }) => rest);
 }
 
-export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
+export function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
   const [isChainIdValid, chainId] = checkChainId(req.params.chainId);
   if (!checkResp(isChainIdValid, res)) {
     return;
@@ -93,7 +94,7 @@ export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
   res.send(toJSONWithBigint({ data: data, status: "ok" } as Response));
 }
 
-export async function getAll(req: any, res: any, fetcher: Fetcher) {
+export function getAll(req: any, res: any, fetcher: Fetcher) {
   const [isChainIdValid, chainId] = checkChainId(req.query.chain_id);
   if (!checkResp(isChainIdValid, res)) {
     return;
@@ -226,7 +227,7 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
   );
 }
 
-export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
+export function getRewardList(req: any, res: any, fetcher: Fetcher) {
   if (req.header("Content-Type") !== "application/json") {
     checkResp(
       {
@@ -280,7 +281,7 @@ export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
   res.send(toJSONWithBigint({ data: data, status: "ok" } as Response));
 }
 
-export async function getGearAPY(req: any, res: any, fetcher: Fetcher) {
+export function getGearAPY(req: any, res: any, fetcher: Fetcher) {
   const [isChainIdValid, chainId] = checkChainId(req.query.chain_id);
   if (!checkResp(isChainIdValid, res)) {
     return;
@@ -295,7 +296,7 @@ export async function getGearAPY(req: any, res: any, fetcher: Fetcher) {
   );
 }
 
-export async function getPoolRewards(req: any, res: any, fetcher: Fetcher) {
+export function getPoolRewards(req: any, res: any, fetcher: Fetcher) {
   const [isChainIdValid, chainId] = checkChainId(req.query.chain_id);
   if (!checkResp(isChainIdValid, res)) {
     return;
@@ -368,8 +369,10 @@ function checkTokenAddress(data: any): [Response, string] {
 
 export function checkResp(res: Response, out: any): boolean {
   if (res.status === "error") {
+    const r = toJSONWithBigint(res);
     out.set({ "Content-Type": "application/json" });
-    out.send(toJSONWithBigint(res));
+    out.send(toJSONWithBigint(r));
+    captureException({ file: "endpoints/checkResp", error: r });
     return false;
   }
   return true;
