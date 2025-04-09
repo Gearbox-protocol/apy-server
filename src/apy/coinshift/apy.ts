@@ -43,7 +43,7 @@ const getAPY: APYHandler = async network => {
 
       apys: [
         {
-          reward: tokens.csUSDL,
+          address: tokens.csUSDL,
           symbol: "csUSDL",
           protocol: PROTOCOL,
           value: Number(netApy) * 100,
