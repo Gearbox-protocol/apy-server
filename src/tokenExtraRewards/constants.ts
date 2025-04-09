@@ -8,7 +8,7 @@ export type TokenExtraRewardsHandler = (
 ) => Promise<TokenExtraRewardsResult>;
 
 export interface FarmInfo {
-  token: Address;
+  address: Address;
   symbol: string;
 
   rewardToken: Address;

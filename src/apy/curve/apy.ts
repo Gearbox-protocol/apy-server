@@ -146,7 +146,7 @@ const getAPY: APYHandler = async network => {
 
         apys: [
           {
-            reward: pool.lpTokenAddress,
+            address: pool.lpTokenAddress,
             symbol,
             protocol: PROTOCOL,
             value: baseAPY,

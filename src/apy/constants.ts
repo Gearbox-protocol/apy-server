@@ -3,7 +3,7 @@ import type { Address } from "viem";
 import type { NetworkType } from "../utils";
 
 export interface Apy {
-  reward: Address;
+  address: Address;
   symbol: string;
   protocol: string;
 

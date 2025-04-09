@@ -41,7 +41,7 @@ const getAPY: APYHandler = async network => {
 
         apys: [
           {
-            reward: d.address,
+            address: d.address,
             symbol,
             protocol: PROTOCOL,
             value: Number(netApy) * 100,

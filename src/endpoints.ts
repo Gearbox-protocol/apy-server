@@ -5,6 +5,8 @@ import type { GearAPY } from "./apy";
 import type { ApyDetails, Fetcher } from "./fetcher";
 import type { PointsInfo } from "./points";
 import type { PoolPointsInfo } from "./poolRewards";
+import type { ExtraCollateralAPY } from "./tokenExtraCollateralAPY";
+import type { ExtraCollateralPointsInfo } from "./tokenExtraCollateralPoints";
 import type { FarmInfo } from "./tokenExtraRewards";
 import { isSupportedNetwork, toJSONWithBigint } from "./utils";
 
@@ -13,9 +15,13 @@ interface TokenOutputDetails {
   address: string;
   symbol: string;
   rewards: {
-    apy: Array<ApyDetails>;
-    points: Array<PointsInfo>;
-    extraRewards: Array<FarmInfo>;
+    apy: Array<Omit<ApyDetails, "symbol" | "address">>;
+    points: Array<Omit<PointsInfo, "symbol" | "address">>;
+    extraRewards: Array<Omit<FarmInfo, "symbol" | "address">>;
+    extraCollateralAPY: Array<Omit<ExtraCollateralAPY, "symbol" | "address">>;
+    extraCollateralPoints: Array<
+      Omit<ExtraCollateralPointsInfo, "symbol" | "address">
+    >;
   };
 }
 
@@ -39,6 +45,12 @@ interface Response {
     | GearAPY;
 }
 
+function removeSymbolAndAddress<T extends { address: Address; symbol: string }>(
+  l: Array<T>,
+): Array<Omit<T, "address" | "symbol">> {
+  return l.map(({ symbol, address, ...rest }) => rest);
+}
+
 export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
   const [isChainIdValid, chainId] = checkChainId(req.params.chainId);
   if (!checkResp(isChainIdValid, res)) {
@@ -55,15 +67,25 @@ export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
   const p = fetcher.cache[chainId]?.tokenPointsList?.[tokenAddress as Address];
   const extra =
     fetcher.cache[chainId]?.tokenExtraRewards?.[tokenAddress as Address];
+  const extraCollateralAPY =
+    fetcher.cache[chainId]?.tokenExtraCollateralAPY?.[tokenAddress as Address];
+  const extraCollateralPoints =
+    fetcher.cache[chainId]?.tokenExtraCollateralPoints?.[
+      tokenAddress as Address
+    ];
 
   const data: TokenOutputDetails = {
     chainId: chainId,
     address: tokenAddress.toLowerCase(),
     symbol: a?.symbol || p?.symbol || "",
     rewards: {
-      apy: a?.apys || [],
-      points: p ? [p] : [],
-      extraRewards: extra || [],
+      apy: removeSymbolAndAddress(a?.apys || []),
+      points: removeSymbolAndAddress(p ? [p] : []),
+      extraRewards: removeSymbolAndAddress(extra || []),
+      extraCollateralAPY: removeSymbolAndAddress(extraCollateralAPY || []),
+      extraCollateralPoints: removeSymbolAndAddress(
+        extraCollateralPoints ? [extraCollateralPoints] : [],
+      ),
     },
   };
 
@@ -80,14 +102,18 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
   const data = Object.entries(
     fetcher.cache[chainId]?.tokenApyList || {},
   ).reduce<Record<Address, TokenOutputDetails>>((acc, [t, a]) => {
+    const cleared = removeSymbolAndAddress(a.apys);
+
     acc[t as Address] = {
       chainId: chainId,
       address: t,
       symbol: a.symbol,
       rewards: {
-        apy: a.apys,
+        apy: cleared,
         points: [],
         extraRewards: [],
+        extraCollateralAPY: [],
+        extraCollateralPoints: [],
       },
     };
 
@@ -97,9 +123,10 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
   Object.entries(fetcher.cache[chainId]?.tokenPointsList || {}).forEach(
     ([t, p]) => {
       const token = t as Address;
+      const cleared = removeSymbolAndAddress([p]);
 
       if (data[token]) {
-        data[token].rewards.points.push(p);
+        data[token].rewards.points.push(...cleared);
       } else {
         data[token] = {
           chainId: chainId,
@@ -107,8 +134,10 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
           symbol: p.symbol,
           rewards: {
             apy: [],
-            points: [p],
+            points: cleared,
             extraRewards: [],
+            extraCollateralAPY: [],
+            extraCollateralPoints: [],
           },
         };
       }
@@ -118,10 +147,11 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
   Object.entries(fetcher.cache[chainId]?.tokenExtraRewards || {}).forEach(
     ([t, ex]) => {
       const token = t as Address;
+      const cleared = removeSymbolAndAddress(ex);
 
       if (ex.length > 0) {
         if (data[token]) {
-          data[token].rewards.extraRewards.push(...ex);
+          data[token].rewards.extraRewards.push(...cleared);
         } else {
           data[token] = {
             chainId: chainId,
@@ -130,13 +160,65 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
             rewards: {
               apy: [],
               points: [],
-              extraRewards: ex,
+              extraRewards: cleared,
+              extraCollateralAPY: [],
+              extraCollateralPoints: [],
             },
           };
         }
       }
     },
   );
+
+  Object.entries(fetcher.cache[chainId]?.tokenExtraCollateralAPY || {}).forEach(
+    ([t, ex]) => {
+      const token = t as Address;
+      const cleared = removeSymbolAndAddress(ex);
+
+      if (ex.length > 0) {
+        if (data[token]) {
+          data[token].rewards.extraCollateralAPY.push(...cleared);
+        } else {
+          data[token] = {
+            chainId: chainId,
+            address: t,
+            symbol: ex[0].symbol,
+            rewards: {
+              apy: [],
+              points: [],
+              extraRewards: [],
+              extraCollateralAPY: cleared,
+              extraCollateralPoints: [],
+            },
+          };
+        }
+      }
+    },
+  );
+
+  Object.entries(
+    fetcher.cache[chainId]?.tokenExtraCollateralPoints || {},
+  ).forEach(([t, p]) => {
+    const token = t as Address;
+    const cleared = removeSymbolAndAddress([p]);
+
+    if (data[token]) {
+      data[token].rewards.extraCollateralPoints.push(...cleared);
+    } else {
+      data[token] = {
+        chainId: chainId,
+        address: t,
+        symbol: p.symbol,
+        rewards: {
+          apy: [],
+          points: [],
+          extraRewards: [],
+          extraCollateralAPY: [],
+          extraCollateralPoints: cleared,
+        },
+      };
+    }
+  });
 
   res.set({ "Content-Type": "application/json" });
   res.send(
@@ -169,15 +251,27 @@ export async function getRewardList(req: any, res: any, fetcher: Fetcher) {
       fetcher.cache[t.chain_id]?.tokenExtraRewards?.[
         t.token_address as Address
       ];
+    const extraCollateralAPY =
+      fetcher.cache[t.chain_id]?.tokenExtraCollateralAPY?.[
+        t.token_address as Address
+      ];
+    const extraCollateralPoints =
+      fetcher.cache[t.chain_id]?.tokenExtraCollateralPoints?.[
+        t.token_address as Address
+      ];
 
     data.push({
       chainId: t.chain_id,
       address: t.token_address.toLowerCase(),
       symbol: a?.symbol,
       rewards: {
-        apy: a?.apys || [],
-        points: p ? [p] : [],
-        extraRewards: extra || [],
+        apy: removeSymbolAndAddress(a?.apys || []),
+        points: removeSymbolAndAddress(p ? [p] : []),
+        extraRewards: removeSymbolAndAddress(extra || []),
+        extraCollateralAPY: removeSymbolAndAddress(extraCollateralAPY || []),
+        extraCollateralPoints: removeSymbolAndAddress(
+          extraCollateralPoints ? [extraCollateralPoints] : [],
+        ),
       },
     });
   }
