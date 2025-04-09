@@ -99,10 +99,10 @@ export class Fetcher {
             const address = addr.toLowerCase() as Address;
 
             const apyList = tokenAPY?.apys.map(
-              ({ reward, ...rest }): ApyDetails => ({
+              ({ address, ...rest }): ApyDetails => ({
                 ...rest,
                 lastUpdated: time,
-                reward: reward.toLowerCase() as Address,
+                address: address.toLowerCase() as Address,
               }),
             );
 

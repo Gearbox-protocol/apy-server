@@ -12,10 +12,10 @@ const getTokenExtraCollateralAPY: TokenExtraCollateralAPYHandler =
     const rewards = EXTRA_APY[network];
 
     const result = rewards.reduce<TokenExtraCollateralAPYResult>((acc, p) => {
-      const token = p.token.toLowerCase() as Address;
+      const address = p.address.toLowerCase() as Address;
       const pool = p.pool.toLowerCase() as Address;
 
-      acc[token] = [...(acc[token] || []), { ...p, token, pool }];
+      acc[address] = [...(acc[address] || []), { ...p, address, pool }];
 
       return acc;
     }, {});

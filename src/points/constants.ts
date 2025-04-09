@@ -45,7 +45,7 @@ interface DebtReward extends PointsReward {
 type CommonReward<CM extends DebtReward["cm"] | undefined> =
   CM extends undefined ? PointsReward : DebtReward;
 
-const REWARDS_BASE_INFO = {
+export const REWARDS_BASE_INFO = {
   eigenlayer: (multiplier: PointsReward["multiplier"]): PointsReward => ({
     name: "Eigenlayer",
     units: "points",

@@ -14,10 +14,10 @@ interface TokenOutputDetails {
   address: string;
   symbol: string;
   rewards: {
-    apy: Array<ApyDetails>;
-    points: Array<PointsInfo>;
-    extraRewards: Array<FarmInfo>;
-    extraCollateralAPY: Array<ExtraCollateralAPY>;
+    apy: Array<Omit<ApyDetails, "symbol" | "address">>;
+    points: Array<Omit<PointsInfo, "symbol" | "address">>;
+    extraRewards: Array<Omit<FarmInfo, "symbol" | "address">>;
+    extraCollateralAPY: Array<Omit<ExtraCollateralAPY, "symbol" | "address">>;
   };
 }
 
@@ -39,6 +39,12 @@ interface Response {
     | Array<PoolOutputDetails>
     | PoolOutputDetails
     | GearAPY;
+}
+
+function removeSymbolAndAddress<T extends { address: Address; symbol: string }>(
+  l: Array<T>,
+): Array<Omit<T, "address" | "symbol">> {
+  return l.map(({ symbol, address, ...rest }) => rest);
 }
 
 export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
@@ -65,10 +71,10 @@ export async function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
     address: tokenAddress.toLowerCase(),
     symbol: a?.symbol || p?.symbol || "",
     rewards: {
-      apy: a?.apys || [],
-      points: p ? [p] : [],
-      extraRewards: extra || [],
-      extraCollateralAPY: extraCollateralAPY || [],
+      apy: removeSymbolAndAddress(a?.apys || []),
+      points: removeSymbolAndAddress(p ? [p] : []),
+      extraRewards: removeSymbolAndAddress(extra || []),
+      extraCollateralAPY: removeSymbolAndAddress(extraCollateralAPY || []),
     },
   };
 
@@ -85,12 +91,14 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
   const data = Object.entries(
     fetcher.cache[chainId]?.tokenApyList || {},
   ).reduce<Record<Address, TokenOutputDetails>>((acc, [t, a]) => {
+    const cleared = removeSymbolAndAddress(a.apys);
+
     acc[t as Address] = {
       chainId: chainId,
       address: t,
       symbol: a.symbol,
       rewards: {
-        apy: a.apys,
+        apy: cleared,
         points: [],
         extraRewards: [],
         extraCollateralAPY: [],
@@ -103,9 +111,10 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
   Object.entries(fetcher.cache[chainId]?.tokenPointsList || {}).forEach(
     ([t, p]) => {
       const token = t as Address;
+      const cleared = removeSymbolAndAddress([p]);
 
       if (data[token]) {
-        data[token].rewards.points.push(p);
+        data[token].rewards.points.push(...cleared);
       } else {
         data[token] = {
           chainId: chainId,
@@ -113,7 +122,7 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
           symbol: p.symbol,
           rewards: {
             apy: [],
-            points: [p],
+            points: cleared,
             extraRewards: [],
             extraCollateralAPY: [],
           },
@@ -125,10 +134,11 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
   Object.entries(fetcher.cache[chainId]?.tokenExtraRewards || {}).forEach(
     ([t, ex]) => {
       const token = t as Address;
+      const cleared = removeSymbolAndAddress(ex);
 
       if (ex.length > 0) {
         if (data[token]) {
-          data[token].rewards.extraRewards.push(...ex);
+          data[token].rewards.extraRewards.push(...cleared);
         } else {
           data[token] = {
             chainId: chainId,
@@ -137,7 +147,7 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
             rewards: {
               apy: [],
               points: [],
-              extraRewards: ex,
+              extraRewards: cleared,
               extraCollateralAPY: [],
             },
           };
@@ -149,10 +159,11 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
   Object.entries(fetcher.cache[chainId]?.tokenExtraCollateralAPY || {}).forEach(
     ([t, ex]) => {
       const token = t as Address;
+      const cleared = removeSymbolAndAddress(ex);
 
       if (ex.length > 0) {
         if (data[token]) {
-          data[token].rewards.extraCollateralAPY.push(...ex);
+          data[token].rewards.extraCollateralAPY.push(...cleared);
         } else {
           data[token] = {
             chainId: chainId,
@@ -162,7 +173,7 @@ export async function getAll(req: any, res: any, fetcher: Fetcher) {
               apy: [],
               points: [],
               extraRewards: [],
-              extraCollateralAPY: ex,
+              extraCollateralAPY: cleared,
             },
           };
         }

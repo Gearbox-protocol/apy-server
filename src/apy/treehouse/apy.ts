@@ -26,7 +26,7 @@ const getAPY: APYHandler = async network => {
 
       apys: [
         {
-          reward: tokens.tETH,
+          address: tokens.tETH,
           symbol: "tETH",
           protocol: PROTOCOL,
           value: rate,

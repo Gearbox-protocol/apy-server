@@ -29,7 +29,7 @@ const getAPY: APYHandler = async network => {
 
       apys: [
         {
-          reward: tokens.sUSDS,
+          address: tokens.sUSDS,
           symbol: "sUSDS",
           protocol: PROTOCOL,
           value: Number(savingsRate) * 100,
@@ -41,7 +41,7 @@ const getAPY: APYHandler = async network => {
       symbol: "stkUSDS",
       apys: [
         {
-          reward: tokens.stkUSDS,
+          address: tokens.stkUSDS,
           symbol: "stkUSDS",
           protocol: PROTOCOL,
           value: Number(farmRate) * 100,
