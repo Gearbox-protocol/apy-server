@@ -17,8 +17,8 @@ import {
 } from "./apy";
 import type { PointsResult } from "./points";
 import { getPoints } from "./points";
-import type { PoolPointsResult } from "./poolRewards";
-import { getPoolPoints } from "./poolRewards";
+import type { PoolExternalAPYResult, PoolPointsResult } from "./poolRewards";
+import { getPoolExternalAPY, getPoolPoints } from "./poolRewards";
 import type { TokenExtraCollateralAPYResult } from "./tokenExtraCollateralAPY";
 import { getTokenExtraCollateralAPY } from "./tokenExtraCollateralAPY";
 import type { TokenExtraCollateralPointsResult } from "./tokenExtraCollateralPoints";
@@ -39,6 +39,7 @@ interface NetworkState {
   tokenExtraCollateralPoints: TokenExtraCollateralPointsResult;
 
   poolPointsList: PoolPointsResult;
+  poolExternalAPYList: PoolExternalAPYResult;
 
   gear: GearAPY;
 }
@@ -56,6 +57,7 @@ export class Fetcher {
       points,
 
       poolPoints,
+      poolExternalAPY,
 
       extraRewards,
       extraCollateralAPY,
@@ -67,6 +69,7 @@ export class Fetcher {
       getPoints(network),
 
       getPoolPoints(network),
+      getPoolExternalAPY(network),
 
       getTokenExtraRewards(network),
       getTokenExtraCollateralAPY(network),
@@ -92,6 +95,7 @@ export class Fetcher {
       extraCollateralPoints,
 
       poolPointsList: poolPoints,
+      poolExternalAPYList: poolExternalAPY,
 
       gearAPY,
     });
@@ -130,6 +134,9 @@ export class Fetcher {
     const poolPointsList =
       poolPoints.status === "fulfilled" ? poolPoints.value : {};
 
+    const poolExternalAPYList =
+      poolExternalAPY.status === "fulfilled" ? poolExternalAPY.value : {};
+
     const tokenExtraRewards =
       extraRewards.status === "fulfilled" ? extraRewards.value : {};
 
@@ -148,7 +155,10 @@ export class Fetcher {
           : { base: 0, crv: 0, gear: 0 },
       tokenApyList,
       tokenPointsList,
+
       poolPointsList,
+      poolExternalAPYList,
+
       tokenExtraRewards,
       tokenExtraCollateralAPY,
       tokenExtraCollateralPoints,
@@ -179,6 +189,7 @@ interface LogProps {
   extraCollateralPoints: PromiseSettledResult<TokenExtraCollateralPointsResult>;
 
   poolPointsList: PromiseSettledResult<PoolPointsResult>;
+  poolExternalAPYList: PromiseSettledResult<PoolExternalAPYResult>;
 
   gearAPY: PromiseSettledResult<GearAPY>;
 }
@@ -192,6 +203,7 @@ function log({
   extraCollateralPoints,
 
   poolPointsList,
+  poolExternalAPYList,
 
   gearAPY,
 }: LogProps) {
@@ -267,6 +279,23 @@ function log({
     }
   } else {
     console.log(`\nPoints error: ${poolPointsList.reason}`);
+  }
+
+  if (poolExternalAPYList.status === "fulfilled") {
+    const external = Object.values(poolExternalAPYList.value);
+
+    if (external.length > 0) {
+      console.log(
+        `\nFetched pool external apy for ${external
+          .map(p => p.map(t => `${t.pool}: ${t.name} - ${t.value}`))
+          .flat(1)
+          .join(", ")} for ${network}`,
+      );
+    } else {
+      console.log(`\nFetched no pool external apy for ${network}`);
+    }
+  } else {
+    console.log(`\nPool external apy error: ${poolExternalAPYList.reason}`);
   }
 
   if (extraCollateralAPY.status === "fulfilled") {
