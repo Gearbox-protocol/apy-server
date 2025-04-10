@@ -90,4 +90,9 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
       estimation: "absolute",
     },
   ],
+
+  Monad: [],
+  MegaETH: [],
+  Berachain: [],
+  Avalanche: [],
 };

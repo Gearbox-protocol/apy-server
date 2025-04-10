@@ -28,4 +28,9 @@ export const POOL_EXTERNAL_APY: Record<NetworkType, Array<ExternalApy>> = {
   Optimism: [],
   Base: [],
   Sonic: [],
+
+  Monad: [],
+  MegaETH: [],
+  Berachain: [],
+  Avalanche: [],
 };
