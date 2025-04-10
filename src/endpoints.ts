@@ -5,7 +5,7 @@ import { isAddress } from "viem";
 import type { GearAPY } from "./apy";
 import type { ApyDetails, Fetcher } from "./fetcher";
 import type { PointsInfo } from "./points";
-import type { PoolPointsInfo } from "./poolRewards";
+import type { PoolPointsInfo } from "./poolRewards/points";
 import type { ExtraCollateralAPY } from "./tokenExtraCollateralAPY";
 import type { ExtraCollateralPointsInfo } from "./tokenExtraCollateralPoints";
 import type { FarmInfo } from "./tokenExtraRewards";

@@ -54,7 +54,9 @@ export class Fetcher {
     const [
       gearAPY,
       points,
+
       poolPoints,
+
       extraRewards,
       extraCollateralAPY,
       extraCollateralPoints,
@@ -62,15 +64,12 @@ export class Fetcher {
       ...allProtocolAPYs
     ] = await Promise.allSettled([
       getGearAPY(network),
-
       getPoints(network),
 
       getPoolPoints(network),
 
       getTokenExtraRewards(network),
-
       getTokenExtraCollateralAPY(network),
-
       getTokenExtraCollateralPoints(network),
 
       getAPYCurve(network),
