@@ -35,4 +35,9 @@ export const POINTS_INFO_BY_NETWORK: Record<
   Optimism: [],
   Base: [],
   Sonic: [],
+
+  Monad: [],
+  MegaETH: [],
+  Berachain: [],
+  Avalanche: [],
 };

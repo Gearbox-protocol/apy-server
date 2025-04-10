@@ -80,8 +80,13 @@ const CURVE_CHAINS: Record<NetworkType, string> = {
   Arbitrum: "arbitrum",
   Mainnet: "ethereum",
   Optimism: "optimism",
-  Base: "base",
-  Sonic: "sonic",
+
+  Base: "not_implemented",
+  Sonic: "not_implemented",
+  Monad: "not_implemented",
+  MegaETH: "not_implemented",
+  Berachain: "not_implemented",
+  Avalanche: "not_implemented",
 };
 
 // const CRYPTO = "https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/crypto";
@@ -104,7 +109,7 @@ const getFactoryStableNgURL = (n: NetworkType) =>
 
 const getAPY: APYHandler = async network => {
   // !& sonic filter
-  if (network === "Sonic" || network === "Base") return {};
+  if (CURVE_CHAINS[network] === "not_implemented") return {};
 
   const { volumes, pools } = await getCurvePools(network);
 

@@ -424,4 +424,9 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
       rewards: [REWARDS_BASE_INFO.sonic(8_00n)],
     },
   ],
+
+  Monad: [],
+  MegaETH: [],
+  Berachain: [],
+  Avalanche: [],
 };
