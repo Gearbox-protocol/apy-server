@@ -1,6 +1,6 @@
 import type { Address } from "viem";
 
-import type { NetworkType } from "../utils";
+import type { NetworkType } from "../../utils";
 
 export type PoolPointsResult = Record<Address, Array<PoolPointsInfo>>;
 export type PoolPointsHandler = (
@@ -90,4 +90,9 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
       estimation: "absolute",
     },
   ],
+
+  Monad: [],
+  MegaETH: [],
+  Berachain: [],
+  Avalanche: [],
 };

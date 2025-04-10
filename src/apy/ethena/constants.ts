@@ -6,6 +6,11 @@ export const TOKENS = {
   Arbitrum: {},
   Base: {},
   Sonic: {},
+
+  Monad: {},
+  MegaETH: {},
+  Berachain: {},
+  Avalanche: {},
 } as const;
 
 export const PROTOCOL = "ethena";

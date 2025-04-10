@@ -112,4 +112,9 @@ export const TOKENS: Record<
   },
   Base: {},
   Sonic: {},
+
+  Monad: {},
+  MegaETH: {},
+  Berachain: {},
+  Avalanche: {},
 };

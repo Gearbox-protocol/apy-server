@@ -27,4 +27,9 @@ export const EXTRA_REWARDS_INFO: Record<NetworkType, Array<FarmInfo>> = {
   Arbitrum: [],
   Base: [],
   Sonic: [],
+
+  Monad: [],
+  MegaETH: [],
+  Berachain: [],
+  Avalanche: [],
 };

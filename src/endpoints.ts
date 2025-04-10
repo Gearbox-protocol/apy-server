@@ -5,7 +5,8 @@ import { isAddress } from "viem";
 import type { GearAPY } from "./apy";
 import type { ApyDetails, Fetcher } from "./fetcher";
 import type { PointsInfo } from "./points";
-import type { PoolPointsInfo } from "./poolRewards";
+import type { ExternalApy } from "./poolRewards";
+import type { PoolPointsInfo } from "./poolRewards/points";
 import type { ExtraCollateralAPY } from "./tokenExtraCollateralAPY";
 import type { ExtraCollateralPointsInfo } from "./tokenExtraCollateralPoints";
 import type { FarmInfo } from "./tokenExtraRewards";
@@ -31,7 +32,8 @@ interface PoolOutputDetails {
   pool: Address;
 
   rewards: {
-    points: Array<PoolPointsInfo>;
+    points: Array<Omit<PoolPointsInfo, "pool">>;
+    externalAPY: Array<Omit<ExternalApy, "pool">>;
   };
 }
 
@@ -50,6 +52,12 @@ function removeSymbolAndAddress<T extends { address: Address; symbol: string }>(
   l: Array<T>,
 ): Array<Omit<T, "address" | "symbol">> {
   return l.map(({ symbol, address, ...rest }) => rest);
+}
+
+function removePool<T extends { pool: Address }>(
+  l: Array<T>,
+): Array<Omit<T, "pool">> {
+  return l.map(({ pool, ...rest }) => rest);
 }
 
 export function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
@@ -304,20 +312,44 @@ export function getPoolRewards(req: any, res: any, fetcher: Fetcher) {
 
   const data = Object.entries(
     fetcher.cache[chainId]?.poolPointsList || {},
-  ).reduce<Record<Address, PoolOutputDetails>>((acc, [p, r]) => {
+  ).reduce<Record<Address, PoolOutputDetails>>((acc, [p, rd]) => {
     const pool = p as Address;
+    const cleared = removePool(rd);
 
     acc[pool] = {
       chainId: chainId,
       pool: pool,
 
       rewards: {
-        points: r,
+        points: cleared,
+        externalAPY: [],
       },
     };
 
     return acc;
   }, {});
+
+  Object.entries(fetcher.cache[chainId]?.poolExternalAPYList || {}).forEach(
+    ([p, ex]) => {
+      const pool = p as Address;
+      const cleared = removePool(ex);
+
+      if (ex.length > 0) {
+        if (data[pool]) {
+          data[pool].rewards.externalAPY.push(...cleared);
+        } else {
+          data[pool] = {
+            chainId: chainId,
+            pool: pool,
+            rewards: {
+              points: [],
+              externalAPY: cleared,
+            },
+          };
+        }
+      }
+    },
+  );
 
   res.set({ "Content-Type": "application/json" });
   res.send(

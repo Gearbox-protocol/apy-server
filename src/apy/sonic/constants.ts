@@ -6,6 +6,11 @@ export const TOKENS = {
   Sonic: {
     stS: "0xE5DA20F15420aD15DE0fa650600aFc998bbE3955",
   },
+
+  Monad: {},
+  MegaETH: {},
+  Berachain: {},
+  Avalanche: {},
 } as const;
 
 export const PROTOCOL = "beets";
