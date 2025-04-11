@@ -37,6 +37,10 @@ interface PoolOutputDetails {
   };
 }
 
+interface GearAPYDetails extends GearAPY {
+  gearPrice: number;
+}
+
 interface Response {
   status: string;
   description?: string;
@@ -45,7 +49,7 @@ interface Response {
     | TokenOutputDetails
     | Array<PoolOutputDetails>
     | PoolOutputDetails
-    | GearAPY;
+    | GearAPYDetails;
 }
 
 function removeSymbolAndAddress<T extends { address: Address; symbol: string }>(
@@ -299,7 +303,13 @@ export function getGearAPY(req: any, res: any, fetcher: Fetcher) {
   res.set({ "Content-Type": "application/json" });
   res.send(
     toJSONWithBigint({
-      data: fetcher.cache[chainId]?.gear,
+      data: {
+        base: fetcher.cache[chainId]?.gear?.base || 0,
+        crv: fetcher.cache[chainId]?.gear?.gear || 0,
+        gear: fetcher.cache[chainId]?.gear?.crv || 0,
+
+        gearPrice: fetcher.cache[chainId]?.gear?.gearPrice || 0,
+      },
       status: "ok",
     } as Response),
   );

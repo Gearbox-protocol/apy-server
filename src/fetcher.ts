@@ -158,7 +158,8 @@ export class Fetcher {
       gear:
         gearAPY.status === "fulfilled"
           ? gearAPY.value
-          : { base: 0, crv: 0, gear: 0 },
+          : { base: 0, crv: 0, gear: 0, gearPrice: 0 },
+
       tokenApyList,
       tokenPointsList,
 
