@@ -62,13 +62,13 @@ function removePool<T extends { pool: Address }>(
 
 export function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
   const [isChainIdValid, chainId] = checkChainId(req.params.chainId);
-  if (!checkResp(isChainIdValid, res)) {
+  if (!checkResp(isChainIdValid, res, fetcher.logger)) {
     return;
   }
   const [isTokenValid, tokenAddress] = checkTokenAddress(
     req.params.tokenAddress,
   );
-  if (!checkResp(isTokenValid, res)) {
+  if (!checkResp(isTokenValid, res, fetcher.logger)) {
     return;
   }
 
@@ -104,7 +104,7 @@ export function getByChainAndToken(req: any, res: any, fetcher: Fetcher) {
 
 export function getAll(req: any, res: any, fetcher: Fetcher) {
   const [isChainIdValid, chainId] = checkChainId(req.query.chain_id);
-  if (!checkResp(isChainIdValid, res)) {
+  if (!checkResp(isChainIdValid, res, fetcher.logger)) {
     return;
   }
 
@@ -243,10 +243,11 @@ export function getRewardList(req: any, res: any, fetcher: Fetcher) {
         description: "Unsupported Content-Type: use application/json",
       },
       res,
+      fetcher.logger,
     );
   }
   const [isTokenList, tokenList] = checkTokenList(toJSONWithBigint(req.body));
-  if (!checkResp(isTokenList, res)) {
+  if (!checkResp(isTokenList, res, fetcher.logger)) {
     return;
   }
 
@@ -291,7 +292,7 @@ export function getRewardList(req: any, res: any, fetcher: Fetcher) {
 
 export function getGearAPY(req: any, res: any, fetcher: Fetcher) {
   const [isChainIdValid, chainId] = checkChainId(req.query.chain_id);
-  if (!checkResp(isChainIdValid, res)) {
+  if (!checkResp(isChainIdValid, res, fetcher.logger)) {
     return;
   }
 
@@ -306,7 +307,7 @@ export function getGearAPY(req: any, res: any, fetcher: Fetcher) {
 
 export function getPoolRewards(req: any, res: any, fetcher: Fetcher) {
   const [isChainIdValid, chainId] = checkChainId(req.query.chain_id);
-  if (!checkResp(isChainIdValid, res)) {
+  if (!checkResp(isChainIdValid, res, fetcher.logger)) {
     return;
   }
 
@@ -399,12 +400,18 @@ function checkTokenAddress(data: any): [Response, string] {
   return [{ status: "ok" }, notUndefined.toString()];
 }
 
-export function checkResp(res: Response, out: any): boolean {
+export function checkResp(
+  res: Response,
+  out: any,
+  logger: Fetcher["logger"] | undefined,
+): boolean {
   if (res.status === "error") {
     const r = toJSONWithBigint(res);
     out.set({ "Content-Type": "application/json" });
     out.send(toJSONWithBigint(r));
+
     captureException({ file: "endpoints/checkResp", error: r });
+    logger?.error(`[SYSTEM] (CHECK RESPONSE): ${r}`);
     return false;
   }
   return true;
