@@ -33,6 +33,8 @@ import { getChainId, supportedChains } from "./utils";
 export type ApyDetails = Apy & { lastUpdated: string };
 type TokenDetails = TokenAPY<ApyDetails>;
 
+export type GearAPYDetails = GearAPY & { lastUpdated: string };
+
 interface NetworkState {
   tokenApyList: Record<Address, TokenDetails>;
   tokenExtraCollateralAPY: TokenExtraCollateralAPYResult;
@@ -43,7 +45,7 @@ interface NetworkState {
   poolPointsList: PoolPointsResult;
   poolExternalAPYList: PoolExternalAPYResult;
 
-  gear: GearAPY;
+  gear: GearAPYDetails;
 }
 
 export class Fetcher {
@@ -135,6 +137,7 @@ export class Fetcher {
       {},
     );
 
+    // empty object to skip updating previous state
     const tokenPointsList = points.status === "fulfilled" ? points.value : {};
 
     const poolPointsList =
@@ -154,18 +157,18 @@ export class Fetcher {
         ? extraCollateralPoints.value
         : {};
 
+    const gear =
+      gearAPY.status === "fulfilled"
+        ? { ...gearAPY.value, lastUpdated: time }
+        : ({} as GearAPYDetails);
+
     return {
-      gear:
-        gearAPY.status === "fulfilled"
-          ? gearAPY.value
-          : { base: 0, crv: 0, gear: 0, gearPrice: 0 },
-
+      gear,
       tokenApyList,
-      tokenPointsList,
 
+      tokenPointsList,
       poolPointsList,
       poolExternalAPYList,
-
       tokenExtraRewards,
       tokenExtraCollateralAPY,
       tokenExtraCollateralPoints,
@@ -177,8 +180,25 @@ export class Fetcher {
 
     for (const network of Object.values(supportedChains)) {
       const chainId = getChainId(network);
-      const state = await this.getNetworkState(network as NetworkType);
-      this.cache[chainId] = state;
+      const { gear, tokenApyList, ...rest } = await this.getNetworkState(
+        network as NetworkType,
+      );
+
+      const oldState = this.cache[chainId] || {};
+
+      // partially update gear and apys
+      this.cache[chainId] = {
+        ...oldState,
+        ...rest,
+        gear: {
+          ...(oldState.gear || {}),
+          ...gear,
+        },
+        tokenApyList: {
+          ...(oldState.tokenApyList || {}),
+          ...tokenApyList,
+        },
+      };
     }
   }
 

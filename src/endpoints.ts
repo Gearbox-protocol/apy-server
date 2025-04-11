@@ -2,8 +2,7 @@ import { captureException } from "@sentry/node";
 import type { Address } from "viem";
 import { isAddress } from "viem";
 
-import type { GearAPY } from "./apy";
-import type { ApyDetails, Fetcher } from "./fetcher";
+import type { ApyDetails, Fetcher, GearAPYDetails } from "./fetcher";
 import type { PointsInfo } from "./points";
 import type { ExternalApy } from "./poolRewards";
 import type { PoolPointsInfo } from "./poolRewards/points";
@@ -35,10 +34,6 @@ interface PoolOutputDetails {
     points: Array<Omit<PoolPointsInfo, "pool">>;
     externalAPY: Array<Omit<ExternalApy, "pool">>;
   };
-}
-
-interface GearAPYDetails extends GearAPY {
-  gearPrice: number;
 }
 
 interface Response {
@@ -309,6 +304,8 @@ export function getGearAPY(req: any, res: any, fetcher: Fetcher) {
         gear: fetcher.cache[chainId]?.gear?.crv || 0,
 
         gearPrice: fetcher.cache[chainId]?.gear?.gearPrice || 0,
+
+        lastUpdated: fetcher.cache[chainId]?.gear?.lastUpdated || 0,
       },
       status: "ok",
     } as Response),
