@@ -1,5 +1,4 @@
 import moment from "moment";
-import type { Logger } from "pino";
 import type { Address } from "viem";
 
 import type { Apy, APYResult, GearAPY, TokenAPY } from "./apy";
@@ -49,12 +48,10 @@ interface NetworkState {
 }
 
 export class Fetcher {
-  public logger: Logger;
   public cache: Record<number, NetworkState>;
 
-  constructor(logger: Logger) {
+  constructor() {
     this.cache = {};
-    this.logger = logger;
   }
 
   private async getNetworkState(network: NetworkType): Promise<NetworkState> {
@@ -93,8 +90,6 @@ export class Fetcher {
       getAPYCoinshift(network),
     ]);
     log({
-      logger: this.logger,
-
       network,
       allProtocolAPYs,
       pointsList: points,
@@ -176,7 +171,7 @@ export class Fetcher {
   }
 
   async run() {
-    this.logger.info("[SYSTEM]: Updating fetcher");
+    console.log("[SYSTEM]: Updating fetcher");
 
     for (const network of Object.values(supportedChains)) {
       const chainId = getChainId(network);
@@ -220,13 +215,9 @@ interface LogProps {
   poolExternalAPYList: PromiseSettledResult<PoolExternalAPYResult>;
 
   gearAPY: PromiseSettledResult<GearAPY>;
-
-  logger: Logger;
 }
 
 function log({
-  logger,
-
   network,
   allProtocolAPYs,
   pointsList,
@@ -239,8 +230,8 @@ function log({
 
   gearAPY,
 }: LogProps) {
-  logger.info(`\n`);
-  logger.info(`[${network}] FETCHED RESULTS`);
+  console.log(`\n`);
+  console.log(`[${network}] FETCHED RESULTS`);
 
   const APY = "PROTOCOL APY";
 
@@ -254,10 +245,10 @@ function log({
       const protocol = protocolUnsafe || "unknown";
 
       if (tokens !== "") {
-        logger.info(`[${network}] (${APY}): ${protocol}: ${tokens}`);
+        console.log(`[${network}] (${APY}): ${protocol}: ${tokens}`);
       }
       if (apy.status === "rejected") {
-        logger.error(`[${network}] (${APY}): ${protocol}: ${apy.reason}`);
+        console.error(`[${network}] (${APY}): ${protocol}: ${apy.reason}`);
         captureException({
           file: `/fetcher/${APY}/${network}/${protocol}`,
           error: apy.reason,
@@ -270,19 +261,19 @@ function log({
     })
     .filter(r => !!r);
   if (fetchedAPYProtocols.length > 0) {
-    logger.info(
+    console.log(
       `[${network}] (${APY}) TOTAL: ${fetchedAPYProtocols.join(", ")}`,
     );
   } else {
-    logger.info(`[${network}] (${APY}): no apy fetched`);
+    console.log(`[${network}] (${APY}): no apy fetched`);
   }
 
   const GEAR = "GEAR";
 
   if (gearAPY.status === "fulfilled") {
-    logger.info(`[${network}] (${GEAR}): ${JSON.stringify(gearAPY.value)}`);
+    console.log(`[${network}] (${GEAR}): ${JSON.stringify(gearAPY.value)}`);
   } else {
-    logger.error(`[${network}] (${GEAR}): ${gearAPY.reason}`);
+    console.error(`[${network}] (${GEAR}): ${gearAPY.reason}`);
     captureException({
       file: `/fetcher/${GEAR}/${network}`,
       error: gearAPY.reason,
@@ -295,14 +286,14 @@ function log({
     const l = Object.values(pointsList.value);
 
     if (l.length > 0) {
-      logger.info(
+      console.log(
         `[${network}] (${POINTS}): ${l.map(p => p.symbol).join(", ")}`,
       );
     } else {
-      logger.info(`[${network}] (${POINTS}): no points fetched`);
+      console.log(`[${network}] (${POINTS}): no points fetched`);
     }
   } else {
-    logger.error(`[${network}] (${POINTS}): ${pointsList.reason}`);
+    console.error(`[${network}] (${POINTS}): ${pointsList.reason}`);
     captureException({
       file: `/fetcher/${POINTS}/${network}`,
       error: pointsList.reason,
@@ -315,17 +306,17 @@ function log({
     const l = Object.values(tokenExtraRewards.value);
 
     if (l.length > 0) {
-      logger.info(
+      console.log(
         `[${network}] (${EXTRA_REWARDS}): ${l
           .map(p => p.map(t => `${t.symbol}: ${t.rewardSymbol}`))
           .flat(1)
           .join(", ")}`,
       );
     } else {
-      logger.info(`[${network}] (${EXTRA_REWARDS}): fetched no extra rewards`);
+      console.log(`[${network}] (${EXTRA_REWARDS}): fetched no extra rewards`);
     }
   } else {
-    logger.error(
+    console.error(
       `[${network}] (${EXTRA_REWARDS}): ${tokenExtraRewards.reason}`,
     );
     captureException({
@@ -340,17 +331,17 @@ function log({
     const l = Object.values(poolPointsList.value);
 
     if (l.length > 0) {
-      logger.info(
+      console.log(
         `[${network}] (${POOL_POINTS}):  ${l
           .map(p => p.map(t => `${t.pool}: ${t.symbol}`))
           .flat(1)
           .join(", ")}`,
       );
     } else {
-      logger.info(`[${network}] (${POOL_POINTS}): fetched no pool points`);
+      console.log(`[${network}] (${POOL_POINTS}): fetched no pool points`);
     }
   } else {
-    logger.error(`[${network}] (${POOL_POINTS}): ${poolPointsList.reason}`);
+    console.error(`[${network}] (${POOL_POINTS}): ${poolPointsList.reason}`);
     captureException({
       file: `/fetcher/${POOL_POINTS}/${network}`,
       error: poolPointsList.reason,
@@ -363,19 +354,19 @@ function log({
     const l = Object.values(poolExternalAPYList.value);
 
     if (l.length > 0) {
-      logger.info(
+      console.log(
         `\[${network}] (${EXTERNAL_APY}): ${l
           .map(p => p.map(t => `${t.pool}: ${t.name} - ${t.value}`))
           .flat(1)
           .join(", ")}`,
       );
     } else {
-      logger.info(
+      console.log(
         `[${network}] (${EXTERNAL_APY}): fetched no pool external apy`,
       );
     }
   } else {
-    logger.error(
+    console.error(
       `[${network}] (${EXTERNAL_APY}): ${poolExternalAPYList.reason}`,
     );
     captureException({
@@ -390,19 +381,19 @@ function log({
     const l = Object.values(extraCollateralAPY.value);
 
     if (l.length > 0) {
-      logger.info(
+      console.log(
         `[${network}] (${EXTRA_COLLATERAL_APY}): ${l
           .map(p => p.map(t => `${t.pool}: ${t.symbol}`))
           .flat(1)
           .join(", ")}`,
       );
     } else {
-      logger.info(
+      console.log(
         `[${network}] (${EXTRA_COLLATERAL_APY}): fetched no extra collateral apy`,
       );
     }
   } else {
-    logger.error(
+    console.error(
       `[${network}] (${EXTRA_COLLATERAL_APY}): ${extraCollateralAPY.reason}`,
     );
     captureException({
@@ -417,18 +408,18 @@ function log({
     const extraPoints = Object.values(extraCollateralPoints.value);
 
     if (extraPoints.length > 0) {
-      logger.info(
+      console.log(
         `[${network}] (${EXTRA_POINTS}): ${extraPoints
           .map(p => p.symbol)
           .join(", ")} for ${network}`,
       );
     } else {
-      logger.info(
+      console.log(
         `[${network}] (${EXTRA_POINTS}): fetched no extra collateral points`,
       );
     }
   } else {
-    logger.error(
+    console.error(
       `[${network}] (${EXTRA_POINTS}): ${extraCollateralPoints.reason}`,
     );
     captureException({
