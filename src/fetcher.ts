@@ -1,4 +1,5 @@
 import moment from "moment";
+import type { Logger } from "pino";
 import type { Address } from "viem";
 
 import type { Apy, APYResult, GearAPY, TokenAPY } from "./apy";
@@ -19,6 +20,7 @@ import type { PointsResult } from "./points";
 import { getPoints } from "./points";
 import type { PoolExternalAPYResult, PoolPointsResult } from "./poolRewards";
 import { getPoolExternalAPY, getPoolPoints } from "./poolRewards";
+import { captureException } from "./sentry";
 import type { TokenExtraCollateralAPYResult } from "./tokenExtraCollateralAPY";
 import { getTokenExtraCollateralAPY } from "./tokenExtraCollateralAPY";
 import type { TokenExtraCollateralPointsResult } from "./tokenExtraCollateralPoints";
@@ -31,6 +33,8 @@ import { getChainId, supportedChains } from "./utils";
 export type ApyDetails = Apy & { lastUpdated: string };
 type TokenDetails = TokenAPY<ApyDetails>;
 
+export type GearAPYDetails = GearAPY & { lastUpdated: string };
+
 interface NetworkState {
   tokenApyList: Record<Address, TokenDetails>;
   tokenExtraCollateralAPY: TokenExtraCollateralAPYResult;
@@ -41,14 +45,16 @@ interface NetworkState {
   poolPointsList: PoolPointsResult;
   poolExternalAPYList: PoolExternalAPYResult;
 
-  gear: GearAPY;
+  gear: GearAPYDetails;
 }
 
 export class Fetcher {
+  public logger: Logger;
   public cache: Record<number, NetworkState>;
 
-  constructor() {
+  constructor(logger: Logger) {
     this.cache = {};
+    this.logger = logger;
   }
 
   private async getNetworkState(network: NetworkType): Promise<NetworkState> {
@@ -87,6 +93,8 @@ export class Fetcher {
       getAPYCoinshift(network),
     ]);
     log({
+      logger: this.logger,
+
       network,
       allProtocolAPYs,
       pointsList: points,
@@ -129,6 +137,7 @@ export class Fetcher {
       {},
     );
 
+    // empty object to skip updating previous state
     const tokenPointsList = points.status === "fulfilled" ? points.value : {};
 
     const poolPointsList =
@@ -148,17 +157,18 @@ export class Fetcher {
         ? extraCollateralPoints.value
         : {};
 
-    return {
-      gear:
-        gearAPY.status === "fulfilled"
-          ? gearAPY.value
-          : { base: 0, crv: 0, gear: 0 },
-      tokenApyList,
-      tokenPointsList,
+    const gear =
+      gearAPY.status === "fulfilled"
+        ? { ...gearAPY.value, lastUpdated: time }
+        : ({} as GearAPYDetails);
 
+    return {
+      gear,
+      tokenApyList,
+
+      tokenPointsList,
       poolPointsList,
       poolExternalAPYList,
-
       tokenExtraRewards,
       tokenExtraCollateralAPY,
       tokenExtraCollateralPoints,
@@ -166,11 +176,29 @@ export class Fetcher {
   }
 
   async run() {
-    console.log("updating fetcher");
+    this.logger.info("[SYSTEM]: Updating fetcher");
+
     for (const network of Object.values(supportedChains)) {
       const chainId = getChainId(network);
-      const state = await this.getNetworkState(network as NetworkType);
-      this.cache[chainId] = state;
+      const { gear, tokenApyList, ...rest } = await this.getNetworkState(
+        network as NetworkType,
+      );
+
+      const oldState = this.cache[chainId] || {};
+
+      // partially update gear and apys
+      this.cache[chainId] = {
+        ...oldState,
+        ...rest,
+        gear: {
+          ...(oldState.gear || {}),
+          ...gear,
+        },
+        tokenApyList: {
+          ...(oldState.tokenApyList || {}),
+          ...tokenApyList,
+        },
+      };
     }
   }
 
@@ -192,9 +220,13 @@ interface LogProps {
   poolExternalAPYList: PromiseSettledResult<PoolExternalAPYResult>;
 
   gearAPY: PromiseSettledResult<GearAPY>;
+
+  logger: Logger;
 }
 
 function log({
+  logger,
+
   network,
   allProtocolAPYs,
   pointsList,
@@ -207,129 +239,201 @@ function log({
 
   gearAPY,
 }: LogProps) {
-  const list = allProtocolAPYs.map(apyRes => {
-    const entries =
-      apyRes.status === "fulfilled" ? Object.entries(apyRes.value) : [];
+  logger.info(`\n`);
+  logger.info(`[${network}] FETCHED RESULTS`);
 
-    const tokens = entries.map(([_, v]) => v.symbol).join(", ");
-    const protocol = entries[0]?.[1]?.apys?.[0]?.protocol || "unknown";
+  const APY = "PROTOCOL APY";
 
-    if (tokens !== "") {
-      console.log(`${protocol}: ${tokens}`);
-    }
-    if (apyRes.status === "rejected") {
-      console.log(`${protocol}: ${apyRes.reason}`);
-    }
+  const fetchedAPYProtocols = allProtocolAPYs
+    .map(apy => {
+      const entries =
+        apy.status === "fulfilled" ? Object.entries(apy.value) : [];
 
-    return `${protocol}: ${entries.length}`;
-  });
-  console.log(`Fetched ${list} for ${network}`);
+      const tokens = entries.map(([_, v]) => v.symbol).join(", ");
+      const protocolUnsafe = entries[0]?.[1]?.apys?.[0]?.protocol;
+      const protocol = protocolUnsafe || "unknown";
+
+      if (tokens !== "") {
+        logger.info(`[${network}] (${APY}): ${protocol}: ${tokens}`);
+      }
+      if (apy.status === "rejected") {
+        logger.error(`[${network}] (${APY}): ${protocol}: ${apy.reason}`);
+        captureException({
+          file: `/fetcher/${APY}/${network}/${protocol}`,
+          error: apy.reason,
+        });
+      }
+
+      return !protocolUnsafe && entries.length === 0
+        ? undefined
+        : `${protocol}: ${entries.length}`;
+    })
+    .filter(r => !!r);
+  if (fetchedAPYProtocols.length > 0) {
+    logger.info(
+      `[${network}] (${APY}) TOTAL: ${fetchedAPYProtocols.join(", ")}`,
+    );
+  } else {
+    logger.info(`[${network}] (${APY}): no apy fetched`);
+  }
+
+  const GEAR = "GEAR";
 
   if (gearAPY.status === "fulfilled") {
-    console.log(`\nGear: ${JSON.stringify(gearAPY.value)}`);
+    logger.info(`[${network}] (${GEAR}): ${JSON.stringify(gearAPY.value)}`);
   } else {
-    console.log(`\nGear error: ${gearAPY.reason}`);
+    logger.error(`[${network}] (${GEAR}): ${gearAPY.reason}`);
+    captureException({
+      file: `/fetcher/${GEAR}/${network}`,
+      error: gearAPY.reason,
+    });
   }
+
+  const POINTS = "POINTS";
 
   if (pointsList.status === "fulfilled") {
-    const points = Object.values(pointsList.value);
+    const l = Object.values(pointsList.value);
 
-    if (points.length > 0) {
-      console.log(
-        `\nFetched points for ${points
-          .map(p => p.symbol)
-          .join(", ")} for ${network}`,
+    if (l.length > 0) {
+      logger.info(
+        `[${network}] (${POINTS}): ${l.map(p => p.symbol).join(", ")}`,
       );
     } else {
-      console.log(`\nFetched no points for ${network}`);
+      logger.info(`[${network}] (${POINTS}): no points fetched`);
     }
   } else {
-    console.log(`\nPoints error: ${pointsList.reason}`);
+    logger.error(`[${network}] (${POINTS}): ${pointsList.reason}`);
+    captureException({
+      file: `/fetcher/${POINTS}/${network}`,
+      error: pointsList.reason,
+    });
   }
+
+  const EXTRA_REWARDS = "EXTRA REWARDS";
 
   if (tokenExtraRewards.status === "fulfilled") {
-    const extraRewards = Object.values(tokenExtraRewards.value);
+    const l = Object.values(tokenExtraRewards.value);
 
-    if (extraRewards.length > 0) {
-      console.log(
-        `\nFetched extra rewards for ${extraRewards
+    if (l.length > 0) {
+      logger.info(
+        `[${network}] (${EXTRA_REWARDS}): ${l
           .map(p => p.map(t => `${t.symbol}: ${t.rewardSymbol}`))
           .flat(1)
-          .join(", ")} for ${network}`,
+          .join(", ")}`,
       );
     } else {
-      console.log(`\nFetched no extra rewards for ${network}`);
+      logger.info(`[${network}] (${EXTRA_REWARDS}): fetched no extra rewards`);
     }
   } else {
-    console.log(`\nPoints error: ${tokenExtraRewards.reason}`);
+    logger.error(
+      `[${network}] (${EXTRA_REWARDS}): ${tokenExtraRewards.reason}`,
+    );
+    captureException({
+      file: `/fetcher/${EXTRA_REWARDS}/${network}`,
+      error: tokenExtraRewards.reason,
+    });
   }
+
+  const POOL_POINTS = "POOL POINTS";
 
   if (poolPointsList.status === "fulfilled") {
-    const points = Object.values(poolPointsList.value);
+    const l = Object.values(poolPointsList.value);
 
-    if (points.length > 0) {
-      console.log(
-        `\nFetched pool points for ${points
+    if (l.length > 0) {
+      logger.info(
+        `[${network}] (${POOL_POINTS}):  ${l
           .map(p => p.map(t => `${t.pool}: ${t.symbol}`))
           .flat(1)
-          .join(", ")} for ${network}`,
+          .join(", ")}`,
       );
     } else {
-      console.log(`\nFetched no pool points for ${network}`);
+      logger.info(`[${network}] (${POOL_POINTS}): fetched no pool points`);
     }
   } else {
-    console.log(`\nPoints error: ${poolPointsList.reason}`);
+    logger.error(`[${network}] (${POOL_POINTS}): ${poolPointsList.reason}`);
+    captureException({
+      file: `/fetcher/${POOL_POINTS}/${network}`,
+      error: poolPointsList.reason,
+    });
   }
+
+  const EXTERNAL_APY = "EXTERNAL APY";
 
   if (poolExternalAPYList.status === "fulfilled") {
-    const external = Object.values(poolExternalAPYList.value);
+    const l = Object.values(poolExternalAPYList.value);
 
-    if (external.length > 0) {
-      console.log(
-        `\nFetched pool external apy for ${external
+    if (l.length > 0) {
+      logger.info(
+        `\[${network}] (${EXTERNAL_APY}): ${l
           .map(p => p.map(t => `${t.pool}: ${t.name} - ${t.value}`))
           .flat(1)
-          .join(", ")} for ${network}`,
+          .join(", ")}`,
       );
     } else {
-      console.log(`\nFetched no pool external apy for ${network}`);
+      logger.info(
+        `[${network}] (${EXTERNAL_APY}): fetched no pool external apy`,
+      );
     }
   } else {
-    console.log(`\nPool external apy error: ${poolExternalAPYList.reason}`);
+    logger.error(
+      `[${network}] (${EXTERNAL_APY}): ${poolExternalAPYList.reason}`,
+    );
+    captureException({
+      file: `/fetcher/${EXTERNAL_APY}/${network}`,
+      error: poolExternalAPYList.reason,
+    });
   }
+
+  const EXTRA_COLLATERAL_APY = "EXTRA COLLATERAL APY";
 
   if (extraCollateralAPY.status === "fulfilled") {
-    const extraCollateral = Object.values(extraCollateralAPY.value);
+    const l = Object.values(extraCollateralAPY.value);
 
-    if (extraCollateral.length > 0) {
-      console.log(
-        `\nFetched extra collateral apy for ${extraCollateral
+    if (l.length > 0) {
+      logger.info(
+        `[${network}] (${EXTRA_COLLATERAL_APY}): ${l
           .map(p => p.map(t => `${t.pool}: ${t.symbol}`))
           .flat(1)
-          .join(", ")} for ${network}`,
+          .join(", ")}`,
       );
     } else {
-      console.log(`\nFetched no extra collateral apy for ${network}`);
+      logger.info(
+        `[${network}] (${EXTRA_COLLATERAL_APY}): fetched no extra collateral apy`,
+      );
     }
   } else {
-    console.log(`\nExtra collateral apy error: ${extraCollateralAPY.reason}`);
+    logger.error(
+      `[${network}] (${EXTRA_COLLATERAL_APY}): ${extraCollateralAPY.reason}`,
+    );
+    captureException({
+      file: `/fetcher/${EXTRA_COLLATERAL_APY}/${network}`,
+      error: extraCollateralAPY.reason,
+    });
   }
+
+  const EXTRA_POINTS = "EXTRA POINTS";
 
   if (extraCollateralPoints.status === "fulfilled") {
     const extraPoints = Object.values(extraCollateralPoints.value);
 
     if (extraPoints.length > 0) {
-      console.log(
-        `\nFetched extra collateral points for ${extraPoints
+      logger.info(
+        `[${network}] (${EXTRA_POINTS}): ${extraPoints
           .map(p => p.symbol)
           .join(", ")} for ${network}`,
       );
     } else {
-      console.log(`\nFetched no extra collateral points for ${network}`);
+      logger.info(
+        `[${network}] (${EXTRA_POINTS}): fetched no extra collateral points`,
+      );
     }
   } else {
-    console.log(
-      `\eExtra collateral points error: ${extraCollateralPoints.reason}`,
+    logger.error(
+      `[${network}] (${EXTRA_POINTS}): ${extraCollateralPoints.reason}`,
     );
+    captureException({
+      file: `/fetcher/${EXTRA_POINTS}/${network}`,
+      error: extraCollateralPoints.reason,
+    });
   }
 }
