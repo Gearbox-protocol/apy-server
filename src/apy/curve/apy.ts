@@ -234,6 +234,7 @@ interface GearAPY {
   base: number;
   crv: number;
   gear: number;
+  gearPrice: number;
 }
 
 async function getGearAPY(_: NetworkType): Promise<GearAPY> {
@@ -242,18 +243,17 @@ async function getGearAPY(_: NetworkType): Promise<GearAPY> {
     axios.get<CurvePoolDataResponse>(getFactoryCryptoURL("Mainnet")),
   ]);
 
-  const poolFactoryByAddress = (
-    mainnetFactoryPools?.data?.data?.poolData || []
-  ).reduce<PoolRecord>((acc, p) => {
+  const poolData = mainnetFactoryPools?.data?.data?.poolData || [];
+  const poolFactoryByAddress = poolData.reduce<PoolRecord>((acc, p) => {
     acc[p.lpTokenAddress.toLowerCase()] = p;
     return acc;
   }, {});
 
-  const mainnetVolumeByAddress =
-    mainnetVolumes.data.data.pools.reduce<VolumeRecord>((acc, v) => {
-      acc[v.address.toLowerCase()] = v;
-      return acc;
-    }, {});
+  const volumes = mainnetVolumes?.data?.data?.pools || [];
+  const mainnetVolumeByAddress = volumes.reduce<VolumeRecord>((acc, v) => {
+    acc[v.address.toLowerCase()] = v;
+    return acc;
+  }, {});
 
   const gearPool = poolFactoryByAddress[GEAR_POOL];
   const gearVolume =
@@ -262,11 +262,16 @@ async function getGearAPY(_: NetworkType): Promise<GearAPY> {
   const gear = (gearPool?.gaugeRewards || [])
     .filter(({ symbol }) => symbol.toLowerCase() === "gear")
     .map(({ apy = 0 }) => apy);
+  const { coins = [] } = gearPool || {};
+  const gearCoin = coins.find(({ symbol }) => symbol.toUpperCase() === "GEAR");
+  const { usdPrice = 0 } = gearCoin || {};
 
   const gearAPY: GearAPY = {
     base: gearVolume?.latestDailyApyPcent || 0,
     crv: Math.max(...(gearPool?.gaugeCrvApy || []), 0),
     gear: Math.max(...gear, 0),
+
+    gearPrice: usdPrice,
   };
 
   return gearAPY;
