@@ -2,6 +2,7 @@ import cors from "cors";
 import express, { json } from "express";
 
 import type { App } from "../core/app";
+import { checkHealth } from "./controllers/health";
 import { notFound } from "./controllers/not-found";
 import initRewardsRouter from "./controllers/rewards";
 
@@ -22,6 +23,8 @@ export const initServer = ({ app }: InitServerProps) => {
   );
 
   server.use("/api/rewards", initRewardsRouter(app));
+
+  server.get("/api/health", checkHealth(app));
   server.get("*", notFound(app));
 
   return server;
