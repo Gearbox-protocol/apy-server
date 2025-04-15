@@ -5,6 +5,6 @@ export const checkHealth: Handler = app => async (__, res) => {
   try {
     res.sendStatus(200);
   } catch (e) {
-    respondWithError(app, res, AppError.getTypedError(e));
+    respondWithError(app, res, AppError.getAppError(e));
   }
 };
