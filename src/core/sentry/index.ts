@@ -4,7 +4,7 @@ import { AppError } from "../errors";
 
 interface SentryError {
   file: string;
-  error: unknown;
+  error: Error;
 }
 
 const APP_NAME_TAG = "app.name";
@@ -12,7 +12,7 @@ const APP_PATH_TAG = "app.path";
 const APP_NAME = "gearbox_apy_server";
 
 export function captureException({ file, error: e }: SentryError) {
-  const error = AppError.getTypedError(e);
+  const error = AppError.getAppError(e);
 
   Sentry.withScope(scope => {
     scope.setTag(APP_NAME_TAG, APP_NAME);

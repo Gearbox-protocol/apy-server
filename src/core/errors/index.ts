@@ -20,7 +20,7 @@ const appErrorHttpCodes = {
 interface AppErrorProps {
   code: AppErrorCodes;
   message?: string;
-  originalError?: Error;
+  originalError?: TypedError;
 }
 
 export class AppError extends Error {
@@ -30,7 +30,7 @@ export class AppError extends Error {
   code: AppErrorCodes;
   httpCode: number;
   message: string;
-  originalError?: Error;
+  originalError?: TypedError;
 
   constructor({ code, originalError, message }: AppErrorProps) {
     super();
@@ -48,12 +48,20 @@ export class AppError extends Error {
     return correctField || e instanceof AppError;
   }
 
-  static getTypedError(e: any): AppError {
-    if (AppError.isAppError(e)) return e;
-    return new AppError({ code: "UNKNOWN_ERROR", originalError: e });
+  static getAppError(e: any): AppError {
+    const wrappedError = this.getTypedError(e);
+    if (AppError.isAppError(wrappedError)) return wrappedError;
+    return new AppError({ code: "UNKNOWN_ERROR", originalError: wrappedError });
   }
 
-  static serializeError(err: Error, omit?: Record<string | symbol, true>) {
+  private static getTypedError(value: any): TypedError {
+    if (typeof value === "object" && value !== null) {
+      return value;
+    }
+    return { message: String(value) };
+  }
+
+  static serializeError(err: TypedError, omit?: Record<string | symbol, true>) {
     try {
       const allProps = [
         ...Object.getOwnPropertyNames(err),
@@ -63,7 +71,7 @@ export class AppError extends Error {
       const serializedObj = allProps.reduce<Record<string | symbol, any>>(
         (acc, key) => {
           if (!omit?.[key]) {
-            const value = err[key as keyof Error];
+            const value = err[key as keyof TypedError];
             acc[key] = value;
           }
 
@@ -82,4 +90,35 @@ export class AppError extends Error {
       });
     }
   }
+}
+
+interface BaseError {
+  name?: string;
+  message?: string;
+  stack?: string;
+  code?: string | number;
+  type?: string;
+  event?: string;
+  reason?: string;
+  action?: string;
+}
+
+interface TypedError {
+  name?: string;
+  message?: string;
+  shortMessage?: string;
+  stack?: string;
+  code?: string | number;
+  type?: string;
+  event?: string;
+  reason?: string;
+  action?: string;
+
+  error?: BaseError;
+  data?: {
+    originalError: BaseError;
+  } & BaseError;
+  info?: {
+    error?: BaseError;
+  };
 }

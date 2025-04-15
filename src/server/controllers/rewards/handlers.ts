@@ -144,7 +144,7 @@ export const getTokenRewards: Handler = app => async (req, res) => {
 
     respondWithJson(app, res, response);
   } catch (e) {
-    respondWithError(app, res, AppError.getTypedError(e));
+    respondWithError(app, res, AppError.getAppError(e));
   }
 };
 
@@ -165,7 +165,7 @@ export const getGearAPY: Handler = app => async (_, res) => {
 
     respondWithJson(app, res, response);
   } catch (e) {
-    respondWithError(app, res, AppError.getTypedError(e));
+    respondWithError(app, res, AppError.getAppError(e));
   }
 };
 
@@ -244,6 +244,6 @@ export const getPoolRewards: Handler = app => async (req, res) => {
 
     respondWithJson(app, res, response);
   } catch (e) {
-    respondWithError(app, res, AppError.getTypedError(e));
+    respondWithError(app, res, AppError.getAppError(e));
   }
 };
