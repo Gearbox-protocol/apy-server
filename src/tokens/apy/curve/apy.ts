@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { Address } from "viem";
 
-import type { NetworkType } from "../../utils";
+import type { NetworkType } from "../../../core/chains";
 import type { APYHandler, APYResult } from "../constants";
 import { GEAR_POOL, PROTOCOL, TOKENS } from "./constants";
 

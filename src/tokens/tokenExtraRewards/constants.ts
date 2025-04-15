@@ -1,6 +1,6 @@
 import type { Address } from "viem";
 
-import type { NetworkType } from "../utils";
+import type { NetworkType } from "../../core/chains";
 
 export type TokenExtraRewardsResult = Record<Address, Array<FarmInfo>>;
 export type TokenExtraRewardsHandler = (

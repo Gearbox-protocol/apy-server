@@ -1,7 +1,7 @@
 import type { Address } from "viem";
 
+import type { NetworkType } from "../../core/chains";
 import type { Apy } from "../apy";
-import type { NetworkType } from "../utils";
 
 export interface ExtraCollateralAPY extends Omit<Apy, "protocol"> {
   pool: Address;

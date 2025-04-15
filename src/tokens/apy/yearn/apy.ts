@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { Address } from "viem";
 
-import { getChainId } from "../../utils";
+import { getChainId } from "../../../core/chains";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 

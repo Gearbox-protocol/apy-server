@@ -32,11 +32,3 @@ export function getChainId(network: NetworkType) {
 export function isSupportedNetwork(chainId: number) {
   return Object.values(CHAINS).includes(chainId);
 }
-
-export function toJSONWithBigint(o: any) {
-  const r = JSON.stringify(o, (_, v) =>
-    typeof v === "bigint" ? v.toString() : v,
-  );
-
-  return r;
-}

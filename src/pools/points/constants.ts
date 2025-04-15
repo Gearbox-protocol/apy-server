@@ -1,6 +1,6 @@
 import type { Address } from "viem";
 
-import type { NetworkType } from "../../utils";
+import type { NetworkType } from "../../core/chains";
 
 export type PoolPointsResult = Record<Address, Array<PoolPointsInfo>>;
 export type PoolPointsHandler = (

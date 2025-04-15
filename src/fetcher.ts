@@ -1,7 +1,12 @@
 import moment from "moment";
 import type { Address } from "viem";
 
-import type { Apy, APYResult, GearAPY, TokenAPY } from "./apy";
+import type { NetworkType } from "./core/chains";
+import { getChainId, supportedChains } from "./core/chains";
+import { captureException } from "./core/sentry";
+import type { PoolExternalAPYResult, PoolPointsResult } from "./pools";
+import { getPoolExternalAPY, getPoolPoints } from "./pools";
+import type { Apy, APYResult, GearAPY, TokenAPY } from "./tokens/apy";
 import {
   getAPYCoinshift,
   getAPYConstant,
@@ -14,20 +19,15 @@ import {
   getAPYTreehouse,
   getAPYYearn,
   getGearAPY,
-} from "./apy";
-import type { PointsResult } from "./points";
-import { getPoints } from "./points";
-import type { PoolExternalAPYResult, PoolPointsResult } from "./poolRewards";
-import { getPoolExternalAPY, getPoolPoints } from "./poolRewards";
-import { captureException } from "./sentry";
-import type { TokenExtraCollateralAPYResult } from "./tokenExtraCollateralAPY";
-import { getTokenExtraCollateralAPY } from "./tokenExtraCollateralAPY";
-import type { TokenExtraCollateralPointsResult } from "./tokenExtraCollateralPoints";
-import { getTokenExtraCollateralPoints } from "./tokenExtraCollateralPoints";
-import type { TokenExtraRewardsResult } from "./tokenExtraRewards";
-import { getTokenExtraRewards } from "./tokenExtraRewards";
-import type { NetworkType } from "./utils";
-import { getChainId, supportedChains } from "./utils";
+} from "./tokens/apy";
+import type { PointsResult } from "./tokens/points";
+import { getPoints } from "./tokens/points";
+import type { TokenExtraCollateralAPYResult } from "./tokens/tokenExtraCollateralAPY";
+import { getTokenExtraCollateralAPY } from "./tokens/tokenExtraCollateralAPY";
+import type { TokenExtraCollateralPointsResult } from "./tokens/tokenExtraCollateralPoints";
+import { getTokenExtraCollateralPoints } from "./tokens/tokenExtraCollateralPoints";
+import type { TokenExtraRewardsResult } from "./tokens/tokenExtraRewards";
+import { getTokenExtraRewards } from "./tokens/tokenExtraRewards";
 
 export type ApyDetails = Apy & { lastUpdated: string };
 type TokenDetails = TokenAPY<ApyDetails>;
@@ -180,6 +180,24 @@ export class Fetcher {
       );
 
       const oldState = this.cache[chainId] || {};
+
+      // const entries = Object.entries(stateUpdate) as Array<
+      //   [keyof NetworkState, NetworkState[keyof NetworkState]]
+      // >;
+      // const newState = entries.reduce<NetworkState>(
+      //   (acc, [parameter, value]) => {
+      //     const oldValue = oldState[parameter];
+
+      //     return {
+      //       ...acc,
+      //       [parameter]: {
+      //         ...oldValue,
+      //         ...value,
+      //       },
+      //     };
+      //   },
+      //   oldState,
+      // );
 
       // partially update gear and apys
       this.cache[chainId] = {

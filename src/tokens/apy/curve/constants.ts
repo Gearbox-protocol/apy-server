@@ -1,6 +1,6 @@
 import type { Address } from "viem";
 
-import type { NetworkType } from "../../utils";
+import type { NetworkType } from "../../../core/chains";
 
 export const GEAR_POOL =
   "0x5Be6C45e2d074fAa20700C49aDA3E88a1cc0025d".toLowerCase() as Address;

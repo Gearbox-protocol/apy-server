@@ -3,6 +3,7 @@ import cors from "cors";
 import { config } from "dotenv";
 import express, { json } from "express";
 
+import { captureException } from "./src/core/sentry";
 import {
   checkResp,
   getAll,
@@ -12,7 +13,6 @@ import {
   getRewardList,
 } from "./src/endpoints";
 import { Fetcher } from "./src/fetcher";
-import { captureException } from "./src/sentry";
 
 config();
 

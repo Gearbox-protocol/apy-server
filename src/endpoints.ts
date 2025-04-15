@@ -2,14 +2,15 @@ import { captureException } from "@sentry/node";
 import type { Address } from "viem";
 import { isAddress } from "viem";
 
+import { isSupportedNetwork } from "./core/chains";
+import { toJSONWithBigint } from "./core/utils";
 import type { ApyDetails, Fetcher, GearAPYDetails } from "./fetcher";
-import type { PointsInfo } from "./points";
-import type { ExternalApy } from "./poolRewards";
-import type { PoolPointsInfo } from "./poolRewards/points";
-import type { ExtraCollateralAPY } from "./tokenExtraCollateralAPY";
-import type { ExtraCollateralPointsInfo } from "./tokenExtraCollateralPoints";
-import type { FarmInfo } from "./tokenExtraRewards";
-import { isSupportedNetwork, toJSONWithBigint } from "./utils";
+import type { ExternalApy } from "./pools";
+import type { PoolPointsInfo } from "./pools/points";
+import type { PointsInfo } from "./tokens/points";
+import type { ExtraCollateralAPY } from "./tokens/tokenExtraCollateralAPY";
+import type { ExtraCollateralPointsInfo } from "./tokens/tokenExtraCollateralPoints";
+import type { FarmInfo } from "./tokens/tokenExtraRewards";
 
 interface TokenOutputDetails {
   chainId: number;

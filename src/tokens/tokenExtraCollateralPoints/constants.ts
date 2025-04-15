@@ -1,8 +1,8 @@
 import type { Address } from "viem";
 
+import type { NetworkType } from "../../core/chains";
 import type { PointsInfo } from "../points";
 import { REWARDS_BASE_INFO } from "../points";
-import type { NetworkType } from "../utils";
 
 export type TokenExtraCollateralPointsResult = Record<
   Address,
