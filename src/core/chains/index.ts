@@ -29,6 +29,19 @@ export function getChainId(network: NetworkType) {
   return CHAINS[network];
 }
 
+const CHAIN_BY_ID = (
+  Object.entries(CHAINS) as Array<[NetworkType, number]>
+).reduce<Record<number, NetworkType>>((acc, [network, chainId]) => {
+  acc[chainId] = network;
+  return acc;
+}, {});
+
 export function isSupportedNetwork(chainId: number) {
-  return Object.values(CHAINS).includes(chainId);
+  return CHAIN_BY_ID[chainId] !== undefined;
+}
+
+export function getNetworkType(
+  chainId: number | bigint | string,
+): NetworkType | undefined {
+  return CHAIN_BY_ID[Number(chainId)];
 }

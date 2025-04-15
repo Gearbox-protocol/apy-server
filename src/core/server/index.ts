@@ -2,6 +2,7 @@ import type { RequestHandler, Response } from "express";
 import type { Address } from "viem";
 
 import type { ExternalApy } from "../../pools";
+import type { PoolExtraApy } from "../../pools/extraAPY/constants";
 import type { PoolPointsInfo } from "../../pools/points";
 import type { PointsInfo } from "../../tokens/points";
 import type { ExtraCollateralAPY } from "../../tokens/tokenExtraCollateralAPY";
@@ -48,6 +49,7 @@ export interface PoolOutputDetails {
   rewards: {
     points: Array<Omit<PoolPointsInfo, "pool">>;
     externalAPY: Array<Omit<ExternalApy, "pool">>;
+    extraAPY: Array<Omit<PoolExtraApy, "pool">>;
   };
 }
 

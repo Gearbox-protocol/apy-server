@@ -186,6 +186,7 @@ export const getPoolRewards: Handler = app => async (req, res) => {
         rewards: {
           points: cleared,
           externalAPY: [],
+          extraAPY: [],
         },
       };
 
@@ -208,6 +209,28 @@ export const getPoolRewards: Handler = app => async (req, res) => {
             rewards: {
               points: [],
               externalAPY: cleared,
+              extraAPY: [],
+            },
+          };
+        }
+      }
+    });
+
+    Object.entries(app.state.poolExtraAPY[chainId] || {}).forEach(([p, ex]) => {
+      const pool = p as Address;
+      const cleared = ex;
+
+      if (ex.length > 0) {
+        if (data[pool]) {
+          data[pool].rewards.extraAPY.push(...cleared);
+        } else {
+          data[pool] = {
+            chainId: chainId,
+            pool: pool,
+            rewards: {
+              points: [],
+              externalAPY: [],
+              extraAPY: cleared,
             },
           };
         }
