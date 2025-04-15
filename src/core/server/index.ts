@@ -1,4 +1,4 @@
-import type { RequestHandler } from "express";
+import type { RequestHandler, Response } from "express";
 import type { Address } from "viem";
 
 import type { ExternalApy } from "../../pools";
@@ -9,10 +9,13 @@ import type { ExtraCollateralPointsInfo } from "../../tokens/tokenExtraCollatera
 import type { FarmInfo } from "../../tokens/tokenExtraRewards";
 import type { App } from "../app";
 import type { ApyDetails, GearAPYDetails } from "../app/fetcher";
+import { AppError } from "../errors";
+import { captureException } from "../sentry";
+import { json_stringify } from "../utils";
 
 export type Handler = (app: App) => RequestHandler;
 
-export interface Response {
+export interface ResponseData {
   status: "error" | "ok";
   description?: string;
   data?:
@@ -59,3 +62,24 @@ export function removePool<T extends { pool: Address }>(
 ): Array<Omit<T, "pool">> {
   return l.map(({ pool, ...rest }) => rest);
 }
+
+export const respondWithError = (
+  _: App,
+  res: Response,
+  e: AppError,
+  reportSentry = true,
+) => {
+  res.status(e.httpCode);
+  res.set({ "Content-Type": "application/json" });
+  res.send({ message: e.message, code: e.code });
+
+  const r = AppError.serializeError(e);
+
+  if (reportSentry) captureException({ file: "endpoints/checkResp", error: r });
+  console.error(`[SYSTEM] (CHECK RESPONSE): ${r}`);
+};
+
+export const respondWithJson = (_: App, res: Response, data: ResponseData) => {
+  res.set({ "Content-Type": "application/json" });
+  res.send(json_stringify(data));
+};
