@@ -1,18 +1,9 @@
 import { init } from "@sentry/node";
-import cors from "cors";
 import { config } from "dotenv";
-import express, { json } from "express";
 
-import {
-  checkResp,
-  getAll,
-  getByChainAndToken,
-  getGearAPY,
-  getPoolRewards,
-  getRewardList,
-} from "./src/endpoints";
-import { Fetcher } from "./src/fetcher";
-import { captureException } from "./src/sentry";
+import { initApp } from "./src/core/app";
+import { captureException } from "./src/core/sentry";
+import { initServer } from "./src/server";
 
 config();
 
@@ -25,95 +16,18 @@ init({
   normalizeDepth: 10,
 });
 
-const app = express();
-const port = process.env.PORT ?? 8000;
-app.use(json());
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-    methods: "GET,PUT,POST,OPTIONS",
-    allowedHeaders: "Content-Type,Authorization",
-  }),
-);
+function main() {
+  try {
+    const app = initApp();
 
-const f = new Fetcher();
-void (async function run() {
-  await f.loop();
-})();
-
-app.get("/api/health", (req, res) => {
-  try {
-    res.sendStatus(200);
-  } catch (e) {
-    res.sendStatus(500);
-    captureException({ file: "/api/health", error: e });
-    console.error(`[SYSTEM] (/api/health): `, e);
-  }
-});
-app.get("/api/rewards/gear-apy", (req, res) => {
-  try {
-    void getGearAPY(req, res, f);
-  } catch (e) {
-    res.sendStatus(500);
-    captureException({ file: "/api/rewards/gear-apy", error: e });
-    console.error(`[SYSTEM] (/api/rewards/gear-apy): `, e);
-  }
-});
-app.get("/api/rewards/pools/all", (req, res) => {
-  try {
-    void getPoolRewards(req, res, f);
-  } catch (e) {
-    res.sendStatus(500);
-    captureException({ file: "/api/rewards/pools/all", error: e });
-    console.error(`[SYSTEM] (/api/rewards/pools/all): `, e);
-  }
-});
-app.get("/api/rewards/tokens/all", (req, res) => {
-  try {
-    void getAll(req, res, f);
-  } catch (e) {
-    res.sendStatus(500);
-    captureException({ file: "/api/rewards/tokens/all", error: e });
-    console.error(`[SYSTEM] (/api/rewards/tokens/all): `, e);
-  }
-});
-app.post("/api/rewards/tokens/list", (req, res) => {
-  try {
-    void getRewardList(req, res, f);
-  } catch (e) {
-    res.sendStatus(500);
-    captureException({ file: "/api/rewards/tokens/list", error: e });
-    console.error(`[SYSTEM] (/api/rewards/tokens/list): `, e);
-  }
-});
-app.get("/api/rewards/tokens/:chainId/:tokenAddress", (req, res) => {
-  try {
-    void getByChainAndToken(req, res, f);
-  } catch (e) {
-    res.sendStatus(500);
-    captureException({
-      file: "/api/rewards/tokens/:chainId/:tokenAddress",
-      error: e,
+    const server = initServer({ app });
+    const port = process.env.PORT ?? 8000;
+    server.listen(port, () => {
+      console.log(`[SYSTEM]: Server is running at http://localhost:${port}`);
     });
-    console.error(`[SYSTEM] (/api/rewards/tokens/:chainId/:tokenAddress): `, e);
+  } catch (e) {
+    captureException({ file: "main/app.listen", error: e });
   }
-});
-
-app.get("/api/rewards/list", (req, res) => {
-  checkResp(
-    {
-      status: "error",
-      description: "Method Not Allowed: use POST",
-    },
-    res,
-  );
-});
-
-try {
-  app.listen(port, () => {
-    console.log(`[SYSTEM]: Server is running at http://localhost:${port}`);
-  });
-} catch (e) {
-  captureException({ file: "main/app.listen", error: e });
 }
+
+void main();
