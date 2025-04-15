@@ -43,20 +43,21 @@ interface NetworkState {
 
   poolPointsList: PoolPointsResult;
   poolExternalAPYList: PoolExternalAPYResult;
-
-  gear: GearAPYDetails;
 }
 
 export class Fetcher {
-  public cache: Record<number, NetworkState>;
+  public rewards: Record<number, NetworkState>;
+  public gear: GearAPYDetails | undefined;
 
   constructor() {
-    this.cache = {};
+    this.rewards = {};
+    this.gear = undefined;
   }
 
-  private async getNetworkState(network: NetworkType): Promise<NetworkState> {
+  private async getNetworkRewards(
+    network: NetworkType,
+  ): Promise<Fetcher["rewards"][number]> {
     const [
-      gearAPY,
       points,
 
       poolPoints,
@@ -68,7 +69,6 @@ export class Fetcher {
 
       ...allProtocolAPYs
     ] = await Promise.allSettled([
-      getGearAPY(network),
       getPoints(network),
 
       getPoolPoints(network),
@@ -89,7 +89,7 @@ export class Fetcher {
       getAPYSonic(network),
       getAPYCoinshift(network),
     ]);
-    log({
+    logRewards({
       network,
       allProtocolAPYs,
       pointsList: points,
@@ -99,8 +99,6 @@ export class Fetcher {
 
       poolPointsList: poolPoints,
       poolExternalAPYList: poolExternalAPY,
-
-      gearAPY,
     });
 
     const time = moment().utc().format();
@@ -152,13 +150,7 @@ export class Fetcher {
         ? extraCollateralPoints.value
         : {};
 
-    const gear =
-      gearAPY.status === "fulfilled"
-        ? { ...gearAPY.value, lastUpdated: time }
-        : ({} as GearAPYDetails);
-
     return {
-      gear,
       tokenApyList,
 
       tokenPointsList,
@@ -170,16 +162,30 @@ export class Fetcher {
     };
   }
 
+  private async getGearRewards(): Promise<NonNullable<Fetcher["gear"]>> {
+    const [gearAPY] = await Promise.allSettled([getGearAPY()]);
+    logGear({ gearAPY });
+
+    const time = moment().utc().format();
+
+    const gear =
+      gearAPY.status === "fulfilled"
+        ? { ...gearAPY.value, lastUpdated: time }
+        : ({} as GearAPYDetails);
+
+    return gear;
+  }
+
   async run() {
     console.log("[SYSTEM]: Updating fetcher");
 
     for (const network of Object.values(supportedChains)) {
       const chainId = getChainId(network);
-      const { gear, tokenApyList, ...rest } = await this.getNetworkState(
+      const { tokenApyList, ...rest } = await this.getNetworkRewards(
         network as NetworkType,
       );
 
-      const oldState = this.cache[chainId] || {};
+      const oldState = this.rewards[chainId] || {};
 
       // const entries = Object.entries(stateUpdate) as Array<
       //   [keyof NetworkState, NetworkState[keyof NetworkState]]
@@ -199,20 +205,23 @@ export class Fetcher {
       //   oldState,
       // );
 
-      // partially update gear and apys
-      this.cache[chainId] = {
+      // partially update apys
+      this.rewards[chainId] = {
         ...oldState,
         ...rest,
-        gear: {
-          ...(oldState.gear || {}),
-          ...gear,
-        },
         tokenApyList: {
           ...(oldState.tokenApyList || {}),
           ...tokenApyList,
         },
       };
     }
+
+    // partially update gear state
+    const gear = await this.getGearRewards();
+    this.gear = {
+      ...(this.gear || {}),
+      ...gear,
+    };
   }
 
   async loop() {
@@ -221,7 +230,7 @@ export class Fetcher {
   }
 }
 
-interface LogProps {
+interface LogRewardsProps {
   network: NetworkType;
   allProtocolAPYs: Array<PromiseSettledResult<APYResult>>;
   pointsList: PromiseSettledResult<PointsResult>;
@@ -231,11 +240,9 @@ interface LogProps {
 
   poolPointsList: PromiseSettledResult<PoolPointsResult>;
   poolExternalAPYList: PromiseSettledResult<PoolExternalAPYResult>;
-
-  gearAPY: PromiseSettledResult<GearAPY>;
 }
 
-function log({
+function logRewards({
   network,
   allProtocolAPYs,
   pointsList,
@@ -245,11 +252,9 @@ function log({
 
   poolPointsList,
   poolExternalAPYList,
-
-  gearAPY,
-}: LogProps) {
+}: LogRewardsProps) {
   console.log(`\n`);
-  console.log(`[${network}] FETCHED RESULTS`);
+  console.log(`[${network}] FETCHED REWARDS RESULTS`);
 
   const APY = "PROTOCOL APY";
 
@@ -284,18 +289,6 @@ function log({
     );
   } else {
     console.log(`[${network}] (${APY}): no apy fetched`);
-  }
-
-  const GEAR = "GEAR";
-
-  if (gearAPY.status === "fulfilled") {
-    console.log(`[${network}] (${GEAR}): ${JSON.stringify(gearAPY.value)}`);
-  } else {
-    console.error(`[${network}] (${GEAR}): ${gearAPY.reason}`);
-    captureException({
-      file: `/fetcher/${GEAR}/${network}`,
-      error: gearAPY.reason,
-    });
   }
 
   const POINTS = "POINTS";
@@ -443,6 +436,29 @@ function log({
     captureException({
       file: `/fetcher/${EXTRA_POINTS}/${network}`,
       error: extraCollateralPoints.reason,
+    });
+  }
+}
+
+interface LogGearProps {
+  gearAPY: PromiseSettledResult<GearAPY>;
+}
+
+function logGear({ gearAPY }: LogGearProps) {
+  const network = "All Networks";
+
+  console.log(`\n`);
+  console.log(`[${network}] FETCHED GEAR RESULTS`);
+
+  const GEAR = "GEAR";
+
+  if (gearAPY.status === "fulfilled") {
+    console.log(`[${network}] (${GEAR}): ${JSON.stringify(gearAPY.value)}`);
+  } else {
+    console.error(`[${network}] (${GEAR}): ${gearAPY.reason}`);
+    captureException({
+      file: `/fetcher/${GEAR}/${network}`,
+      error: gearAPY.reason,
     });
   }
 }

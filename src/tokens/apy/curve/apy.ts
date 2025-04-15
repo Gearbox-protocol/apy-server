@@ -237,7 +237,7 @@ interface GearAPY {
   gearPrice: number;
 }
 
-async function getGearAPY(_: NetworkType): Promise<GearAPY> {
+async function getGearAPY(): Promise<GearAPY> {
   const [mainnetVolumes, mainnetFactoryPools] = await Promise.all([
     axios.get<VolumesResponse>(getVolumesURL("Mainnet")),
     axios.get<CurvePoolDataResponse>(getFactoryCryptoURL("Mainnet")),
