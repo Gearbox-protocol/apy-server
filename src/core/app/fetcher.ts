@@ -3,6 +3,8 @@ import type { Address } from "viem";
 
 import type { PoolExternalAPYResult, PoolPointsResult } from "../../pools";
 import { getPoolExternalAPY, getPoolPoints } from "../../pools";
+import { getPoolExtraAPY } from "../../pools/extraAPY/apy";
+import type { PoolExtraAPYResultByChain } from "../../pools/extraAPY/constants";
 import type { Apy, APYResult, GearAPY, TokenAPY } from "../../tokens/apy";
 import {
   getAPYCoinshift,
@@ -26,7 +28,7 @@ import { getTokenExtraCollateralPoints } from "../../tokens/tokenExtraCollateral
 import type { TokenExtraRewardsResult } from "../../tokens/tokenExtraRewards";
 import { getTokenExtraRewards } from "../../tokens/tokenExtraRewards";
 import type { NetworkType } from "../chains";
-import { getChainId, supportedChains } from "../chains";
+import { getChainId, getNetworkType, supportedChains } from "../chains";
 import { captureException } from "../sentry";
 
 export type ApyDetails = Apy & { lastUpdated: string };
@@ -48,10 +50,12 @@ interface NetworkState {
 export class Fetcher {
   public rewards: Record<number, NetworkState>;
   public gear: GearAPYDetails | undefined;
+  public poolExtraAPY: PoolExtraAPYResultByChain;
 
   constructor() {
     this.rewards = {};
     this.gear = undefined;
+    this.poolExtraAPY = {};
   }
 
   private async getNetworkRewards(
@@ -163,22 +167,31 @@ export class Fetcher {
   }
 
   private async getGearRewards(): Promise<NonNullable<Fetcher["gear"]>> {
-    const [gearAPY] = await Promise.allSettled([getGearAPY()]);
-    logGear({ gearAPY });
+    const [gearAPYResponse] = await Promise.allSettled([getGearAPY()]);
+    logGear({ gearAPY: gearAPYResponse });
 
     const time = moment().utc().format();
 
     const gear =
-      gearAPY.status === "fulfilled"
-        ? { ...gearAPY.value, lastUpdated: time }
+      gearAPYResponse.status === "fulfilled"
+        ? { ...gearAPYResponse.value, lastUpdated: time }
         : ({} as GearAPYDetails);
 
     return gear;
   }
 
-  async run() {
-    console.log("[SYSTEM]: Updating fetcher");
+  private async getPoolExtraAPY(): Promise<Fetcher["poolExtraAPY"]> {
+    const [extraAPYResponse] = await Promise.allSettled([getPoolExtraAPY()]);
+    logPoolExtraAPY({ poolExtraAPY: extraAPYResponse });
 
+    const extraAPY =
+      extraAPYResponse.status === "fulfilled" ? extraAPYResponse.value : {};
+
+    return extraAPY;
+  }
+
+  private async runNetworkRewards() {
+    console.log("[SYSTEM]: Updating rewards list");
     for (const network of Object.values(supportedChains)) {
       const chainId = getChainId(network);
       const { tokenApyList, ...rest } = await this.getNetworkRewards(
@@ -215,7 +228,10 @@ export class Fetcher {
         },
       };
     }
+  }
 
+  private async runGear() {
+    console.log("[SYSTEM]: Updating gear");
     // partially update gear state
     const gear = await this.getGearRewards();
     this.gear = {
@@ -224,9 +240,40 @@ export class Fetcher {
     };
   }
 
+  private async runPoolExtraRewards() {
+    console.log("[SYSTEM]: Updating pool extra rewards");
+    // partially update gear state
+    const extra = await this.getPoolExtraAPY();
+
+    Object.entries(extra).forEach(([ch, chainAPY]) => {
+      const chainId = Number(ch);
+
+      const oldState = this.poolExtraAPY[chainId] || {};
+
+      this.poolExtraAPY[chainId] = {
+        ...oldState,
+        ...chainAPY,
+      };
+    });
+  }
+
   async loop() {
-    void this.run();
-    setInterval(this.run.bind(this), 60 * 60 * 1000); // 1 hr
+    const hourTask = async () => {
+      await this.runNetworkRewards();
+      await this.runGear();
+    };
+
+    const quarterTask = async () => {
+      await this.runPoolExtraRewards();
+    };
+
+    void (async () => {
+      await hourTask();
+      await quarterTask();
+    })();
+
+    setInterval(hourTask, 60 * 60 * 1000); // 60min
+    setInterval(quarterTask, 15 * 60 * 1000); // 15 min
   }
 }
 
@@ -459,6 +506,42 @@ function logGear({ gearAPY }: LogGearProps) {
     captureException({
       file: `/fetcher/${GEAR}/${network}`,
       error: gearAPY.reason,
+    });
+  }
+}
+
+interface LogPoolExtraAPYProps {
+  poolExtraAPY: PromiseSettledResult<PoolExtraAPYResultByChain>;
+}
+
+function logPoolExtraAPY({ poolExtraAPY }: LogPoolExtraAPYProps) {
+  const defaultNetwork = "All Networks";
+
+  const EXTRA_APY = "POOL EXTRA APY";
+
+  if (poolExtraAPY.status === "fulfilled") {
+    Object.entries(poolExtraAPY.value).forEach(([chainId, chainAPY]) => {
+      const network = getNetworkType(chainId) || chainId;
+
+      console.log(`\n`);
+      console.log(`[${network}] FETCHED POOL EXTRA APY RESULTS`);
+
+      Object.values(chainAPY).forEach(poolAPY => {
+        const poolString = [
+          poolAPY[0]?.token,
+          poolAPY.map(apy => [apy.rewardTokenSymbol, apy.apy].join("/")),
+        ].join(": ");
+
+        console.log(`[${network}] (${EXTRA_APY}): ${poolString}`);
+
+        return undefined;
+      });
+    });
+  } else {
+    console.error(`[${defaultNetwork}] (${EXTRA_APY}): ${poolExtraAPY.reason}`);
+    captureException({
+      file: `/fetcher/${EXTRA_APY}/${defaultNetwork}`,
+      error: poolExtraAPY.reason,
     });
   }
 }

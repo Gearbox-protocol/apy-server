@@ -1,6 +1,6 @@
 {
   "root": true,
-  "extends": ["@gearbox-protocol/eslint-config/react"],
+  "extends": ["@gearbox-protocol/eslint-config"],
   "parserOptions": {
     "project": ["./tsconfig.json"],
   },
