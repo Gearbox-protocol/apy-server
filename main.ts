@@ -1,7 +1,7 @@
 import { init } from "@sentry/node";
 import { config } from "dotenv";
 
-import { Fetcher } from "./src/core/app/fetcher";
+import { initApp } from "./src/core/app";
 import { captureException } from "./src/core/sentry";
 import { initServer } from "./src/server";
 
@@ -18,14 +18,10 @@ init({
 
 function main() {
   try {
-    const app = new Fetcher();
-    void (async function run() {
-      await app.loop();
-    })();
-
-    const port = process.env.PORT ?? 8000;
+    const app = initApp();
 
     const server = initServer({ app });
+    const port = process.env.PORT ?? 8000;
     server.listen(port, () => {
       console.log(`[SYSTEM]: Server is running at http://localhost:${port}`);
     });

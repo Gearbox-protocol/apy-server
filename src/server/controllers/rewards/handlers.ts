@@ -19,9 +19,9 @@ export const getTokenRewards: Handler = app => async (req, res) => {
   try {
     const { chainId } = validateReq({ chainId: req.query.chain_id });
 
-    const data = Object.entries(app.cache[chainId]?.tokenApyList || {}).reduce<
-      Record<Address, TokenOutputDetails>
-    >((acc, [t, a]) => {
+    const data = Object.entries(
+      app.state.cache[chainId]?.tokenApyList || {},
+    ).reduce<Record<Address, TokenOutputDetails>>((acc, [t, a]) => {
       const cleared = removeSymbolAndAddress(a.apys);
 
       acc[t as Address] = {
@@ -40,7 +40,7 @@ export const getTokenRewards: Handler = app => async (req, res) => {
       return acc;
     }, {});
 
-    Object.entries(app.cache[chainId]?.tokenPointsList || {}).forEach(
+    Object.entries(app.state.cache[chainId]?.tokenPointsList || {}).forEach(
       ([t, p]) => {
         const token = t as Address;
         const cleared = removeSymbolAndAddress([p]);
@@ -64,7 +64,7 @@ export const getTokenRewards: Handler = app => async (req, res) => {
       },
     );
 
-    Object.entries(app.cache[chainId]?.tokenExtraRewards || {}).forEach(
+    Object.entries(app.state.cache[chainId]?.tokenExtraRewards || {}).forEach(
       ([t, ex]) => {
         const token = t as Address;
         const cleared = removeSymbolAndAddress(ex);
@@ -90,34 +90,34 @@ export const getTokenRewards: Handler = app => async (req, res) => {
       },
     );
 
-    Object.entries(app.cache[chainId]?.tokenExtraCollateralAPY || {}).forEach(
-      ([t, ex]) => {
-        const token = t as Address;
-        const cleared = removeSymbolAndAddress(ex);
+    Object.entries(
+      app.state.cache[chainId]?.tokenExtraCollateralAPY || {},
+    ).forEach(([t, ex]) => {
+      const token = t as Address;
+      const cleared = removeSymbolAndAddress(ex);
 
-        if (ex.length > 0) {
-          if (data[token]) {
-            data[token].rewards.extraCollateralAPY.push(...cleared);
-          } else {
-            data[token] = {
-              chainId: chainId,
-              address: t,
-              symbol: ex[0].symbol,
-              rewards: {
-                apy: [],
-                points: [],
-                extraRewards: [],
-                extraCollateralAPY: cleared,
-                extraCollateralPoints: [],
-              },
-            };
-          }
+      if (ex.length > 0) {
+        if (data[token]) {
+          data[token].rewards.extraCollateralAPY.push(...cleared);
+        } else {
+          data[token] = {
+            chainId: chainId,
+            address: t,
+            symbol: ex[0].symbol,
+            rewards: {
+              apy: [],
+              points: [],
+              extraRewards: [],
+              extraCollateralAPY: cleared,
+              extraCollateralPoints: [],
+            },
+          };
         }
-      },
-    );
+      }
+    });
 
     Object.entries(
-      app.cache[chainId]?.tokenExtraCollateralPoints || {},
+      app.state.cache[chainId]?.tokenExtraCollateralPoints || {},
     ).forEach(([t, p]) => {
       const token = t as Address;
       const cleared = removeSymbolAndAddress([p]);
@@ -154,13 +154,13 @@ export const getGearAPY: Handler = app => async (req, res) => {
 
     const response: ResponseData = {
       data: {
-        base: app.cache[chainId]?.gear?.base || 0,
-        crv: app.cache[chainId]?.gear?.gear || 0,
-        gear: app.cache[chainId]?.gear?.crv || 0,
+        base: app.state.cache[chainId]?.gear?.base || 0,
+        crv: app.state.cache[chainId]?.gear?.gear || 0,
+        gear: app.state.cache[chainId]?.gear?.crv || 0,
 
-        gearPrice: app.cache[chainId]?.gear?.gearPrice || 0,
+        gearPrice: app.state.cache[chainId]?.gear?.gearPrice || 0,
 
-        lastUpdated: app.cache[chainId]?.gear?.lastUpdated || "0",
+        lastUpdated: app.state.cache[chainId]?.gear?.lastUpdated || "0",
       },
       status: "ok",
     };
@@ -176,7 +176,7 @@ export const getPoolRewards: Handler = app => async (req, res) => {
     const { chainId } = validateReq({ chainId: req.query.chain_id });
 
     const data = Object.entries(
-      app.cache[chainId]?.poolPointsList || {},
+      app.state.cache[chainId]?.poolPointsList || {},
     ).reduce<Record<Address, PoolOutputDetails>>((acc, [p, rd]) => {
       const pool = p as Address;
       const cleared = removePool(rd);
@@ -194,7 +194,7 @@ export const getPoolRewards: Handler = app => async (req, res) => {
       return acc;
     }, {});
 
-    Object.entries(app.cache[chainId]?.poolExternalAPYList || {}).forEach(
+    Object.entries(app.state.cache[chainId]?.poolExternalAPYList || {}).forEach(
       ([p, ex]) => {
         const pool = p as Address;
         const cleared = removePool(ex);
