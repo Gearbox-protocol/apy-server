@@ -529,7 +529,9 @@ function logPoolExtraAPY({ poolExtraAPY }: LogPoolExtraAPYProps) {
       Object.values(chainAPY).forEach(poolAPY => {
         const poolString = [
           poolAPY[0]?.token,
-          poolAPY.map(apy => [apy.rewardTokenSymbol, apy.apy].join("/")),
+          poolAPY
+            .map(apy => [apy.rewardTokenSymbol, apy.apy].join("/"))
+            .join(", "),
         ].join(": ");
 
         console.log(`[${network}] (${EXTRA_APY}): ${poolString}`);
