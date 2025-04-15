@@ -144,7 +144,12 @@ export const getTokenRewards: Handler = app => async (req, res) => {
 
     respondWithJson(app, res, response);
   } catch (e) {
-    respondWithError(app, res, AppError.getAppError(e));
+    respondWithError({
+      app,
+      res,
+      error: AppError.getAppError(e),
+      file: "rewards/handlers/getTokenRewards",
+    });
   }
 };
 
@@ -165,7 +170,12 @@ export const getGearAPY: Handler = app => async (_, res) => {
 
     respondWithJson(app, res, response);
   } catch (e) {
-    respondWithError(app, res, AppError.getAppError(e));
+    respondWithError({
+      app,
+      res,
+      error: AppError.getAppError(e),
+      file: "rewards/handlers/getGearAPY",
+    });
   }
 };
 
@@ -244,6 +254,11 @@ export const getPoolRewards: Handler = app => async (req, res) => {
 
     respondWithJson(app, res, response);
   } catch (e) {
-    respondWithError(app, res, AppError.getAppError(e));
+    respondWithError({
+      app,
+      res,
+      error: AppError.getAppError(e),
+      file: "rewards/handlers/getPoolRewards",
+    });
   }
 };

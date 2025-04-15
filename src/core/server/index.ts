@@ -65,12 +65,20 @@ export function removePool<T extends { pool: Address }>(
   return l.map(({ pool, ...rest }) => rest);
 }
 
-export const respondWithError = (
-  _: App,
-  res: Response,
-  e: AppError,
+interface RespondWithErrorProps {
+  app: App;
+  res: Response;
+  error: AppError;
+
+  file: string;
+  reportSentry?: boolean;
+}
+
+export const respondWithError = ({
+  res,
+  error: e,
   reportSentry = true,
-) => {
+}: RespondWithErrorProps) => {
   res.status(e.httpCode);
   res.set({ "Content-Type": "application/json" });
   res.send({ message: e.message, code: e.code });
