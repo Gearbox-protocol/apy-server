@@ -1,8 +1,8 @@
 import { isAddress } from "viem";
 
 import { isSupportedNetwork } from "../chains";
-import type { Response } from "../response";
 import { captureException } from "../sentry";
+import type { Response } from "../server";
 import { toJSONWithBigint } from "../utils";
 
 export function checkChainId(data: any): [Response, number] {

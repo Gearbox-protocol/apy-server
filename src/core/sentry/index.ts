@@ -5,10 +5,9 @@ interface SentryError {
   error: unknown;
 }
 
-export const APP_NAME_TAG = "app.name";
-export const APP_PATH_TAG = "app.path";
-export const ERR_DESCRIPTION_TAG = "err.description";
-export const APP_NAME = "gearbox_apy_server";
+const APP_NAME_TAG = "app.name";
+const APP_PATH_TAG = "app.path";
+const APP_NAME = "gearbox_apy_server";
 
 export function captureException({ file, error: e }: SentryError) {
   Sentry.withScope(scope => {

@@ -1,12 +1,16 @@
+import type { RequestHandler } from "express";
 import type { Address } from "viem";
 
-import type { ApyDetails, GearAPYDetails } from "../../fetcher";
 import type { ExternalApy } from "../../pools";
 import type { PoolPointsInfo } from "../../pools/points";
 import type { PointsInfo } from "../../tokens/points";
 import type { ExtraCollateralAPY } from "../../tokens/tokenExtraCollateralAPY";
 import type { ExtraCollateralPointsInfo } from "../../tokens/tokenExtraCollateralPoints";
 import type { FarmInfo } from "../../tokens/tokenExtraRewards";
+import type { App } from "../app";
+import type { ApyDetails, GearAPYDetails } from "../app/fetcher";
+
+export type Handler = (app: App) => RequestHandler;
 
 export interface Response {
   status: "error" | "ok";

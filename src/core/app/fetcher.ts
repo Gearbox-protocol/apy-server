@@ -1,12 +1,9 @@
 import moment from "moment";
 import type { Address } from "viem";
 
-import type { NetworkType } from "./core/chains";
-import { getChainId, supportedChains } from "./core/chains";
-import { captureException } from "./core/sentry";
-import type { PoolExternalAPYResult, PoolPointsResult } from "./pools";
-import { getPoolExternalAPY, getPoolPoints } from "./pools";
-import type { Apy, APYResult, GearAPY, TokenAPY } from "./tokens/apy";
+import type { PoolExternalAPYResult, PoolPointsResult } from "../../pools";
+import { getPoolExternalAPY, getPoolPoints } from "../../pools";
+import type { Apy, APYResult, GearAPY, TokenAPY } from "../../tokens/apy";
 import {
   getAPYCoinshift,
   getAPYConstant,
@@ -19,15 +16,18 @@ import {
   getAPYTreehouse,
   getAPYYearn,
   getGearAPY,
-} from "./tokens/apy";
-import type { PointsResult } from "./tokens/points";
-import { getPoints } from "./tokens/points";
-import type { TokenExtraCollateralAPYResult } from "./tokens/tokenExtraCollateralAPY";
-import { getTokenExtraCollateralAPY } from "./tokens/tokenExtraCollateralAPY";
-import type { TokenExtraCollateralPointsResult } from "./tokens/tokenExtraCollateralPoints";
-import { getTokenExtraCollateralPoints } from "./tokens/tokenExtraCollateralPoints";
-import type { TokenExtraRewardsResult } from "./tokens/tokenExtraRewards";
-import { getTokenExtraRewards } from "./tokens/tokenExtraRewards";
+} from "../../tokens/apy";
+import type { PointsResult } from "../../tokens/points";
+import { getPoints } from "../../tokens/points";
+import type { TokenExtraCollateralAPYResult } from "../../tokens/tokenExtraCollateralAPY";
+import { getTokenExtraCollateralAPY } from "../../tokens/tokenExtraCollateralAPY";
+import type { TokenExtraCollateralPointsResult } from "../../tokens/tokenExtraCollateralPoints";
+import { getTokenExtraCollateralPoints } from "../../tokens/tokenExtraCollateralPoints";
+import type { TokenExtraRewardsResult } from "../../tokens/tokenExtraRewards";
+import { getTokenExtraRewards } from "../../tokens/tokenExtraRewards";
+import type { NetworkType } from "../chains";
+import { getChainId, supportedChains } from "../chains";
+import { captureException } from "../sentry";
 
 export type ApyDetails = Apy & { lastUpdated: string };
 type TokenDetails = TokenAPY<ApyDetails>;

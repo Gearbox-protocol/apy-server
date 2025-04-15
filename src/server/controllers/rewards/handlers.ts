@@ -1,24 +1,24 @@
 import type { Address } from "viem";
 
 import type {
+  Handler,
   PoolOutputDetails,
   Response,
   TokenOutputDetails,
-} from "./core/response";
-import { removePool, removeSymbolAndAddress } from "./core/response";
-import { toJSONWithBigint } from "./core/utils";
-import { checkChainId, checkResp } from "./core/validation";
-import type { Fetcher } from "./fetcher";
+} from "../../../core/server";
+import { removePool, removeSymbolAndAddress } from "../../../core/server";
+import { toJSONWithBigint } from "../../../core/utils";
+import { checkChainId, checkResp } from "../../../core/validation";
 
-export function getAll(req: any, res: any, fetcher: Fetcher) {
+export const getTokenRewards: Handler = app => async (req, res) => {
   const [isChainIdValid, chainId] = checkChainId(req.query.chain_id);
   if (!checkResp(isChainIdValid, res)) {
     return;
   }
 
-  const data = Object.entries(
-    fetcher.cache[chainId]?.tokenApyList || {},
-  ).reduce<Record<Address, TokenOutputDetails>>((acc, [t, a]) => {
+  const data = Object.entries(app.cache[chainId]?.tokenApyList || {}).reduce<
+    Record<Address, TokenOutputDetails>
+  >((acc, [t, a]) => {
     const cleared = removeSymbolAndAddress(a.apys);
 
     acc[t as Address] = {
@@ -37,7 +37,7 @@ export function getAll(req: any, res: any, fetcher: Fetcher) {
     return acc;
   }, {});
 
-  Object.entries(fetcher.cache[chainId]?.tokenPointsList || {}).forEach(
+  Object.entries(app.cache[chainId]?.tokenPointsList || {}).forEach(
     ([t, p]) => {
       const token = t as Address;
       const cleared = removeSymbolAndAddress([p]);
@@ -61,7 +61,7 @@ export function getAll(req: any, res: any, fetcher: Fetcher) {
     },
   );
 
-  Object.entries(fetcher.cache[chainId]?.tokenExtraRewards || {}).forEach(
+  Object.entries(app.cache[chainId]?.tokenExtraRewards || {}).forEach(
     ([t, ex]) => {
       const token = t as Address;
       const cleared = removeSymbolAndAddress(ex);
@@ -87,7 +87,7 @@ export function getAll(req: any, res: any, fetcher: Fetcher) {
     },
   );
 
-  Object.entries(fetcher.cache[chainId]?.tokenExtraCollateralAPY || {}).forEach(
+  Object.entries(app.cache[chainId]?.tokenExtraCollateralAPY || {}).forEach(
     ([t, ex]) => {
       const token = t as Address;
       const cleared = removeSymbolAndAddress(ex);
@@ -113,37 +113,37 @@ export function getAll(req: any, res: any, fetcher: Fetcher) {
     },
   );
 
-  Object.entries(
-    fetcher.cache[chainId]?.tokenExtraCollateralPoints || {},
-  ).forEach(([t, p]) => {
-    const token = t as Address;
-    const cleared = removeSymbolAndAddress([p]);
+  Object.entries(app.cache[chainId]?.tokenExtraCollateralPoints || {}).forEach(
+    ([t, p]) => {
+      const token = t as Address;
+      const cleared = removeSymbolAndAddress([p]);
 
-    if (data[token]) {
-      data[token].rewards.extraCollateralPoints.push(...cleared);
-    } else {
-      data[token] = {
-        chainId: chainId,
-        address: t,
-        symbol: p.symbol,
-        rewards: {
-          apy: [],
-          points: [],
-          extraRewards: [],
-          extraCollateralAPY: [],
-          extraCollateralPoints: cleared,
-        },
-      };
-    }
-  });
+      if (data[token]) {
+        data[token].rewards.extraCollateralPoints.push(...cleared);
+      } else {
+        data[token] = {
+          chainId: chainId,
+          address: t,
+          symbol: p.symbol,
+          rewards: {
+            apy: [],
+            points: [],
+            extraRewards: [],
+            extraCollateralAPY: [],
+            extraCollateralPoints: cleared,
+          },
+        };
+      }
+    },
+  );
 
   const response: Response = { data: Object.values(data), status: "ok" };
 
   res.set({ "Content-Type": "application/json" });
   res.send(toJSONWithBigint(response));
-}
+};
 
-export function getGearAPY(req: any, res: any, fetcher: Fetcher) {
+export const getGearAPY: Handler = app => async (req, res) => {
   const [isChainIdValid, chainId] = checkChainId(req.query.chain_id);
   if (!checkResp(isChainIdValid, res)) {
     return;
@@ -151,30 +151,30 @@ export function getGearAPY(req: any, res: any, fetcher: Fetcher) {
 
   const response: Response = {
     data: {
-      base: fetcher.cache[chainId]?.gear?.base || 0,
-      crv: fetcher.cache[chainId]?.gear?.gear || 0,
-      gear: fetcher.cache[chainId]?.gear?.crv || 0,
+      base: app.cache[chainId]?.gear?.base || 0,
+      crv: app.cache[chainId]?.gear?.gear || 0,
+      gear: app.cache[chainId]?.gear?.crv || 0,
 
-      gearPrice: fetcher.cache[chainId]?.gear?.gearPrice || 0,
+      gearPrice: app.cache[chainId]?.gear?.gearPrice || 0,
 
-      lastUpdated: fetcher.cache[chainId]?.gear?.lastUpdated || "0",
+      lastUpdated: app.cache[chainId]?.gear?.lastUpdated || "0",
     },
     status: "ok",
   };
 
   res.set({ "Content-Type": "application/json" });
   res.send(toJSONWithBigint(response));
-}
+};
 
-export function getPoolRewards(req: any, res: any, fetcher: Fetcher) {
+export const getPoolRewards: Handler = app => async (req, res) => {
   const [isChainIdValid, chainId] = checkChainId(req.query.chain_id);
   if (!checkResp(isChainIdValid, res)) {
     return;
   }
 
-  const data = Object.entries(
-    fetcher.cache[chainId]?.poolPointsList || {},
-  ).reduce<Record<Address, PoolOutputDetails>>((acc, [p, rd]) => {
+  const data = Object.entries(app.cache[chainId]?.poolPointsList || {}).reduce<
+    Record<Address, PoolOutputDetails>
+  >((acc, [p, rd]) => {
     const pool = p as Address;
     const cleared = removePool(rd);
 
@@ -191,7 +191,7 @@ export function getPoolRewards(req: any, res: any, fetcher: Fetcher) {
     return acc;
   }, {});
 
-  Object.entries(fetcher.cache[chainId]?.poolExternalAPYList || {}).forEach(
+  Object.entries(app.cache[chainId]?.poolExternalAPYList || {}).forEach(
     ([p, ex]) => {
       const pool = p as Address;
       const cleared = removePool(ex);
@@ -220,4 +220,4 @@ export function getPoolRewards(req: any, res: any, fetcher: Fetcher) {
 
   res.set({ "Content-Type": "application/json" });
   res.send(toJSONWithBigint(response));
-}
+};

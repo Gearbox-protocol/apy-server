@@ -1,11 +1,9 @@
 import { init } from "@sentry/node";
-import cors from "cors";
 import { config } from "dotenv";
-import express, { json } from "express";
 
+import { Fetcher } from "./src/core/app/fetcher";
 import { captureException } from "./src/core/sentry";
-import { getAll, getGearAPY, getPoolRewards } from "./src/endpoints";
-import { Fetcher } from "./src/fetcher";
+import { initServer } from "./src/server";
 
 config();
 
@@ -18,64 +16,22 @@ init({
   normalizeDepth: 10,
 });
 
-const app = express();
-const port = process.env.PORT ?? 8000;
-app.use(json());
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-    methods: "GET,PUT,POST,OPTIONS",
-    allowedHeaders: "Content-Type,Authorization",
-  }),
-);
+function main() {
+  try {
+    const app = new Fetcher();
+    void (async function run() {
+      await app.loop();
+    })();
 
-const f = new Fetcher();
-void (async function run() {
-  await f.loop();
-})();
+    const port = process.env.PORT ?? 8000;
 
-app.get("/api/health", (req, res) => {
-  try {
-    res.sendStatus(200);
+    const server = initServer({ app });
+    server.listen(port, () => {
+      console.log(`[SYSTEM]: Server is running at http://localhost:${port}`);
+    });
   } catch (e) {
-    res.sendStatus(500);
-    captureException({ file: "/api/health", error: e });
-    console.error(`[SYSTEM] (/api/health): `, e);
+    captureException({ file: "main/app.listen", error: e });
   }
-});
-app.get("/api/rewards/gear-apy", (req, res) => {
-  try {
-    void getGearAPY(req, res, f);
-  } catch (e) {
-    res.sendStatus(500);
-    captureException({ file: "/api/rewards/gear-apy", error: e });
-    console.error(`[SYSTEM] (/api/rewards/gear-apy): `, e);
-  }
-});
-app.get("/api/rewards/pools/all", (req, res) => {
-  try {
-    void getPoolRewards(req, res, f);
-  } catch (e) {
-    res.sendStatus(500);
-    captureException({ file: "/api/rewards/pools/all", error: e });
-    console.error(`[SYSTEM] (/api/rewards/pools/all): `, e);
-  }
-});
-app.get("/api/rewards/tokens/all", (req, res) => {
-  try {
-    void getAll(req, res, f);
-  } catch (e) {
-    res.sendStatus(500);
-    captureException({ file: "/api/rewards/tokens/all", error: e });
-    console.error(`[SYSTEM] (/api/rewards/tokens/all): `, e);
-  }
-});
-
-try {
-  app.listen(port, () => {
-    console.log(`[SYSTEM]: Server is running at http://localhost:${port}`);
-  });
-} catch (e) {
-  captureException({ file: "main/app.listen", error: e });
 }
+
+void main();
