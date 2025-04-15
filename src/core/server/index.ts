@@ -75,10 +75,8 @@ export const respondWithError = (
   res.set({ "Content-Type": "application/json" });
   res.send({ message: e.message, code: e.code });
 
-  const r = AppError.serializeError(e);
-
-  if (reportSentry) captureException({ file: "endpoints/checkResp", error: r });
-  console.error(`[SYSTEM] (CHECK RESPONSE): ${r}`);
+  if (reportSentry) captureException({ file: "endpoints/checkResp", error: e });
+  console.error(`[SYSTEM] (CHECK RESPONSE): ${AppError.serializeError(e)}`);
 };
 
 export const respondWithJson = (_: App, res: Response, data: ResponseData) => {
