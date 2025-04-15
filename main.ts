@@ -4,14 +4,7 @@ import { config } from "dotenv";
 import express, { json } from "express";
 
 import { captureException } from "./src/core/sentry";
-import {
-  checkResp,
-  getAll,
-  getByChainAndToken,
-  getGearAPY,
-  getPoolRewards,
-  getRewardList,
-} from "./src/endpoints";
+import { getAll, getGearAPY, getPoolRewards } from "./src/endpoints";
 import { Fetcher } from "./src/fetcher";
 
 config();
@@ -77,37 +70,6 @@ app.get("/api/rewards/tokens/all", (req, res) => {
     captureException({ file: "/api/rewards/tokens/all", error: e });
     console.error(`[SYSTEM] (/api/rewards/tokens/all): `, e);
   }
-});
-app.post("/api/rewards/tokens/list", (req, res) => {
-  try {
-    void getRewardList(req, res, f);
-  } catch (e) {
-    res.sendStatus(500);
-    captureException({ file: "/api/rewards/tokens/list", error: e });
-    console.error(`[SYSTEM] (/api/rewards/tokens/list): `, e);
-  }
-});
-app.get("/api/rewards/tokens/:chainId/:tokenAddress", (req, res) => {
-  try {
-    void getByChainAndToken(req, res, f);
-  } catch (e) {
-    res.sendStatus(500);
-    captureException({
-      file: "/api/rewards/tokens/:chainId/:tokenAddress",
-      error: e,
-    });
-    console.error(`[SYSTEM] (/api/rewards/tokens/:chainId/:tokenAddress): `, e);
-  }
-});
-
-app.get("/api/rewards/list", (req, res) => {
-  checkResp(
-    {
-      status: "error",
-      description: "Method Not Allowed: use POST",
-    },
-    res,
-  );
 });
 
 try {
