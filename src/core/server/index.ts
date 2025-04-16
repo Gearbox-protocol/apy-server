@@ -1,4 +1,4 @@
-import type { RequestHandler, Response } from "express";
+import type { Request, RequestHandler, Response } from "express";
 import type { Address } from "viem";
 
 import type { ExternalApy } from "../../pools";
@@ -67,23 +67,27 @@ export function removePool<T extends { pool: Address }>(
 
 interface RespondWithErrorProps {
   app: App;
+  req: Request;
   res: Response;
-  error: AppError;
 
+  error: AppError;
   file: string;
   reportSentry?: boolean;
 }
 
 export const respondWithError = ({
   res,
+  req,
+
   error: e,
+  file,
   reportSentry = true,
 }: RespondWithErrorProps) => {
   res.status(e.httpCode);
   res.set({ "Content-Type": "application/json" });
   res.send({ message: e.message, code: e.code });
 
-  if (reportSentry) captureException({ file: "endpoints/checkResp", error: e });
+  if (reportSentry) captureException({ file, req, error: e });
   console.error(`[SYSTEM] (CHECK RESPONSE): ${AppError.serializeError(e)}`);
 };
 

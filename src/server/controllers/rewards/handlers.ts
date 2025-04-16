@@ -146,6 +146,7 @@ export const getTokenRewards: Handler = app => async (req, res) => {
   } catch (e) {
     respondWithError({
       app,
+      req,
       res,
       error: AppError.getAppError(e),
       file: "rewards/handlers/getTokenRewards",
@@ -153,7 +154,7 @@ export const getTokenRewards: Handler = app => async (req, res) => {
   }
 };
 
-export const getGearAPY: Handler = app => async (_, res) => {
+export const getGearAPY: Handler = app => async (req, res) => {
   try {
     const response: ResponseData = {
       data: {
@@ -172,6 +173,7 @@ export const getGearAPY: Handler = app => async (_, res) => {
   } catch (e) {
     respondWithError({
       app,
+      req,
       res,
       error: AppError.getAppError(e),
       file: "rewards/handlers/getGearAPY",
@@ -256,6 +258,7 @@ export const getPoolRewards: Handler = app => async (req, res) => {
   } catch (e) {
     respondWithError({
       app,
+      req,
       res,
       error: AppError.getAppError(e),
       file: "rewards/handlers/getPoolRewards",
