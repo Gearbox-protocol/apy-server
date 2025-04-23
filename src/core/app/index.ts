@@ -7,6 +7,7 @@ export interface App {
 }
 
 export function initApp(): App {
+  console.log("[SYSTEM]: Starting app");
   const state = new Fetcher();
   void (async function run() {
     await state.loop();

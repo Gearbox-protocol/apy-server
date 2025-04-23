@@ -530,7 +530,11 @@ function logPoolExtraAPY({ poolExtraAPY }: LogPoolExtraAPYProps) {
         const poolString = [
           poolAPY[0]?.token,
           poolAPY
-            .map(apy => [apy.rewardTokenSymbol, apy.apy].join("/"))
+            .map(apy =>
+              [apy.rewardTokenSymbol, apy.apy, `ts=${apy.endTimestamp}`].join(
+                "/",
+              ),
+            )
             .join(", "),
         ].join(": ");
 

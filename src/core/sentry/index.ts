@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/node";
+import { init } from "@sentry/node";
 import type { Request } from "express";
 
 import { AppError } from "../errors";
@@ -66,3 +67,16 @@ function getRequestData(req: Request) {
     route: req.route,
   });
 }
+
+export const initSentry = () => {
+  console.log("[SYSTEM]: Starting sentry");
+
+  return init({
+    dsn: "https://068cd79b8537ac37326fd7e917c0df41@o4509052850470912.ingest.us.sentry.io/4509052850733057",
+
+    // Set sampling rate for profiling - this is evaluated only once per SDK.init
+    profileSessionSampleRate: 1.0,
+    enabled: true,
+    normalizeDepth: 10,
+  });
+};
