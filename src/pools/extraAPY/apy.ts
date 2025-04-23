@@ -1,3 +1,4 @@
+import type { AxiosResponse } from "axios";
 import axios from "axios";
 import moment from "moment";
 import type { Address } from "viem";
@@ -29,25 +30,27 @@ export const getPoolExtraAPY: PoolExtraAPYHandler = async () => {
   // so we need to get all aprIds for campaigns with multiple rewards and then get the campaign by aprId
   const aprIdsList = currentActiveCampaigns
     .map(c =>
-      // apr token for campaigns with a single reward is obvious
-      c.aprRecord.breakdowns.length > 1
-        ? c.aprRecord.breakdowns.map(b => {
-            return {
-              campaignId: c.id,
-              aprId: b.identifier,
-            };
-          })
-        : [],
+      c.aprRecord.breakdowns.map(b => {
+        return {
+          campaignId: c.id,
+          aprId: b.identifier,
+        };
+      }),
     )
     .flat(1);
 
-  const aprIdsResponse = await Promise.allSettled(
-    aprIdsList.map(id =>
+  const aprIdsResponse: Array<
+    PromiseSettledResult<AxiosResponse<MerkleXYZV4RewardCampaignResponse, any>>
+  > = [];
+
+  for (const id of aprIdsList) {
+    const resp = await Promise.allSettled([
       axios.get<MerkleXYZV4RewardCampaignResponse>(
         MerkleXYZApi.getGearboxRewardCampaignUrl(id.aprId),
       ),
-    ),
-  );
+    ]);
+    aprIdsResponse.push(...resp);
+  }
 
   const aprCampaignByAPRId = aprIdsResponse.reduce<
     Record<Address, Array<MerklXYZV4RewardCampaign> | undefined>
