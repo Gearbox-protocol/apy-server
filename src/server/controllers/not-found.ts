@@ -3,6 +3,7 @@ import { type Handler, respondWithError } from "../../core/server";
 
 const PATHS_TO_IGNORE: Record<string, boolean> = {
   "/robots.txt": true,
+  "/favicon.ico": true,
   "/": true,
 };
 
