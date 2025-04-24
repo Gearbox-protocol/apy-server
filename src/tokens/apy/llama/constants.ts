@@ -81,7 +81,7 @@ export const TOKENS: Record<
     },
 
     "0x444FA0ffb033265591895b66c81c2e5fF606E097": {
-      id: "e91e23af-9099-45d9-8ba5-ea5b4638e453",
+      id: "d826a92b-2bd2-4fae-8483-db1ef8888aee",
       symbol: "stkcvxRLUSDUSDC",
     },
 
