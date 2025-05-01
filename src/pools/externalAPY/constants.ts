@@ -33,4 +33,6 @@ export const POOL_EXTERNAL_APY: Record<NetworkType, Array<ExternalApy>> = {
   MegaETH: [],
   Berachain: [],
   Avalanche: [],
+  BNB: [],
+  WorldChain: [],
 };

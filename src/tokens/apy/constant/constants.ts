@@ -49,6 +49,8 @@ export const TOKENS: Record<
   MegaETH: {},
   Berachain: {},
   Avalanche: {},
+  BNB: {},
+  WorldChain: {},
 } as const;
 
 export const PROTOCOL = "constant";

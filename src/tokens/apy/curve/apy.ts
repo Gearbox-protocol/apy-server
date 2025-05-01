@@ -87,6 +87,8 @@ const CURVE_CHAINS: Record<NetworkType, string> = {
   MegaETH: "not_implemented",
   Berachain: "not_implemented",
   Avalanche: "not_implemented",
+  BNB: "not_implemented",
+  WorldChain: "not_implemented",
 };
 
 // const CRYPTO = "https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/crypto";

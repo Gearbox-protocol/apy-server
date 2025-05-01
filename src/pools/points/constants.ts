@@ -95,4 +95,6 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
   MegaETH: [],
   Berachain: [],
   Avalanche: [],
+  BNB: [],
+  WorldChain: [],
 };

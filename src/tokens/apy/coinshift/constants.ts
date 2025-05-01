@@ -9,6 +9,8 @@ export const TOKENS = {
   MegaETH: {},
   Berachain: {},
   Avalanche: {},
+  BNB: {},
+  WorldChain: {},
 } as const;
 
 export const PROTOCOL = "coinshift";

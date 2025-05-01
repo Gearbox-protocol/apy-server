@@ -40,4 +40,6 @@ export const POINTS_INFO_BY_NETWORK: Record<
   MegaETH: [],
   Berachain: [],
   Avalanche: [],
+  BNB: [],
+  WorldChain: [],
 };

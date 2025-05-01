@@ -71,4 +71,6 @@ export const TOKENS: Record<NetworkType, Record<Address, string>> = {
   MegaETH: {},
   Berachain: {},
   Avalanche: {},
+  BNB: {},
+  WorldChain: {},
 };
