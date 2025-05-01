@@ -35,4 +35,6 @@ export const EXTRA_APY: Record<NetworkType, Array<ExtraCollateralAPY>> = {
   MegaETH: [],
   Berachain: [],
   Avalanche: [],
+  BNB: [],
+  WorldChain: [],
 };

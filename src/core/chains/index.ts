@@ -9,6 +9,8 @@ export const supportedChains = [
   "Monad",
   "Berachain",
   "Avalanche",
+  "BNB",
+  "WorldChain",
 ] as const;
 
 export type NetworkType = (typeof supportedChains)[number];
@@ -23,6 +25,8 @@ const CHAINS = {
   MegaETH: 6342,
   Berachain: 80094,
   Avalanche: 43_114,
+  BNB: 56,
+  WorldChain: 480,
 };
 
 export function getChainId(network: NetworkType) {

@@ -429,4 +429,6 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
   MegaETH: [],
   Berachain: [],
   Avalanche: [],
+  BNB: [],
+  WorldChain: [],
 };
