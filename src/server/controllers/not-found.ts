@@ -16,6 +16,6 @@ export const notFound: Handler = app => async (req, res) => {
       code: "NOT_FOUND",
     }),
     file: "handlers/notFound",
-    reportSentry: !PATHS_TO_IGNORE[req.url],
+    reportSentry: !PATHS_TO_IGNORE[req.path],
   });
 };
