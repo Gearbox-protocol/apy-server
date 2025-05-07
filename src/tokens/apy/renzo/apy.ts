@@ -4,14 +4,18 @@ import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
 interface Response {
-  apr: {
-    data: {
-      rate: number;
-      avgPeriodDays: number;
-    };
-    pzETHAPR: {
-      rate: number;
-      avgPeriodDays: number;
+  success: boolean;
+  data: {
+    apr: {
+      success: boolean;
+      data: {
+        rate: number;
+        avgPeriodDays: number;
+      };
+      pzETHAPR: {
+        rate: number;
+        avgPeriodDays: number;
+      };
     };
   };
 }
@@ -24,7 +28,7 @@ const getAPYRenzo: APYHandler = async network => {
 
   const { data } = await axios.get<Response>(getUrl());
 
-  const rate = data?.apr?.data?.rate || 0;
+  const rate = data?.data?.apr?.data?.rate || 0;
 
   const result: APYResult = {
     [tokens.ezETH]: {
