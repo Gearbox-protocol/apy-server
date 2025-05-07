@@ -109,7 +109,7 @@ const getFactoryCrvUsdURL = (n: NetworkType) =>
 const getFactoryStableNgURL = (n: NetworkType) =>
   `https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/factory-stable-ng`;
 
-const getAPY: APYHandler = async network => {
+const getAPYCurve: APYHandler = async network => {
   // !& sonic filter
   if (CURVE_CHAINS[network] === "not_implemented") return {};
 
@@ -279,4 +279,4 @@ async function getGearAPY(): Promise<GearAPY> {
   return gearAPY;
 }
 
-export { GearAPY, getAPY as getAPYCurve, getGearAPY };
+export { GearAPY, getAPYCurve, getGearAPY };

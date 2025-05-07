@@ -5,7 +5,13 @@ import type { PoolExternalAPYResult, PoolPointsResult } from "../../pools";
 import { getPoolExternalAPY, getPoolPoints } from "../../pools";
 import { getPoolExtraAPY } from "../../pools/extraAPY/apy";
 import type { PoolExtraAPYResultByChain } from "../../pools/extraAPY/constants";
-import type { Apy, APYResult, GearAPY, TokenAPY } from "../../tokens/apy";
+import type {
+  Apy,
+  APYHandler,
+  APYResult,
+  GearAPY,
+  TokenAPY,
+} from "../../tokens/apy";
 import {
   getAPYCoinshift,
   getAPYConstant,
@@ -61,6 +67,18 @@ export class Fetcher {
   private async getNetworkRewards(
     network: NetworkType,
   ): Promise<Fetcher["rewards"][number]> {
+    const protocolsAPYFunctions = [
+      getAPYCurve,
+      getAPYEthena,
+      getAPYLama,
+      getAPYLido,
+      getAPYSky,
+      getAPYYearn,
+      getAPYTreehouse,
+      getAPYConstant,
+      getAPYSonic,
+      getAPYCoinshift,
+    ];
     const [
       points,
 
@@ -82,20 +100,12 @@ export class Fetcher {
       getTokenExtraCollateralAPY(network),
       getTokenExtraCollateralPoints(network),
 
-      getAPYCurve(network),
-      getAPYEthena(network),
-      getAPYLama(network),
-      getAPYLido(network),
-      getAPYSky(network),
-      getAPYYearn(network),
-      getAPYTreehouse(network),
-      getAPYConstant(network),
-      getAPYSonic(network),
-      getAPYCoinshift(network),
+      ...protocolsAPYFunctions.map(fn => fn(network)),
     ]);
     logRewards({
       network,
       allProtocolAPYs,
+      protocolsAPYFunctions,
       pointsList: points,
       tokenExtraRewards: extraRewards,
       extraCollateralAPY,
@@ -280,6 +290,7 @@ export class Fetcher {
 interface LogRewardsProps {
   network: NetworkType;
   allProtocolAPYs: Array<PromiseSettledResult<APYResult>>;
+  protocolsAPYFunctions: Array<APYHandler>;
   pointsList: PromiseSettledResult<PointsResult>;
   tokenExtraRewards: PromiseSettledResult<TokenExtraRewardsResult>;
   extraCollateralAPY: PromiseSettledResult<TokenExtraCollateralAPYResult>;
@@ -292,6 +303,7 @@ interface LogRewardsProps {
 function logRewards({
   network,
   allProtocolAPYs,
+  protocolsAPYFunctions,
   pointsList,
   tokenExtraRewards,
   extraCollateralAPY,
@@ -306,13 +318,14 @@ function logRewards({
   const APY = "PROTOCOL APY";
 
   const fetchedAPYProtocols = allProtocolAPYs
-    .map(apy => {
+    .map((apy, index) => {
       const entries =
         apy.status === "fulfilled" ? Object.entries(apy.value) : [];
 
       const tokens = entries.map(([_, v]) => v.symbol).join(", ");
       const protocolUnsafe = entries[0]?.[1]?.apys?.[0]?.protocol;
-      const protocol = protocolUnsafe || "unknown";
+      const protocol =
+        protocolUnsafe || protocolsAPYFunctions[index]?.name || "unknown";
 
       if (tokens !== "") {
         console.log(`[${network}] (${APY}): ${protocol}: ${tokens}`);

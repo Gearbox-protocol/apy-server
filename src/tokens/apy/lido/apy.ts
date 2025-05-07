@@ -25,7 +25,7 @@ interface Response {
 
 const LIDO_URL = "https://eth-api.lido.fi/v1/protocol/steth/apr/sma";
 
-const getAPY: APYHandler = async network => {
+const getAPYLido: APYHandler = async network => {
   const res = await axios.get<Response>(LIDO_URL);
   const { smaApr = 0 } = res?.data?.data || {};
 
@@ -57,4 +57,4 @@ const getAPY: APYHandler = async network => {
   return result;
 };
 
-export { getAPY as getAPYLido };
+export { getAPYLido };

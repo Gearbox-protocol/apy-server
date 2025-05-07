@@ -12,7 +12,7 @@ type Response = [
 
 const getURL = () => "https://info-sky.blockanalitica.com/api/v1/overall/";
 
-const getAPY: APYHandler = async network => {
+const getAPYSky: APYHandler = async network => {
   const tokens = TOKENS[network];
   if (!tokens || !("sUSDS" in tokens)) return {};
 
@@ -53,4 +53,4 @@ const getAPY: APYHandler = async network => {
   return result;
 };
 
-export { getAPY as getAPYSky };
+export { getAPYSky };

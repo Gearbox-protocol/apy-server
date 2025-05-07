@@ -28,7 +28,7 @@ const PAYLOAD = {
   },
 };
 
-const getAPY: APYHandler = async network => {
+const getAPYCoinshift: APYHandler = async network => {
   const tokens = TOKENS[network];
   if (!tokens || !("csUSDL" in tokens)) return {};
 
@@ -55,4 +55,4 @@ const getAPY: APYHandler = async network => {
   return result;
 };
 
-export { getAPY as getAPYCoinshift };
+export { getAPYCoinshift };

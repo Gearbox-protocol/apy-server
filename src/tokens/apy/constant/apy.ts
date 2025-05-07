@@ -3,7 +3,7 @@ import type { Address } from "viem";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
-const getAPY: APYHandler = async network => {
+const getAPYConstant: APYHandler = async network => {
   const apys = TOKENS[network];
 
   const result = Object.entries(apys).reduce<APYResult>((acc, [addr, info]) => {
@@ -29,4 +29,4 @@ const getAPY: APYHandler = async network => {
   return result;
 };
 
-export { getAPY as getAPYConstant };
+export { getAPYConstant };

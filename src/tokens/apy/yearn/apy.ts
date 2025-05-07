@@ -20,7 +20,7 @@ type Response = Array<APYData>;
 const getUrl = (chainId: number) =>
   `https://ydaemon.yearn.finance/vaults/all?chainids=${chainId}&limit=2500`;
 
-const getAPY: APYHandler = async network => {
+const getAPYYearn: APYHandler = async network => {
   const chainId = getChainId(network);
   const { data } = await axios.get<Response>(getUrl(chainId));
 
@@ -56,4 +56,4 @@ const getAPY: APYHandler = async network => {
   return result;
 };
 
-export { getAPY as getAPYYearn };
+export { getAPYYearn };

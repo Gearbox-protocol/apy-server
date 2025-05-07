@@ -21,7 +21,7 @@ interface LamaResponse {
   status: string;
 }
 
-const getAPY: APYHandler = async network => {
+const getAPYLama: APYHandler = async network => {
   const tokens = TOKENS[network] || {};
   const tokensList = Object.entries(tokens);
   if (tokensList.length === 0) return {};
@@ -58,4 +58,4 @@ const getAPY: APYHandler = async network => {
   return allAPY;
 };
 
-export { getAPY as getAPYLama };
+export { getAPYLama };

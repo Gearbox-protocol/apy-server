@@ -11,7 +11,7 @@ interface Response {
 
 const getUrl = () => "https://api.treehouse.finance/apy";
 
-const getAPY: APYHandler = async network => {
+const getAPYTreehouse: APYHandler = async network => {
   const tokens = TOKENS[network];
   if (!tokens || !("tETH" in tokens)) return {};
 
@@ -38,4 +38,4 @@ const getAPY: APYHandler = async network => {
   return result;
 };
 
-export { getAPY as getAPYTreehouse };
+export { getAPYTreehouse };
