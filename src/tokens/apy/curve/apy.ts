@@ -109,15 +109,18 @@ const getFactoryCrvUsdURL = (n: NetworkType) =>
 const getFactoryStableNgURL = (n: NetworkType) =>
   `https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/factory-stable-ng`;
 
-const getAPY: APYHandler = async network => {
+const getAPYCurve: APYHandler = async network => {
   // !& sonic filter
   if (CURVE_CHAINS[network] === "not_implemented") return {};
 
+  const tokenEntries = Object.entries(TOKENS[network] || {}).map(
+    ([k, v]) => [k.toLowerCase(), v] as const,
+  );
+  if (tokenEntries.length === 0) return {};
+
   const { volumes, pools } = await getCurvePools(network);
 
-  const tokens = Object.fromEntries(
-    Object.entries(TOKENS[network]).map(([k, v]) => [k.toLowerCase(), v]),
-  ) as Record<Address, string>;
+  const tokens = Object.fromEntries(tokenEntries) as Record<Address, string>;
 
   const volumeByAddress = volumes.data.data.pools.reduce<VolumeRecord>(
     (acc, v) => {
@@ -279,4 +282,4 @@ async function getGearAPY(): Promise<GearAPY> {
   return gearAPY;
 }
 
-export { GearAPY, getAPY as getAPYCurve, getGearAPY };
+export { GearAPY, getAPYCurve, getGearAPY };

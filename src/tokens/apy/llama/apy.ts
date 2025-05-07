@@ -21,10 +21,11 @@ interface LamaResponse {
   status: string;
 }
 
-const getAPY: APYHandler = async network => {
-  const tokens = TOKENS[network] || {};
-  const tokensList = Object.entries(tokens);
-  if (tokensList.length === 0) return {};
+const getAPYLama: APYHandler = async network => {
+  const tokenEntries = Object.entries(TOKENS[network] || {}).map(
+    ([k, v]) => [k.toLowerCase(), v] as const,
+  );
+  if (tokenEntries.length === 0) return {};
 
   const res = await axios.get<LamaResponse>(getDefillamaURL());
   const poolById = res.data.data.reduce<Record<string, LamaItem>>((acc, p) => {
@@ -32,7 +33,7 @@ const getAPY: APYHandler = async network => {
     return acc;
   }, {});
 
-  const allAPY = tokensList.reduce<APYResult>((acc, [addr, p]) => {
+  const allAPY = tokenEntries.reduce<APYResult>((acc, [addr, p]) => {
     const address = addr as Address;
     const pool = poolById[p.id] || {};
 
@@ -58,4 +59,4 @@ const getAPY: APYHandler = async network => {
   return allAPY;
 };
 
-export { getAPY as getAPYLama };
+export { getAPYLama };

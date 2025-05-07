@@ -12,7 +12,7 @@ const PAYLOAD = {
   query: "{\n  stsGetGqlStakedSonicData {\n    stakingApr\n  }\n}",
 };
 
-const getAPY: APYHandler = async network => {
+const getAPYSonic: APYHandler = async network => {
   const tokens = TOKENS[network];
   if (!tokens || !("stS" in tokens)) return {};
 
@@ -39,4 +39,4 @@ const getAPY: APYHandler = async network => {
   return result;
 };
 
-export { getAPY as getAPYSonic };
+export { getAPYSonic };

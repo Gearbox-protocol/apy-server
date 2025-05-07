@@ -11,7 +11,7 @@ interface Response {
 const getAPYURL = () =>
   "https://api-v2.pendle.finance/core/v2/1/markets/0xcdd26eb5eb2ce0f203a84553853667ae69ca29ce/data";
 
-const getAPY: APYHandler = async network => {
+const getAPYEthena: APYHandler = async network => {
   const tokens = TOKENS[network];
   if (!tokens || !("sUSDe" in tokens)) return {};
 
@@ -39,4 +39,4 @@ const getAPY: APYHandler = async network => {
   return result;
 };
 
-export { getAPY as getAPYEthena };
+export { getAPYEthena };

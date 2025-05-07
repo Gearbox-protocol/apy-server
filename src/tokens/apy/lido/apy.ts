@@ -25,36 +25,36 @@ interface Response {
 
 const LIDO_URL = "https://eth-api.lido.fi/v1/protocol/steth/apr/sma";
 
-const getAPY: APYHandler = async network => {
+const getAPYLido: APYHandler = async network => {
+  const tokenEntries = Object.entries(TOKENS[network] || {}).map(
+    ([k, v]) => [k.toLowerCase(), v] as const,
+  );
+  if (tokenEntries.length === 0) return {};
+
   const res = await axios.get<Response>(LIDO_URL);
   const { smaApr = 0 } = res?.data?.data || {};
 
-  const tokens = TOKENS[network] || {};
+  const result = tokenEntries.reduce<APYResult>((acc, [addr, symbol]) => {
+    const address = addr as Address;
 
-  const result = Object.entries(tokens).reduce<APYResult>(
-    (acc, [addr, symbol]) => {
-      const address = addr as Address;
+    acc[address] = {
+      address,
+      symbol: symbol,
 
-      acc[address] = {
-        address,
-        symbol: symbol,
+      apys: [
+        {
+          address: address,
+          symbol: symbol,
+          protocol: PROTOCOL,
+          value: smaApr,
+        },
+      ],
+    };
 
-        apys: [
-          {
-            address: address,
-            symbol: symbol,
-            protocol: PROTOCOL,
-            value: smaApr,
-          },
-        ],
-      };
-
-      return acc;
-    },
-    {},
-  );
+    return acc;
+  }, {});
 
   return result;
 };
 
-export { getAPY as getAPYLido };
+export { getAPYLido };
