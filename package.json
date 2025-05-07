@@ -19,6 +19,7 @@
     "@sentry/esbuild-plugin": "^3.2.3",
     "@sentry/node": "^9.10.0",
     "axios": "^1.7.9",
+    "axios-cache-interceptor": "^1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",

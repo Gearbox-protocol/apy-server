@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import { cachedAxios } from "../../../core/app";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
@@ -18,7 +19,7 @@ const getAPYTreehouse: APYHandler = async network => {
   );
   if (tokenEntries.length === 0) return {};
 
-  const { data } = await axios.get<Response>(getUrl());
+  const { data } = await cachedAxios.get<Response>(getUrl());
 
   const rate = data?.total_apr_teth || 0;
 

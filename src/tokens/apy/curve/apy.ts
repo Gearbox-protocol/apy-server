@@ -1,6 +1,6 @@
-import axios from "axios";
 import type { Address } from "viem";
 
+import { cachedAxios } from "../../../core/app";
 import type { NetworkType } from "../../../core/chains";
 import type { APYHandler, APYResult } from "../constants";
 import { GEAR_POOL, PROTOCOL, TOKENS } from "./constants";
@@ -176,15 +176,15 @@ async function getCurvePools(network: NetworkType) {
   switch (network) {
     case "Mainnet": {
       const [volumes, ...pools] = await Promise.all([
-        axios.get<VolumesResponse>(getVolumesURL(network)),
+        cachedAxios.get<VolumesResponse>(getVolumesURL(network)),
 
-        axios.get<CurvePoolDataResponse>(getFactoryCryptoURL(network)),
+        cachedAxios.get<CurvePoolDataResponse>(getFactoryCryptoURL(network)),
 
-        axios.get<CurvePoolDataResponse>(getMainURL(network)),
-        axios.get<CurvePoolDataResponse>(getCryptoURL(network)),
-        axios.get<CurvePoolDataResponse>(getFactoryTriCryptoURL(network)),
-        axios.get<CurvePoolDataResponse>(getFactoryCrvUsdURL(network)),
-        axios.get<CurvePoolDataResponse>(getFactoryStableNgURL(network)),
+        cachedAxios.get<CurvePoolDataResponse>(getMainURL(network)),
+        cachedAxios.get<CurvePoolDataResponse>(getCryptoURL(network)),
+        cachedAxios.get<CurvePoolDataResponse>(getFactoryTriCryptoURL(network)),
+        cachedAxios.get<CurvePoolDataResponse>(getFactoryCrvUsdURL(network)),
+        cachedAxios.get<CurvePoolDataResponse>(getFactoryStableNgURL(network)),
       ]);
       return {
         volumes,
@@ -193,9 +193,9 @@ async function getCurvePools(network: NetworkType) {
     }
     case "Arbitrum": {
       const [volumes, ...pools] = await Promise.all([
-        axios.get<VolumesResponse>(getVolumesURL(network)),
-        axios.get<CurvePoolDataResponse>(getMainURL(network)),
-        axios.get<CurvePoolDataResponse>(getFactoryStableNgURL(network)),
+        cachedAxios.get<VolumesResponse>(getVolumesURL(network)),
+        cachedAxios.get<CurvePoolDataResponse>(getMainURL(network)),
+        cachedAxios.get<CurvePoolDataResponse>(getFactoryStableNgURL(network)),
       ]);
 
       return {
@@ -206,9 +206,9 @@ async function getCurvePools(network: NetworkType) {
 
     case "Optimism": {
       const [volumes, ...pools] = await Promise.all([
-        axios.get<VolumesResponse>(getVolumesURL(network)),
-        axios.get<CurvePoolDataResponse>(getMainURL(network)),
-        axios.get<CurvePoolDataResponse>(getFactoryStableNgURL(network)),
+        cachedAxios.get<VolumesResponse>(getVolumesURL(network)),
+        cachedAxios.get<CurvePoolDataResponse>(getMainURL(network)),
+        cachedAxios.get<CurvePoolDataResponse>(getFactoryStableNgURL(network)),
       ]);
 
       return {
@@ -219,9 +219,9 @@ async function getCurvePools(network: NetworkType) {
 
     case "Base": {
       const [volumes, ...pools] = await Promise.all([
-        axios.get<VolumesResponse>(getVolumesURL(network)),
-        axios.get<CurvePoolDataResponse>(getMainURL(network)),
-        axios.get<CurvePoolDataResponse>(getFactoryStableNgURL(network)),
+        cachedAxios.get<VolumesResponse>(getVolumesURL(network)),
+        cachedAxios.get<CurvePoolDataResponse>(getMainURL(network)),
+        cachedAxios.get<CurvePoolDataResponse>(getFactoryStableNgURL(network)),
       ]);
 
       return {
@@ -244,8 +244,8 @@ interface GearAPY {
 
 async function getGearAPY(): Promise<GearAPY> {
   const [mainnetVolumes, mainnetFactoryPools] = await Promise.all([
-    axios.get<VolumesResponse>(getVolumesURL("Mainnet")),
-    axios.get<CurvePoolDataResponse>(getFactoryCryptoURL("Mainnet")),
+    cachedAxios.get<VolumesResponse>(getVolumesURL("Mainnet")),
+    cachedAxios.get<CurvePoolDataResponse>(getFactoryCryptoURL("Mainnet")),
   ]);
 
   const poolData = mainnetFactoryPools?.data?.data?.poolData || [];

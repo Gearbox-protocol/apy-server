@@ -1,5 +1,6 @@
 import axios from "axios";
 
+import { cachedAxios } from "../../../core/app";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
@@ -19,7 +20,7 @@ const getAPYEtherfi: APYHandler = async network => {
   );
   if (tokenEntries.length === 0) return {};
 
-  const { data } = await axios.get<Response>(getUrl());
+  const { data } = await cachedAxios.get<Response>(getUrl());
 
   const apr7D = data?.["7_day_apr"] || 0;
   const restakingAPR7D = data?.["7_day_restaking_apr"] || 0;

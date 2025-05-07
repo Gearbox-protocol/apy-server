@@ -1,5 +1,4 @@
-import axios from "axios";
-
+import { cachedAxios } from "../../../core/app";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
@@ -29,7 +28,7 @@ const getAPYRenzo: APYHandler = async network => {
   );
   if (tokenEntries.length === 0) return {};
 
-  const { data } = await axios.get<Response>(getUrl());
+  const { data } = await cachedAxios.get<Response>(getUrl());
 
   const rate = data?.data?.apr?.data?.rate || 0;
   const pzRate = data?.data?.apr?.pzETHAPR?.rate || 0;
