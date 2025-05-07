@@ -18,15 +18,19 @@ interface APYData {
 type Response = Array<APYData>;
 
 const getUrl = (chainId: number) =>
-  `https://ydaemon.yearn.finance/vaults/all?chainids=${chainId}&limit=2500`;
+  `https://ydaemon.yearn.fi/vaults/all?chainids=${chainId}&limit=2500`;
 
 const getAPYYearn: APYHandler = async network => {
   const chainId = getChainId(network);
+  const tokenEntries = Object.entries(TOKENS[network] || {}).map(
+    ([k, v]) => [k.toLowerCase(), v] as const,
+  );
+
+  if (tokenEntries.length === 0) return {};
+
   const { data } = await axios.get<Response>(getUrl(chainId));
 
-  const tokens = Object.fromEntries(
-    Object.entries(TOKENS[network]).map(([k, v]) => [k.toLowerCase(), v]),
-  ) as Record<Address, string>;
+  const tokens = Object.fromEntries(tokenEntries) as Record<Address, string>;
 
   const result = data.reduce<APYResult>((acc, d) => {
     const addr = d.address.toLowerCase() as Address;
