@@ -14,7 +14,10 @@ const getUrl = () => "https://app.ether.fi/api/protocol/protocol-detail";
 
 const getAPYEtherfi: APYHandler = async network => {
   const tokens = TOKENS[network];
-  if (!tokens || !("weETH" in tokens)) return {};
+  const tokenEntries = Object.entries(tokens).map(
+    ([k, v]) => [k.toLowerCase(), v] as const,
+  );
+  if (tokenEntries.length === 0) return {};
 
   const { data } = await axios.get<Response>(getUrl());
 
@@ -23,8 +26,10 @@ const getAPYEtherfi: APYHandler = async network => {
 
   const rate = apr7D / 0.9 + restakingAPR7D;
 
-  const result: APYResult = {
-    [tokens.weETH]: {
+  const result: APYResult = {};
+
+  if ("weETH" in tokens) {
+    result[tokens.weETH] = {
       address: tokens.weETH,
       symbol: "weETH",
 
@@ -36,8 +41,8 @@ const getAPYEtherfi: APYHandler = async network => {
           value: rate,
         },
       ],
-    },
-  };
+    };
+  }
 
   return result;
 };

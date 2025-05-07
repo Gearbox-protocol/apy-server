@@ -14,14 +14,19 @@ const PAYLOAD = {
 
 const getAPYSonic: APYHandler = async network => {
   const tokens = TOKENS[network];
-  if (!tokens || !("stS" in tokens)) return {};
+  const tokenEntries = Object.entries(tokens).map(
+    ([k, v]) => [k.toLowerCase(), v] as const,
+  );
+  if (tokenEntries.length === 0) return {};
 
   const res = await axios.post<Response>(URL, PAYLOAD);
   const { stsGetGqlStakedSonicData } = res?.data.data || {};
   const { stakingApr = "0" } = stsGetGqlStakedSonicData || {};
 
-  const result: APYResult = {
-    [tokens.stS]: {
+  const result: APYResult = {};
+
+  if ("stS" in tokens) {
+    result[tokens.stS] = {
       address: tokens.stS,
       symbol: "stS",
 
@@ -33,8 +38,8 @@ const getAPYSonic: APYHandler = async network => {
           value: Number(stakingApr) * 100,
         },
       ],
-    },
-  };
+    };
+  }
 
   return result;
 };

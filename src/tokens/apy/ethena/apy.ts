@@ -13,15 +13,20 @@ const getAPYURL = () =>
 
 const getAPYEthena: APYHandler = async network => {
   const tokens = TOKENS[network];
-  if (!tokens || !("sUSDe" in tokens)) return {};
+  const tokenEntries = Object.entries(tokens).map(
+    ([k, v]) => [k.toLowerCase(), v] as const,
+  );
+  if (tokenEntries.length === 0) return {};
 
   const resp = await axios.get<Response>(getAPYURL());
   const apyInfo = resp?.data;
 
   const rate = apyInfo?.underlyingInterestApy || 0;
 
-  const result: APYResult = {
-    [tokens.sUSDe]: {
+  const result: APYResult = {};
+
+  if ("sUSDe" in tokens) {
+    result[tokens.sUSDe] = {
       address: tokens.sUSDe,
       symbol: "sUSDe",
 
@@ -33,8 +38,8 @@ const getAPYEthena: APYHandler = async network => {
           value: Number(rate) * 100,
         },
       ],
-    },
-  };
+    };
+  }
 
   return result;
 };
