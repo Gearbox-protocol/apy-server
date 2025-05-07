@@ -13,14 +13,19 @@ const getUrl = () => "https://api.treehouse.finance/apy";
 
 const getAPYTreehouse: APYHandler = async network => {
   const tokens = TOKENS[network];
-  if (!tokens || !("tETH" in tokens)) return {};
+  const tokenEntries = Object.entries(tokens).map(
+    ([k, v]) => [k.toLowerCase(), v] as const,
+  );
+  if (tokenEntries.length === 0) return {};
 
   const { data } = await axios.get<Response>(getUrl());
 
   const rate = data?.total_apr_teth || 0;
 
-  const result: APYResult = {
-    [tokens.tETH]: {
+  const result: APYResult = {};
+
+  if ("tETH" in tokens) {
+    result[tokens.tETH] = {
       address: tokens.tETH,
       symbol: "tETH",
 
@@ -32,8 +37,8 @@ const getAPYTreehouse: APYHandler = async network => {
           value: rate,
         },
       ],
-    },
-  };
+    };
+  }
 
   return result;
 };

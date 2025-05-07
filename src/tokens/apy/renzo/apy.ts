@@ -23,7 +23,8 @@ interface Response {
 const getUrl = () => "https://app.renzoprotocol.com/api/stats";
 
 const getAPYRenzo: APYHandler = async network => {
-  const tokenEntries = Object.entries(TOKENS[network] || {}).map(
+  const tokens = TOKENS[network];
+  const tokenEntries = Object.entries(tokens).map(
     ([k, v]) => [k.toLowerCase(), v] as const,
   );
   if (tokenEntries.length === 0) return {};
@@ -32,8 +33,6 @@ const getAPYRenzo: APYHandler = async network => {
 
   const rate = data?.data?.apr?.data?.rate || 0;
   const pzRate = data?.data?.apr?.pzETHAPR?.rate || 0;
-
-  const tokens = TOKENS[network];
 
   const result: APYResult = {};
 

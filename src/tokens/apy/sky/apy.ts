@@ -14,7 +14,10 @@ const getURL = () => "https://info-sky.blockanalitica.com/api/v1/overall/";
 
 const getAPYSky: APYHandler = async network => {
   const tokens = TOKENS[network];
-  if (!tokens || !("sUSDS" in tokens)) return {};
+  const tokenEntries = Object.entries(tokens).map(
+    ([k, v]) => [k.toLowerCase(), v] as const,
+  );
+  if (tokenEntries.length === 0) return {};
 
   const resp = await axios.get<Response>(getURL());
   const apyInfo = resp?.data?.[0];
@@ -22,8 +25,10 @@ const getAPYSky: APYHandler = async network => {
   const savingsRate = apyInfo?.sky_savings_rate_apy || 0;
   const farmRate = apyInfo?.sky_farm_apy || 0;
 
-  const result: APYResult = {
-    [tokens.sUSDS]: {
+  const result: APYResult = {};
+
+  if ("sUSDS" in tokens) {
+    result[tokens.sUSDS] = {
       address: tokens.sUSDS,
       symbol: "sUSDS",
 
@@ -35,8 +40,11 @@ const getAPYSky: APYHandler = async network => {
           value: Number(savingsRate) * 100,
         },
       ],
-    },
-    [tokens.stkUSDS]: {
+    };
+  }
+
+  if ("stkUSDS" in tokens) {
+    result[tokens.stkUSDS] = {
       address: tokens.stkUSDS,
       symbol: "stkUSDS",
       apys: [
@@ -47,8 +55,8 @@ const getAPYSky: APYHandler = async network => {
           value: Number(farmRate) * 100,
         },
       ],
-    },
-  };
+    };
+  }
 
   return result;
 };

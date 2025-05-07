@@ -30,14 +30,19 @@ const PAYLOAD = {
 
 const getAPYCoinshift: APYHandler = async network => {
   const tokens = TOKENS[network];
-  if (!tokens || !("csUSDL" in tokens)) return {};
+  const tokenEntries = Object.entries(tokens).map(
+    ([k, v]) => [k.toLowerCase(), v] as const,
+  );
+  if (tokenEntries.length === 0) return {};
 
   const res = await axios.post<Response>(URL, PAYLOAD);
   const { state } = res?.data.data?.vault || {};
   const { netApy = 0 } = state || {};
 
-  const result: APYResult = {
-    [tokens.csUSDL]: {
+  const result: APYResult = {};
+
+  if ("csUSDL" in tokens) {
+    result[tokens.csUSDL] = {
       address: tokens.csUSDL,
       symbol: "csUSDL",
 
@@ -49,8 +54,8 @@ const getAPYCoinshift: APYHandler = async network => {
           value: Number(netApy) * 100,
         },
       ],
-    },
-  };
+    };
+  }
 
   return result;
 };
