@@ -3,6 +3,7 @@ import axios from "axios";
 import moment from "moment";
 import type { Address } from "viem";
 
+import { cachedAxios } from "../../core/app";
 import type {
   PoolExtraApy,
   PoolExtraAPYHandler,
@@ -18,7 +19,7 @@ import { MerkleXYZApi } from "./merklAPI";
 
 export const getPoolExtraAPY: PoolExtraAPYHandler = async () => {
   // get all campaigns
-  const res = await axios.get<MerkleXYZV4CampaignsResponse>(
+  const res = await cachedAxios.get<MerkleXYZV4CampaignsResponse>(
     MerkleXYZApi.getGearboxCampaignsUrl(),
   );
   // filter out not active
@@ -45,7 +46,7 @@ export const getPoolExtraAPY: PoolExtraAPYHandler = async () => {
 
   for (const id of aprIdsList) {
     const resp = await Promise.allSettled([
-      axios.get<MerkleXYZV4RewardCampaignResponse>(
+      cachedAxios.get<MerkleXYZV4RewardCampaignResponse>(
         MerkleXYZApi.getGearboxRewardCampaignUrl(id.aprId),
       ),
     ]);
