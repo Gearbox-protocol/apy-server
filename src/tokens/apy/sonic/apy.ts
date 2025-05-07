@@ -1,5 +1,4 @@
-import axios from "axios";
-
+import { cachedAxios } from "../../../core/app";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
@@ -19,7 +18,11 @@ const getAPYSonic: APYHandler = async network => {
   );
   if (tokenEntries.length === 0) return {};
 
-  const res = await axios.post<Response>(URL, PAYLOAD);
+  const res = await cachedAxios.post<Response>(URL, PAYLOAD, {
+    cache: {
+      methods: ["post"],
+    },
+  });
   const { stsGetGqlStakedSonicData } = res?.data.data || {};
   const { stakingApr = "0" } = stsGetGqlStakedSonicData || {};
 

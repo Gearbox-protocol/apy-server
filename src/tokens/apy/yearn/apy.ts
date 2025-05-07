@@ -1,4 +1,3 @@
-import axios from "axios";
 import type { Address } from "viem";
 
 import { cachedAxios } from "../../../core/app";

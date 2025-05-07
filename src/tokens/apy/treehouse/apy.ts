@@ -1,5 +1,3 @@
-import axios from "axios";
-
 import { cachedAxios } from "../../../core/app";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
