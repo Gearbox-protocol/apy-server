@@ -23,15 +23,22 @@ interface Response {
 const getUrl = () => "https://app.renzoprotocol.com/api/stats";
 
 const getAPYRenzo: APYHandler = async network => {
-  const tokens = TOKENS[network];
-  if (!tokens || !("ezETH" in tokens)) return {};
+  const tokenEntries = Object.entries(TOKENS[network] || {}).map(
+    ([k, v]) => [k.toLowerCase(), v] as const,
+  );
+  if (tokenEntries.length === 0) return {};
 
   const { data } = await axios.get<Response>(getUrl());
 
   const rate = data?.data?.apr?.data?.rate || 0;
+  const pzRate = data?.data?.apr?.pzETHAPR?.rate || 0;
 
-  const result: APYResult = {
-    [tokens.ezETH]: {
+  const tokens = TOKENS[network];
+
+  const result: APYResult = {};
+
+  if ("ezETH" in tokens) {
+    result[tokens.ezETH] = {
       address: tokens.ezETH,
       symbol: "ezETH",
 
@@ -43,8 +50,24 @@ const getAPYRenzo: APYHandler = async network => {
           value: rate,
         },
       ],
-    },
-  };
+    };
+  }
+
+  if ("pzETH" in tokens) {
+    result[tokens.pzETH] = {
+      address: tokens.pzETH,
+      symbol: "pzETH",
+
+      apys: [
+        {
+          address: tokens.pzETH,
+          symbol: "pzETH",
+          protocol: PROTOCOL,
+          value: pzRate,
+        },
+      ],
+    };
+  }
 
   return result;
 };
