@@ -4,15 +4,15 @@ import type { NetworkType } from "../../../core/chains";
 
 const rsETH = {
   symbol: "rsETH",
-  apy: 3.6,
+  apy: 3.5,
 };
 const rswETH = {
   symbol: "rswETH",
-  apy: 2.77,
+  apy: 1.8,
 };
 const pufETH = {
   symbol: "pufETH",
-  apy: 2.78,
+  apy: 3.47,
 };
 
 export const TOKENS: Record<
