@@ -25,6 +25,8 @@ import {
   getAPYYearn,
   getGearAPY,
 } from "../../tokens/apy";
+import { getAPYEtherfi } from "../../tokens/apy/etherfi";
+import { getAPYRenzo } from "../../tokens/apy/renzo";
 import type { PointsResult } from "../../tokens/points";
 import { getPoints } from "../../tokens/points";
 import type { TokenExtraCollateralAPYResult } from "../../tokens/tokenExtraCollateralAPY";
@@ -78,6 +80,8 @@ export class Fetcher {
       getAPYConstant,
       getAPYSonic,
       getAPYCoinshift,
+      getAPYRenzo,
+      getAPYEtherfi,
     ];
     const [
       points,
