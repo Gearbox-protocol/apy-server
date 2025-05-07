@@ -15,6 +15,10 @@ import {
 } from "../../../core/server";
 import { validateReq } from "../../../core/validation";
 
+const PATHS_TO_IGNORE: Record<string, boolean> = {
+  "/api/rewards/pools/all": true,
+};
+
 export const getTokenRewards: Handler = app => async (req, res) => {
   try {
     const { chainId } = validateReq({ chainId: req.query.chain_id });
@@ -150,6 +154,7 @@ export const getTokenRewards: Handler = app => async (req, res) => {
       res,
       error: AppError.getAppError(e),
       file: "rewards/handlers/getTokenRewards",
+      reportSentry: !PATHS_TO_IGNORE[req.originalUrl],
     });
   }
 };

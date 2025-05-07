@@ -1,6 +1,6 @@
-import axios from "axios";
 import type { Address } from "viem";
 
+import { cachedAxios } from "../../../core/app";
 import { getChainId } from "../../../core/chains";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
@@ -28,7 +28,7 @@ const getAPYYearn: APYHandler = async network => {
 
   if (tokenEntries.length === 0) return {};
 
-  const { data } = await axios.get<Response>(getUrl(chainId));
+  const { data } = await cachedAxios.get<Response>(getUrl(chainId));
 
   const tokens = Object.fromEntries(tokenEntries) as Record<Address, string>;
 

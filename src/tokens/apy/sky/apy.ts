@@ -1,5 +1,4 @@
-import axios from "axios";
-
+import { cachedAxios } from "../../../core/app";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
@@ -19,7 +18,7 @@ const getAPYSky: APYHandler = async network => {
   );
   if (tokenEntries.length === 0) return {};
 
-  const resp = await axios.get<Response>(getURL());
+  const resp = await cachedAxios.get<Response>(getURL());
   const apyInfo = resp?.data?.[0];
 
   const savingsRate = apyInfo?.sky_savings_rate_apy || 0;

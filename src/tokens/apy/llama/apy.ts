@@ -1,6 +1,6 @@
-import axios from "axios";
 import type { Address } from "viem";
 
+import { cachedAxios } from "../../../core/app";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
@@ -27,7 +27,7 @@ const getAPYLama: APYHandler = async network => {
   );
   if (tokenEntries.length === 0) return {};
 
-  const res = await axios.get<LamaResponse>(getDefillamaURL());
+  const res = await cachedAxios.get<LamaResponse>(getDefillamaURL());
   const poolById = res.data.data.reduce<Record<string, LamaItem>>((acc, p) => {
     acc[p.pool] = p;
     return acc;
