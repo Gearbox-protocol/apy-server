@@ -17,6 +17,7 @@ import { validateReq } from "../../../core/validation";
 
 const PATHS_TO_IGNORE: Record<string, boolean> = {
   "/api/rewards/pools/all": true,
+  "/api/rewards/tokens/all": true,
 };
 
 export const getTokenRewards: Handler = app => async (req, res) => {
@@ -148,13 +149,15 @@ export const getTokenRewards: Handler = app => async (req, res) => {
 
     respondWithJson(app, res, response);
   } catch (e) {
+    const notReport =
+      !!PATHS_TO_IGNORE[req.originalUrl] && req.query.chain_id === undefined;
     respondWithError({
       app,
       req,
       res,
       error: AppError.getAppError(e),
       file: "rewards/handlers/getTokenRewards",
-      reportSentry: !PATHS_TO_IGNORE[req.originalUrl],
+      reportSentry: !notReport,
     });
   }
 };
@@ -261,12 +264,15 @@ export const getPoolRewards: Handler = app => async (req, res) => {
 
     respondWithJson(app, res, response);
   } catch (e) {
+    const notReport =
+      !!PATHS_TO_IGNORE[req.originalUrl] && req.query.chain_id === undefined;
     respondWithError({
       app,
       req,
       res,
       error: AppError.getAppError(e),
       file: "rewards/handlers/getPoolRewards",
+      reportSentry: !notReport,
     });
   }
 };
