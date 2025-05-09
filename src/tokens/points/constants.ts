@@ -46,18 +46,6 @@ type CommonReward<CM extends DebtReward["cm"] | undefined> =
   CM extends undefined ? PointsReward : DebtReward;
 
 export const REWARDS_BASE_INFO = {
-  eigenlayer: (multiplier: PointsReward["multiplier"]): PointsReward => ({
-    name: "Eigenlayer",
-    units: "points",
-    multiplier,
-    type: "eigenlayer",
-  }),
-  renzo: (multiplier: PointsReward["multiplier"]): PointsReward => ({
-    name: "Renzo",
-    units: "points",
-    multiplier,
-    type: "renzo",
-  }),
   etherfi: (multiplier: PointsReward["multiplier"]): PointsReward => ({
     name: "Ether.fi",
     units: "points",
@@ -220,11 +208,6 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
       rewards: [REWARDS_BASE_INFO.etherfi(200n)],
     },
     {
-      address: "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
-      symbol: "ezETH",
-      rewards: [REWARDS_BASE_INFO.renzo(300n)],
-    },
-    {
       address: "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
       symbol: "rsETH",
       rewards: [REWARDS_BASE_INFO.kelp(200n)],
@@ -267,7 +250,6 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
       address: "0x8c9532a60E0E7C6BbD2B2c1303F63aCE1c3E9811",
       symbol: "pzETH",
       rewards: [
-        REWARDS_BASE_INFO.renzo(300n),
         REWARDS_BASE_INFO.symbiotic(100n),
         REWARDS_BASE_INFO.mellow(200n),
       ],
@@ -377,14 +359,6 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
   ],
   Arbitrum: [
     {
-      address: "0x2416092f143378750bb29b79eD961ab195CcEea5",
-      symbol: "ezETH",
-      rewards: [
-        REWARDS_BASE_INFO.eigenlayer(100n),
-        REWARDS_BASE_INFO.renzo(300n),
-      ],
-    },
-    {
       address: "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       symbol: "USDe",
       rewards: [REWARDS_BASE_INFO.ethena(2000n)],
@@ -392,22 +366,10 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
     {
       address: "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
       symbol: "rsETH",
-      rewards: [
-        REWARDS_BASE_INFO.eigenlayer(100n),
-        REWARDS_BASE_INFO.kelp(300n),
-      ],
+      rewards: [REWARDS_BASE_INFO.kelp(300n)],
     },
   ],
-  Optimism: [
-    {
-      address: "0x2416092f143378750bb29b79eD961ab195CcEea5",
-      symbol: "ezETH",
-      rewards: [
-        REWARDS_BASE_INFO.eigenlayer(100n),
-        REWARDS_BASE_INFO.renzo(300n),
-      ],
-    },
-  ],
+  Optimism: [],
   Base: [],
   Sonic: [
     {
