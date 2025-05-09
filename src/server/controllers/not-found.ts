@@ -5,6 +5,7 @@ const PATHS_TO_IGNORE: Record<string, boolean> = {
   "/robots.txt": true,
   "/favicon.ico": true,
   "/": true,
+  "/api": true,
 };
 
 export const notFound: Handler = app => async (req, res) => {
