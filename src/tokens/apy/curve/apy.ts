@@ -91,23 +91,23 @@ const CURVE_CHAINS: Record<NetworkType, string> = {
   WorldChain: "not_implemented",
 };
 
-// const CRYPTO = "https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/crypto";
-// const FACTORY = "https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/factory";
+// const CRYPTO = "https://api.curve.finance/api/getPools/${CURVE_CHAINS[n]}/crypto";
+// const FACTORY = "https://api.curve.finance/api/getPools/${CURVE_CHAINS[n]}/factory";
 // const CURVE_APY_URL = "https://www.convexfinance.com/api/curve-apys";
 const getVolumesURL = (n: NetworkType) =>
-  `https://api.curve.fi/api/getVolumes/${CURVE_CHAINS[n]}`;
+  `https://api.curve.finance/api/getVolumes/${CURVE_CHAINS[n]}`;
 const getMainURL = (n: NetworkType) =>
-  `https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/main`;
+  `https://api.curve.finance/api/getPools/${CURVE_CHAINS[n]}/main`;
 const getFactoryCryptoURL = (n: NetworkType) =>
-  `https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/factory-crypto`;
+  `https://api.curve.finance/api/getPools/${CURVE_CHAINS[n]}/factory-crypto`;
 const getCryptoURL = (n: NetworkType) =>
-  `https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/crypto`;
+  `https://api.curve.finance/api/getPools/${CURVE_CHAINS[n]}/crypto`;
 const getFactoryTriCryptoURL = (n: NetworkType) =>
-  `https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/factory-tricrypto`;
+  `https://api.curve.finance/api/getPools/${CURVE_CHAINS[n]}/factory-tricrypto`;
 const getFactoryCrvUsdURL = (n: NetworkType) =>
-  `https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/factory-crvusd`;
+  `https://api.curve.finance/api/getPools/${CURVE_CHAINS[n]}/factory-crvusd`;
 const getFactoryStableNgURL = (n: NetworkType) =>
-  `https://api.curve.fi/api/getPools/${CURVE_CHAINS[n]}/factory-stable-ng`;
+  `https://api.curve.finance/api/getPools/${CURVE_CHAINS[n]}/factory-stable-ng`;
 
 const getAPYCurve: APYHandler = async network => {
   // !& sonic filter
