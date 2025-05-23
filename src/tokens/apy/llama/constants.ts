@@ -91,6 +91,11 @@ export const TOKENS: Record<
   MegaETH: {},
   Berachain: {},
   Avalanche: {},
-  BNB: {},
+  BNB: {
+    "0x32C830f5c34122C6afB8aE87ABA541B7900a2C5F": {
+      id: "89818a06-3414-4d9d-a8a6-7c8686a40d2a",
+      symbol: "ynBNBx",
+    },
+  },
   WorldChain: {},
 };
