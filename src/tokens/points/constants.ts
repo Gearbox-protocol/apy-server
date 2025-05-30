@@ -53,22 +53,10 @@ export const REWARDS_BASE_INFO = {
     type: "etherfi",
   }),
   kelp: (multiplier: PointsReward["multiplier"]): PointsReward => ({
-    name: "Kelp",
-    units: "Miles",
+    name: "Kernel",
+    units: "Points",
     multiplier,
     type: "kelp",
-  }),
-  swell: (multiplier: PointsReward["multiplier"]): PointsReward => ({
-    name: "Swell",
-    units: "points",
-    multiplier,
-    type: "swell",
-  }),
-  puffer: (multiplier: PointsReward["multiplier"]): PointsReward => ({
-    name: "Puffer",
-    units: "points",
-    multiplier,
-    type: "puffer",
   }),
   ethena: <CM extends DebtReward["cm"] | undefined = undefined>(
     multiplier: PointsReward["multiplier"],
@@ -211,16 +199,6 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
       address: "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
       symbol: "rsETH",
       rewards: [REWARDS_BASE_INFO.kelp(200n)],
-    },
-    {
-      address: "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
-      symbol: "rswETH",
-      rewards: [REWARDS_BASE_INFO.swell(450n)],
-    },
-    {
-      address: "0xD9A442856C234a39a81a089C06451EBAa4306a72",
-      symbol: "pufETH",
-      rewards: [REWARDS_BASE_INFO.puffer(100n)],
     },
 
     {
