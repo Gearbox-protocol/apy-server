@@ -40,7 +40,7 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
 
       amount: 7500n * 10000n,
       duration: "hour",
-      name: "Kelp Mile",
+      name: "Kernel Points",
       estimation: "relative",
     },
 
