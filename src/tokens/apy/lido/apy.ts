@@ -39,6 +39,7 @@ const getAPYLido: APYHandler = async network => {
 
     acc[address] = {
       address,
+
       symbol: symbol,
 
       apys: [
