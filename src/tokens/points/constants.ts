@@ -29,7 +29,8 @@ export type PointsType =
   | "treehouseNuts"
   | "rings"
   | "sonic"
-  | "shift";
+  | "shift"
+  | "omni";
 
 interface PointsReward {
   name: string;
@@ -178,6 +179,13 @@ export const REWARDS_BASE_INFO = {
     units: "points",
     multiplier,
     type: "shift",
+  }),
+
+  omni: (multiplier: PointsReward["multiplier"]): PointsReward => ({
+    name: "OMNI",
+    units: "points",
+    multiplier,
+    type: "omni",
   }),
 };
 
