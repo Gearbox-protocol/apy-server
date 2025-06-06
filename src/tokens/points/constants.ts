@@ -5,7 +5,7 @@ import type { NetworkType } from "../../core/chains";
 export type PointsResult = Record<Address, PointsInfo>;
 export type PointsHandler = (network: NetworkType) => Promise<PointsResult>;
 
-type PointsType =
+export type PointsType =
   | "eigenlayer"
   | "renzo"
   | "etherfi"

@@ -1,6 +1,8 @@
 import type { Address } from "viem";
 
 import type { NetworkType } from "../../core/chains";
+import type { PointsType } from "../../tokens/points";
+import { REWARDS_BASE_INFO } from "../../tokens/points";
 
 export type PoolPointsResult = Record<Address, Array<PoolPointsInfo>>;
 export type PoolPointsHandler = (
@@ -13,9 +15,11 @@ export interface PoolPointsInfo {
   symbol: string;
 
   amount: bigint;
-  duration: string;
+  duration: string | undefined;
   name: string;
+  type: PointsType;
   estimation: "absolute" | "relative";
+  condition: "deposit" | "cross-chain-deposit" | "holding";
 }
 
 const WETH_V3_TRADE_ETH: Address = "0xda0002859b2d05f66a753d8241fcde8623f26f4f";
@@ -40,8 +44,10 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
 
       amount: 7500n * 10000n,
       duration: "hour",
-      name: "Kernel Points",
+      name: `${REWARDS_BASE_INFO.kelp(1n).name} ${REWARDS_BASE_INFO.kelp(1n).units}`,
+      type: REWARDS_BASE_INFO.kelp(1n).type,
       estimation: "relative",
+      condition: "holding",
     },
 
     {
@@ -51,8 +57,10 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
 
       amount: 2000n * 10000n,
       duration: "day",
-      name: "Lombard LUX",
+      name: `${REWARDS_BASE_INFO.lombard(1n).name} LUX`,
+      type: REWARDS_BASE_INFO.lombard(1n).type,
       estimation: "absolute",
+      condition: "holding",
     },
     {
       pool: WBTC_V3_TRADE_ETH,
@@ -61,8 +69,10 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
 
       amount: 172_800n * 10000n,
       duration: "day",
-      name: "Pump BTC",
+      name: REWARDS_BASE_INFO.pumpBTC(1n).name,
+      type: REWARDS_BASE_INFO.pumpBTC(1n).type,
       estimation: "absolute",
+      condition: "holding",
     },
   ],
   Arbitrum: [],
@@ -76,8 +86,10 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
 
       amount: 10n * 10000n,
       duration: "day",
-      name: "Sonic points",
+      name: `${REWARDS_BASE_INFO.sonic(1n).name} ${REWARDS_BASE_INFO.sonic(1n).units}`,
+      type: REWARDS_BASE_INFO.sonic(1n).type,
       estimation: "absolute",
+      condition: "holding",
     },
     {
       pool: WC_V3_SONIC,
@@ -86,8 +98,10 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
 
       amount: 8n * 10000n,
       duration: "day",
-      name: "Sonic points",
+      name: `${REWARDS_BASE_INFO.sonic(1n).name} ${REWARDS_BASE_INFO.sonic(1n).units}`,
+      type: REWARDS_BASE_INFO.sonic(1n).type,
       estimation: "absolute",
+      condition: "holding",
     },
   ],
 
