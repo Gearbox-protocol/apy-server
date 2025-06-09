@@ -42,7 +42,7 @@ const NATIVE_ADDRESS = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
 const USDT_ETH = "0xdAC17F958D2ee523a2206206994597C13D831ec7";
 const RSETH_ETH = "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7";
 const LBTC_ETH = "0x8236a87084f8B84306f72007F36F2618A5634494";
-const PUMPBTC_ETH = "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e";
+// const PUMPBTC_ETH = "0xF469fBD2abcd6B9de8E169d128226C0Fc90a012e";
 
 const WS_SONIC = "0x039e2fB66102314Ce7b64Ce5Ce3E5183bc94aD38";
 const USDC_E_SONIC = "0x29219dd400f2Bf60E5a23d13Be72B486D4038894";
@@ -78,18 +78,18 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
       estimation: "absolute",
       condition: "holding",
     },
-    {
-      pool: WBTC_V3_TRADE_ETH,
-      token: PUMPBTC_ETH,
-      symbol: "pumpBTC",
+    // {
+    //   pool: WBTC_V3_TRADE_ETH,
+    //   token: PUMPBTC_ETH,
+    //   symbol: "pumpBTC",
 
-      amount: 172_800n * 10000n,
-      duration: "day",
-      name: REWARDS_BASE_INFO.pumpBTC(1n).name,
-      type: REWARDS_BASE_INFO.pumpBTC(1n).type,
-      estimation: "absolute",
-      condition: "holding",
-    },
+    //   amount: 172_800n * 10000n,
+    //   duration: "day",
+    //   name: REWARDS_BASE_INFO.pumpBTC(1n).name,
+    //   type: REWARDS_BASE_INFO.pumpBTC(1n).type,
+    //   estimation: "absolute",
+    //   condition: "holding",
+    // },
 
     {
       pool: WETH_V3_TRADE_ETH,
