@@ -96,6 +96,10 @@ export const TOKENS: Record<
       id: "89818a06-3414-4d9d-a8a6-7c8686a40d2a",
       symbol: "ynBNBx",
     },
+    "0x7788A3538C5fc7F9c7C8A74EAC4c898fC8d87d92": {
+      id: "e7ac1a5f-f141-4c00-9a5d-2e2c505a800c",
+      symbol: "sUSDX",
+    },
   },
   WorldChain: {},
 };
