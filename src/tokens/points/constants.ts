@@ -30,7 +30,8 @@ export type PointsType =
   | "rings"
   | "sonic"
   | "shift"
-  | "omni";
+  | "omni"
+  | "sPoint";
 
 interface PointsReward {
   name: string;
@@ -186,6 +187,13 @@ export const REWARDS_BASE_INFO = {
     units: "points",
     multiplier,
     type: "omni",
+  }),
+
+  sPoint: (multiplier: PointsReward["multiplier"]): PointsReward => ({
+    name: "S-Point",
+    units: "",
+    multiplier,
+    type: "sPoint",
   }),
 };
 
@@ -377,6 +385,12 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
   MegaETH: [],
   Berachain: [],
   Avalanche: [],
-  BNB: [],
+  BNB: [
+    {
+      address: "0x7788A3538C5fc7F9c7C8A74EAC4c898fC8d87d92",
+      symbol: "sUSDX",
+      rewards: [REWARDS_BASE_INFO.sPoint(1_00n)],
+    },
+  ],
   WorldChain: [],
 };
