@@ -169,32 +169,7 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
     },
   ],
   Base: [],
-  Sonic: [
-    {
-      pool: USDC_E_V3_SONIC,
-      token: USDC_E_SONIC,
-      symbol: "USDC_e",
-
-      amount: 10n * 10000n,
-      duration: "day",
-      name: `${REWARDS_BASE_INFO.sonic(1n).name} ${REWARDS_BASE_INFO.sonic(1n).units}`,
-      type: REWARDS_BASE_INFO.sonic(1n).type,
-      estimation: "absolute",
-      condition: "holding",
-    },
-    {
-      pool: WC_V3_SONIC,
-      token: WS_SONIC,
-      symbol: "wS",
-
-      amount: 8n * 10000n,
-      duration: "day",
-      name: `${REWARDS_BASE_INFO.sonic(1n).name} ${REWARDS_BASE_INFO.sonic(1n).units}`,
-      type: REWARDS_BASE_INFO.sonic(1n).type,
-      estimation: "absolute",
-      condition: "holding",
-    },
-  ],
+  Sonic: [],
 
   Monad: [],
   MegaETH: [],
