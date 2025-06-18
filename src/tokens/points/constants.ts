@@ -41,7 +41,6 @@ interface PointsReward {
   multiplier: bigint | "soon";
   type: PointsType;
 }
-
 interface DebtReward extends PointsReward {
   cm: Address;
 }
