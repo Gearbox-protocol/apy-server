@@ -31,7 +31,9 @@ export type PointsType =
   | "sonic"
   | "shift"
   | "omni"
-  | "sPoint";
+  | "sPoint"
+  | "upshift"
+  | "mezo";
 
 interface PointsReward {
   name: string;
@@ -195,6 +197,19 @@ export const REWARDS_BASE_INFO = {
     multiplier,
     type: "sPoint",
   }),
+
+  upshift: (multiplier: PointsReward["multiplier"]): PointsReward => ({
+    name: "Upshift",
+    units: "points",
+    multiplier,
+    type: "upshift",
+  }),
+  mezo: (multiplier: PointsReward["multiplier"]): PointsReward => ({
+    name: "Mezo",
+    units: "points",
+    multiplier,
+    type: "mezo",
+  }),
 };
 
 export interface PointsInfo {
@@ -357,6 +372,14 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
       address: "0xbEeFc011e94f43b8B7b455eBaB290C7Ab4E216f1",
       symbol: "csUSDL",
       rewards: [REWARDS_BASE_INFO.shift(1_00n)],
+    },
+    {
+      address: "0x8AcA0841993ef4C87244d519166e767f49362C21",
+      symbol: "uptBTC",
+      rewards: [
+        REWARDS_BASE_INFO.mezo(1_00n),
+        REWARDS_BASE_INFO.upshift(5_00n),
+      ],
     },
   ],
   Arbitrum: [

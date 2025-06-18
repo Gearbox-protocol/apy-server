@@ -34,9 +34,9 @@ export const TOKENS: Record<
       id: "d826a92b-2bd2-4fae-8483-db1ef8888aee",
       symbol: "stkcvxRLUSDUSDC",
     },
-    "0xb7de5dFCb74d25c2f21841fbd6230355C50d9308": {
-      id: "606e53bf-ea88-4d4e-92b8-fcd6e97e4106",
-      symbol: "PT_sUSDe_29MAY2025",
+    "0x7c853d6bfb49256af65af672dcc3f66c015e96e0": {
+      id: "2f17b2cf-9f50-41de-95f9-502079c789de",
+      symbol: "PT_uptBTC_14AUG2025",
     },
 
     // "0x276187f24D41745513cbE2Bd5dFC33a4d8CDc9ed": {
