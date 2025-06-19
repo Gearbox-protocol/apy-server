@@ -26,8 +26,8 @@ export const POINTS_INFO_BY_NETWORK: Record<
       address: "0x7a4EffD87C2f3C55CA251080b1343b605f327E3a",
       symbol: "rstETH",
       rewards: [
-        REWARDS_BASE_INFO.symbiotic(35n),
-        REWARDS_BASE_INFO.mellow(70n),
+        REWARDS_BASE_INFO.symbiotic(20n),
+        REWARDS_BASE_INFO.mellow(40n),
       ],
     },
   ],
