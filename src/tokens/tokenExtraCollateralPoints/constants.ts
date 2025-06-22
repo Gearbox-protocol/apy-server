@@ -8,6 +8,7 @@ export type TokenExtraCollateralPointsResult = Record<
   Address,
   ExtraCollateralPointsInfo
 >;
+
 export type ExtraCollateralPointsHandler = (
   network: NetworkType,
 ) => Promise<TokenExtraCollateralPointsResult>;
