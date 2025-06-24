@@ -1,6 +1,7 @@
 import type { Address } from "viem";
 
 import { cachedAxios } from "../../../core/app";
+import { captureException } from "../../../core/sentry";
 import { LIDO_AUTH_TOKEN } from "../../../core/utils";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
@@ -32,7 +33,12 @@ const getAPYLido: APYHandler = async network => {
   );
   if (tokenEntries.length === 0) return {};
 
-  if (!LIDO_AUTH_TOKEN) console.log("NO LIDO_AUTH_TOKEN", LIDO_AUTH_TOKEN);
+  if (!LIDO_AUTH_TOKEN) {
+    captureException({
+      file: `/fetcher/getAPYLido`,
+      error: new Error("LIDO_AUTH_TOKEN is not set"),
+    });
+  }
 
   const res = await cachedAxios.get<Response>(
     LIDO_URL,
