@@ -1,11 +1,9 @@
-import { config } from "dotenv";
+import "dotenv/config";
 
 import { initApp } from "./src/core/app";
 import { captureException, initSentry } from "./src/core/sentry";
 import { IS_DEV } from "./src/core/utils";
 import { initServer } from "./src/server";
-
-config();
 
 if (!IS_DEV) {
   initSentry();

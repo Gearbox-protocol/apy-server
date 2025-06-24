@@ -9,3 +9,5 @@ export const json_stringify = (o: any, space?: number) => {
 };
 
 export const IS_DEV = process.env.NODE_ENV !== "production";
+
+export const LIDO_AUTH_TOKEN = process.env.LIDO_AUTH_TOKEN;
