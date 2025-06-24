@@ -1,6 +1,7 @@
 import type { Address } from "viem";
 
 import { cachedAxios } from "../../../core/app";
+import { LIDO_AUTH_TOKEN } from "../../../core/utils";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
@@ -31,7 +32,19 @@ const getAPYLido: APYHandler = async network => {
   );
   if (tokenEntries.length === 0) return {};
 
-  const res = await cachedAxios.get<Response>(LIDO_URL);
+  if (!LIDO_AUTH_TOKEN) console.log("NO LIDO_AUTH_TOKEN", LIDO_AUTH_TOKEN);
+
+  const res = await cachedAxios.get<Response>(
+    LIDO_URL,
+    LIDO_AUTH_TOKEN
+      ? {
+          withCredentials: true,
+          headers: {
+            Cookie: `access_token=${LIDO_AUTH_TOKEN}`,
+          },
+        }
+      : undefined,
+  );
   const { smaApr = 0 } = res?.data?.data || {};
 
   const result = tokenEntries.reduce<APYResult>((acc, [addr, symbol]) => {
