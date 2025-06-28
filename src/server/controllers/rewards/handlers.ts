@@ -167,8 +167,8 @@ export const getGearAPY: Handler = app => async (req, res) => {
     const response: ResponseData = {
       data: {
         base: app.state.gear?.base || 0,
-        crv: app.state.gear?.gear || 0,
-        gear: app.state.gear?.crv || 0,
+        crv: app.state.gear?.crv || 0,
+        gear: app.state.gear?.gear || 0,
 
         gearPrice: app.state.gear?.gearPrice || 0,
 

@@ -33,13 +33,6 @@ const getAPYLido: APYHandler = async network => {
   );
   if (tokenEntries.length === 0) return {};
 
-  if (!LIDO_AUTH_TOKEN) {
-    captureException({
-      file: `/fetcher/getAPYLido`,
-      error: new Error("LIDO_AUTH_TOKEN is not set"),
-    });
-  }
-
   const res = await cachedAxios.get<Response>(
     LIDO_URL,
     LIDO_AUTH_TOKEN
