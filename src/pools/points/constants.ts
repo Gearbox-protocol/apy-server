@@ -177,4 +177,5 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
   Avalanche: [],
   BNB: [],
   WorldChain: [],
+  Etherlink: [],
 };

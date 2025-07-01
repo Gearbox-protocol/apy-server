@@ -34,4 +34,5 @@ export const EXTRA_REWARDS_INFO: Record<NetworkType, Array<FarmInfo>> = {
   Avalanche: [],
   BNB: [],
   WorldChain: [],
+  Etherlink: [],
 };

@@ -29,6 +29,7 @@ export const TOKENS: Record<NetworkType, Record<Address, string>> = {
   Avalanche: {},
   BNB: {},
   WorldChain: {},
+  Etherlink: {},
 };
 
 export const PROTOCOL = "lido";

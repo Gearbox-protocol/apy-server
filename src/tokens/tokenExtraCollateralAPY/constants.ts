@@ -37,4 +37,5 @@ export const EXTRA_APY: Record<NetworkType, Array<ExtraCollateralAPY>> = {
   Avalanche: [],
   BNB: [],
   WorldChain: [],
+  Etherlink: [],
 };

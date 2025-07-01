@@ -102,4 +102,5 @@ export const TOKENS: Record<
     },
   },
   WorldChain: {},
+  Etherlink: {},
 };

@@ -18,6 +18,7 @@ export const TOKENS = {
   Avalanche: {},
   BNB: {},
   WorldChain: {},
+  Etherlink: {},
 } as const;
 
 export const PROTOCOL = "renzo";
