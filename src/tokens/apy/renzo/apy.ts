@@ -35,7 +35,7 @@ const getAPYRenzo: APYHandler = async network => {
 
   const result: APYResult = {};
 
-  if ("ezETH" in tokens) {
+  if (tokens?.ezETH) {
     result[tokens.ezETH] = {
       address: tokens.ezETH,
       symbol: "ezETH",
@@ -51,7 +51,7 @@ const getAPYRenzo: APYHandler = async network => {
     };
   }
 
-  if ("pzETH" in tokens) {
+  if (tokens?.pzETH) {
     result[tokens.pzETH] = {
       address: tokens.pzETH,
       symbol: "pzETH",

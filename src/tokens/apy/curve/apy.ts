@@ -89,6 +89,7 @@ const CURVE_CHAINS: Record<NetworkType, string> = {
   Avalanche: "not_implemented",
   BNB: "not_implemented",
   WorldChain: "not_implemented",
+  Etherlink: "not_implemented",
 };
 
 // const CRYPTO = "https://api.curve.finance/api/getPools/${CURVE_CHAINS[n]}/crypto";

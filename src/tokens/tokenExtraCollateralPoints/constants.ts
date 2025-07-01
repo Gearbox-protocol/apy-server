@@ -43,4 +43,5 @@ export const POINTS_INFO_BY_NETWORK: Record<
   Avalanche: [],
   BNB: [],
   WorldChain: [],
+  Etherlink: [],
 };

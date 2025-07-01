@@ -4,12 +4,9 @@ import type { NetworkType } from "../../../core/chains";
 
 export const TOKENS: Record<
   NetworkType,
-  { sUSDS?: Address; stkUSDS?: Address }
+  { mBASIS?: Address; mTBILL?: Address }
 > = {
-  Mainnet: {
-    sUSDS: "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
-    stkUSDS: "0xcB5D10A57Aeb622b92784D53F730eE2210ab370E",
-  },
+  Mainnet: {},
   Optimism: {},
   Arbitrum: {},
   Base: {},
@@ -21,7 +18,10 @@ export const TOKENS: Record<
   Avalanche: {},
   BNB: {},
   WorldChain: {},
-  Etherlink: {},
+  Etherlink: {
+    mTBILL: "0xdd629e5241cbc5919847783e6c96b2de4754e438",
+    mBASIS: "0x2247b5a46bb79421a314ab0f0b67ffd11dd37ee4",
+  },
 };
 
-export const PROTOCOL = "sky";
+export const PROTOCOL = "midas";

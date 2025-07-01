@@ -27,7 +27,7 @@ const getAPYEtherfi: APYHandler = async network => {
 
   const result: APYResult = {};
 
-  if ("weETH" in tokens) {
+  if (tokens?.weETH) {
     result[tokens.weETH] = {
       address: tokens.weETH,
       symbol: "weETH",

@@ -23,7 +23,7 @@ const getAPYTreehouse: APYHandler = async network => {
 
   const result: APYResult = {};
 
-  if ("tETH" in tokens) {
+  if (tokens?.tETH) {
     result[tokens.tETH] = {
       address: tokens.tETH,
       symbol: "tETH",
