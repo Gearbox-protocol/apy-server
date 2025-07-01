@@ -1,4 +1,8 @@
-export const TOKENS = {
+import type { Address } from "viem";
+
+import type { NetworkType } from "../../../core/chains";
+
+export const TOKENS: Record<NetworkType, { tETH?: Address }> = {
   Mainnet: {
     tETH: "0xD11c452fc99cF405034ee446803b6F6c1F6d5ED8",
   },
@@ -14,6 +18,6 @@ export const TOKENS = {
   BNB: {},
   WorldChain: {},
   Etherlink: {},
-} as const;
+};
 
 export const PROTOCOL = "treehouse";

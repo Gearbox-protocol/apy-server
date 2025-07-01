@@ -28,7 +28,7 @@ const getAPYSonic: APYHandler = async network => {
 
   const result: APYResult = {};
 
-  if ("stS" in tokens) {
+  if (tokens?.stS) {
     result[tokens.stS] = {
       address: tokens.stS,
       symbol: "stS",

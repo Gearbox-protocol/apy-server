@@ -24,7 +24,7 @@ const getAPYEthena: APYHandler = async network => {
 
   const result: APYResult = {};
 
-  if ("sUSDe" in tokens) {
+  if (tokens?.sUSDe) {
     result[tokens.sUSDe] = {
       address: tokens.sUSDe,
       symbol: "sUSDe",
