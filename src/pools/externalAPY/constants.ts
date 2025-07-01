@@ -35,4 +35,5 @@ export const POOL_EXTERNAL_APY: Record<NetworkType, Array<ExternalApy>> = {
   Avalanche: [],
   BNB: [],
   WorldChain: [],
+  Etherlink: [],
 };

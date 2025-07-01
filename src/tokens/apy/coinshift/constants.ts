@@ -1,4 +1,8 @@
-export const TOKENS = {
+import type { Address } from "viem";
+
+import type { NetworkType } from "../../../core/chains";
+
+export const TOKENS: Record<NetworkType, { csUSDL?: Address }> = {
   Mainnet: { csUSDL: "0xbEeFc011e94f43b8B7b455eBaB290C7Ab4E216f1" },
   Optimism: {},
   Arbitrum: {},
@@ -11,6 +15,7 @@ export const TOKENS = {
   Avalanche: {},
   BNB: {},
   WorldChain: {},
-} as const;
+  Etherlink: {},
+};
 
 export const PROTOCOL = "coinshift";

@@ -44,7 +44,7 @@ const getAPYCoinshift: APYHandler = async network => {
 
   const result: APYResult = {};
 
-  if ("csUSDL" in tokens) {
+  if (tokens?.csUSDL) {
     result[tokens.csUSDL] = {
       address: tokens.csUSDL,
       symbol: "csUSDL",

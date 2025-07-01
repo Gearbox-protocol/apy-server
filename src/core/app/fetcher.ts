@@ -19,6 +19,7 @@ import {
   getAPYEthena,
   getAPYLama,
   getAPYLido,
+  getAPYMidas,
   getAPYSky,
   getAPYSonic,
   getAPYTreehouse,
@@ -82,6 +83,7 @@ export class Fetcher {
       getAPYCoinshift,
       getAPYRenzo,
       getAPYEtherfi,
+      getAPYMidas,
     ];
     const [
       points,

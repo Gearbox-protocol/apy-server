@@ -1,4 +1,8 @@
-export const TOKENS = {
+import type { Address } from "viem";
+
+import type { NetworkType } from "../../../core/chains";
+
+export const TOKENS: Record<NetworkType, { stS?: Address }> = {
   Mainnet: {},
   Optimism: {},
   Arbitrum: {},
@@ -13,6 +17,7 @@ export const TOKENS = {
   Avalanche: {},
   BNB: {},
   WorldChain: {},
-} as const;
+  Etherlink: {},
+};
 
 export const PROTOCOL = "beets";

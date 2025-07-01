@@ -37,6 +37,7 @@ export const TOKENS: Record<
   Avalanche: {},
   BNB: {},
   WorldChain: {},
-} as const;
+  Etherlink: {},
+};
 
 export const PROTOCOL = "constant";

@@ -26,7 +26,7 @@ const getAPYSky: APYHandler = async network => {
 
   const result: APYResult = {};
 
-  if ("sUSDS" in tokens) {
+  if (tokens?.sUSDS) {
     result[tokens.sUSDS] = {
       address: tokens.sUSDS,
       symbol: "sUSDS",
@@ -42,7 +42,7 @@ const getAPYSky: APYHandler = async network => {
     };
   }
 
-  if ("stkUSDS" in tokens) {
+  if (tokens?.stkUSDS) {
     result[tokens.stkUSDS] = {
       address: tokens.stkUSDS,
       symbol: "stkUSDS",
