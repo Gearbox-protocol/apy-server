@@ -5,6 +5,7 @@ export * from "./curve";
 export * from "./ethena";
 export * from "./lido";
 export * from "./llama";
+export * from "./midas";
 export * from "./sky";
 export * from "./sonic";
 export * from "./treehouse";
