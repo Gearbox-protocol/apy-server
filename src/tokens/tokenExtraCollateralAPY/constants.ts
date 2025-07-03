@@ -25,6 +25,13 @@ export const EXTRA_APY: Record<NetworkType, Array<ExtraCollateralAPY>> = {
       value: 1,
       type: "relative",
     },
+    {
+      pool: "0x72CCB97cbdC40f8fb7FFA42Ed93AE74923547200", // cp0x WSTETH_POOL
+      address: "0xB908c9FE885369643adB5FBA4407d52bD726c72d", // cp0xLRT
+      symbol: "cp0xLRT",
+      value: 1,
+      type: "relative",
+    },
   ],
   Optimism: [],
   Arbitrum: [],

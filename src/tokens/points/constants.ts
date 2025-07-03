@@ -307,8 +307,8 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
       address: "0xB908c9FE885369643adB5FBA4407d52bD726c72d",
       symbol: "cp0xLRT",
       rewards: [
-        REWARDS_BASE_INFO.symbiotic(100n),
-        REWARDS_BASE_INFO.mellow(200n),
+        REWARDS_BASE_INFO.symbiotic(50n),
+        REWARDS_BASE_INFO.mellow(100n),
       ],
     },
 
