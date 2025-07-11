@@ -100,6 +100,10 @@ export const TOKENS: Record<
       id: "e7ac1a5f-f141-4c00-9a5d-2e2c505a800c",
       symbol: "sUSDX",
     },
+    "0xfA56005cdf111725A8e5395fc90Cd33135BcCAE8": {
+      id: "b0922876-0529-4541-869d-eee2a38c0867",
+      symbol: "PT_sUSDX_1SEP2025",
+    },
   },
   WorldChain: {},
   Etherlink: {},

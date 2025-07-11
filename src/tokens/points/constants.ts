@@ -413,6 +413,11 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
       symbol: "sUSDX",
       rewards: [REWARDS_BASE_INFO.sPoint(1_00n)],
     },
+    {
+      address: "0xf3527ef8dE265eAa3716FB312c12847bFBA66Cef",
+      symbol: "USDX",
+      rewards: [REWARDS_BASE_INFO.sPoint(1_50n)],
+    },
   ],
   WorldChain: [],
   Etherlink: [],
