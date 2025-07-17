@@ -12,7 +12,6 @@ export const TOKENS: Record<NetworkType, Record<Address, string>> = {
     "0x7a4EffD87C2f3C55CA251080b1343b605f327E3a": "rstETH",
     "0xBEEF69Ac7870777598A04B2bd4771c71212E6aBc": "steakLRT",
     "0x5fD13359Ba15A84B76f7F87568309040176167cd": "amphrETH",
-    "0x5E362eb2c0706Bd1d134689eC75176018385430B": "DVstETH",
   },
   Optimism: {
     "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb": "wstETH",
