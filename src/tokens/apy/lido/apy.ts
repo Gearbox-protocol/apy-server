@@ -1,7 +1,6 @@
 import type { Address } from "viem";
 
 import { cachedAxios } from "../../../core/app";
-import { captureException } from "../../../core/sentry";
 import { LIDO_AUTH_TOKEN } from "../../../core/utils";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
@@ -33,18 +32,7 @@ const getAPYLido: APYHandler = async network => {
   );
   if (tokenEntries.length === 0) return {};
 
-  const res = await cachedAxios.get<Response>(
-    LIDO_URL,
-    LIDO_AUTH_TOKEN
-      ? {
-          withCredentials: true,
-          headers: {
-            Cookie: `access_token=${LIDO_AUTH_TOKEN}`,
-          },
-        }
-      : undefined,
-  );
-  const { smaApr = 0 } = res?.data?.data || {};
+  const { smaApr = 0 } = await fetchLidoData();
 
   const result = tokenEntries.reduce<APYResult>((acc, [addr, symbol]) => {
     const address = addr as Address;
@@ -70,4 +58,21 @@ const getAPYLido: APYHandler = async network => {
   return result;
 };
 
-export { getAPYLido };
+async function fetchLidoData() {
+  const res = await cachedAxios.get<Response>(
+    LIDO_URL,
+    LIDO_AUTH_TOKEN
+      ? {
+          withCredentials: true,
+          headers: {
+            Cookie: `access_token=${LIDO_AUTH_TOKEN}`,
+          },
+        }
+      : undefined,
+  );
+  const { smaApr = 0 } = res?.data?.data || {};
+
+  return { smaApr };
+}
+
+export { fetchLidoData, getAPYLido };

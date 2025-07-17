@@ -19,6 +19,7 @@ import {
   getAPYEthena,
   getAPYLama,
   getAPYLido,
+  getAPYMellow,
   getAPYMidas,
   getAPYSky,
   getAPYSonic,
@@ -84,6 +85,7 @@ export class Fetcher {
       getAPYRenzo,
       getAPYEtherfi,
       getAPYMidas,
+      getAPYMellow,
     ];
     const [
       points,
@@ -324,7 +326,7 @@ function logRewards({
   const APY = "PROTOCOL APY";
 
   const fetchedAPYProtocols = allProtocolAPYs
-    .map((apy, index) => {
+    .map((apy, index, arr) => {
       const entries =
         apy.status === "fulfilled" ? Object.entries(apy.value) : [];
 
@@ -339,7 +341,7 @@ function logRewards({
       if (apy.status === "rejected") {
         console.error(`[${network}] (${APY}): ${protocol}: ${apy.reason}`);
         captureException({
-          file: `/fetcher/${APY}/${network}/${protocol}`,
+          file: `/fetcher/${APY}/${network}/${protocol}(${index}/${arr})`,
           error: apy.reason,
         });
       }

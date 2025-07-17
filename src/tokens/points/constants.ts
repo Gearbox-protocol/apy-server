@@ -343,11 +343,7 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
     {
       address: "0x5E362eb2c0706Bd1d134689eC75176018385430B",
       symbol: "DVstETH",
-      rewards: [
-        REWARDS_BASE_INFO.mellow(2_00n),
-        REWARDS_BASE_INFO.obol(1_00n),
-        REWARDS_BASE_INFO.ssv(1_00n),
-      ],
+      rewards: [REWARDS_BASE_INFO.mellow(2_00n)],
     },
 
     {
