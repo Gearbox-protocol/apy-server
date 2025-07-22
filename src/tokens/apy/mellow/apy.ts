@@ -11,7 +11,7 @@ interface Response {
 const getUrl = () => "https://points.mellow.finance/dvv/apr";
 
 const getAPYMellow: APYHandler = async network => {
-  const tokens = TOKENS[network];
+  const tokens = TOKENS[network] || {};
   const tokenEntries = Object.entries(tokens).map(
     ([k, v]) => [k.toLowerCase(), v] as const,
   );

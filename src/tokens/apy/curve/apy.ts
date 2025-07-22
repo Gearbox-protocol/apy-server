@@ -2,6 +2,7 @@ import type { Address } from "viem";
 
 import { cachedAxios } from "../../../core/app";
 import type { NetworkType } from "../../../core/chains";
+import type { PartialRecord } from "../../../core/utils";
 import type { APYHandler, APYResult } from "../constants";
 import { GEAR_POOL, PROTOCOL, TOKENS } from "./constants";
 
@@ -76,20 +77,10 @@ interface CurvePoolDataResponse {
 type PoolRecord = Record<string, CurvePoolData>;
 type VolumeRecord = Record<string, VolumesResponse["data"]["pools"][number]>;
 
-const CURVE_CHAINS: Record<NetworkType, string> = {
+const CURVE_CHAINS: PartialRecord<NetworkType, string> = {
   Arbitrum: "arbitrum",
   Mainnet: "ethereum",
   Optimism: "optimism",
-
-  Base: "not_implemented",
-  Sonic: "not_implemented",
-  Monad: "not_implemented",
-  MegaETH: "not_implemented",
-  Berachain: "not_implemented",
-  Avalanche: "not_implemented",
-  BNB: "not_implemented",
-  WorldChain: "not_implemented",
-  Etherlink: "not_implemented",
 };
 
 // const CRYPTO = "https://api.curve.finance/api/getPools/${CURVE_CHAINS[n]}/crypto";
@@ -111,8 +102,7 @@ const getFactoryStableNgURL = (n: NetworkType) =>
   `https://api.curve.finance/api/getPools/${CURVE_CHAINS[n]}/factory-stable-ng`;
 
 const getAPYCurve: APYHandler = async network => {
-  // !& sonic filter
-  if (CURVE_CHAINS[network] === "not_implemented") return {};
+  if (!CURVE_CHAINS[network]) return {};
 
   const tokenEntries = Object.entries(TOKENS[network] || {}).map(
     ([k, v]) => [k.toLowerCase(), v] as const,

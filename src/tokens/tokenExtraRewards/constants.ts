@@ -1,6 +1,7 @@
 import type { Address } from "viem";
 
 import type { NetworkType } from "../../core/chains";
+import type { PartialRecord } from "../../core/utils";
 
 export type TokenExtraRewardsResult = Record<Address, Array<FarmInfo>>;
 export type TokenExtraRewardsHandler = (
@@ -21,18 +22,7 @@ export interface FarmInfo {
   balance: bigint;
 }
 
-export const EXTRA_REWARDS_INFO: Record<NetworkType, Array<FarmInfo>> = {
-  Mainnet: [],
-  Optimism: [],
-  Arbitrum: [],
-  Base: [],
-  Sonic: [],
-
-  Monad: [],
-  MegaETH: [],
-  Berachain: [],
-  Avalanche: [],
-  BNB: [],
-  WorldChain: [],
-  Etherlink: [],
-};
+export const EXTRA_REWARDS_INFO: PartialRecord<
+  NetworkType,
+  Array<FarmInfo>
+> = {};

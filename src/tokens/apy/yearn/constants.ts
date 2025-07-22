@@ -1,8 +1,9 @@
 import type { Address } from "viem";
 
 import type { NetworkType } from "../../../core/chains";
+import type { PartialRecord } from "../../../core/utils";
 
-export const TOKENS: Record<NetworkType, Record<Address, string>> = {
+export const TOKENS: PartialRecord<NetworkType, Record<Address, string>> = {
   Mainnet: {
     // "0xdA816459F1AB5631232FE5e97a05BBBb94970c95": "yvDAI",
     // "0xa354F35829Ae975e850e23e9615b11Da1B3dC4DE": "yvUSDC",
@@ -20,17 +21,6 @@ export const TOKENS: Record<NetworkType, Record<Address, string>> = {
     // "0x7Edf16076e56FA4c111055fbA1fF5556b8757cFB": "yvWBTC",
     // "0x7D2382b1f8Af621229d33464340541Db362B4907": "yvOP",
   },
-  Arbitrum: {},
-  Base: {},
-  Sonic: {},
-
-  Monad: {},
-  MegaETH: {},
-  Berachain: {},
-  Avalanche: {},
-  BNB: {},
-  WorldChain: {},
-  Etherlink: {},
 };
 
 export const PROTOCOL = "yearn";

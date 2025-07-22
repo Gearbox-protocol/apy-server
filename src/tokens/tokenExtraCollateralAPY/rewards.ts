@@ -9,7 +9,7 @@ import { EXTRA_APY } from "./constants";
 // allows rewrite base apy of a token for a pool in absolute or relative manner
 const getTokenExtraCollateralAPY: TokenExtraCollateralAPYHandler =
   async network => {
-    const rewards = EXTRA_APY[network];
+    const rewards = EXTRA_APY[network] || [];
 
     const result = rewards.reduce<TokenExtraCollateralAPYResult>((acc, p) => {
       const address = p.address.toLowerCase() as Address;
