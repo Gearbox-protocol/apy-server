@@ -6,6 +6,7 @@ export * from "./ethena";
 export * from "./lido";
 export * from "./llama";
 export * from "./mellow";
+export * from "./mellow-vaults";
 export * from "./midas";
 export * from "./sky";
 export * from "./sonic";

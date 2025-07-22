@@ -20,6 +20,9 @@ export const TOKENS: PartialRecord<NetworkType, Record<Address, string>> = {
   Arbitrum: {
     "0x5979D7b546E38E414F7E9822514be443A4800529": "wstETH",
   },
+  Lisk: {
+    "0x76D8de471F54aAA87784119c60Df1bbFc852C415": "wstETH",
+  },
 };
 
 export const PROTOCOL = "lido";

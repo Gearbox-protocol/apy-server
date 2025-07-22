@@ -26,8 +26,6 @@ const getAPYMellow: APYHandler = async network => {
   const result: APYResult = {};
 
   if (tokens?.DVstETH) {
-    console.log("DVstETH", smaApr, obolRate, ssvRate);
-
     result[tokens.DVstETH] = {
       address: tokens.DVstETH,
       symbol: "DVstETH",
