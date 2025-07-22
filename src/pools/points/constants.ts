@@ -1,6 +1,7 @@
 import type { Address } from "viem";
 
 import type { NetworkType } from "../../core/chains";
+import type { PartialRecord } from "../../core/utils";
 import type { PointsType } from "../../tokens/points";
 import { REWARDS_BASE_INFO } from "../../tokens/points";
 
@@ -51,7 +52,7 @@ const USDT_ARB = "0xaf88d065e77c8cC2239327C5EDb3A432268e5831";
 
 const USDT_OP = "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85";
 
-export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
+export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
   Mainnet: [
     {
       pool: WETH_V3_TRADE_ETH,
@@ -168,14 +169,4 @@ export const POOL_POINTS: Record<NetworkType, Array<PoolPointsInfo>> = {
       condition: "cross-chain-deposit",
     },
   ],
-  Base: [],
-  Sonic: [],
-
-  Monad: [],
-  MegaETH: [],
-  Berachain: [],
-  Avalanche: [],
-  BNB: [],
-  WorldChain: [],
-  Etherlink: [],
 };

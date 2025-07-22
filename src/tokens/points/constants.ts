@@ -1,6 +1,7 @@
 import type { Address } from "viem";
 
 import type { NetworkType } from "../../core/chains";
+import type { PartialRecord } from "../../core/utils";
 
 export type PointsResult = Record<Address, PointsInfo>;
 export type PointsHandler = (network: NetworkType) => Promise<PointsResult>;
@@ -218,7 +219,10 @@ export interface PointsInfo {
   debtRewards?: Array<DebtReward>;
 }
 
-export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
+export const POINTS_INFO_BY_NETWORK: PartialRecord<
+  NetworkType,
+  Array<PointsInfo>
+> = {
   Mainnet: [
     {
       address: "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
@@ -389,8 +393,6 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
       rewards: [REWARDS_BASE_INFO.kelp(300n)],
     },
   ],
-  Optimism: [],
-  Base: [],
   Sonic: [
     {
       address: "0xd3DCe716f3eF535C5Ff8d041c1A41C3bd89b97aE",
@@ -398,11 +400,6 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
       rewards: [REWARDS_BASE_INFO.rings(1_50n)],
     },
   ],
-
-  Monad: [],
-  MegaETH: [],
-  Berachain: [],
-  Avalanche: [],
   BNB: [
     {
       address: "0x7788A3538C5fc7F9c7C8A74EAC4c898fC8d87d92",
@@ -415,6 +412,4 @@ export const POINTS_INFO_BY_NETWORK: Record<NetworkType, Array<PointsInfo>> = {
       rewards: [REWARDS_BASE_INFO.sPoint(1_50n)],
     },
   ],
-  WorldChain: [],
-  Etherlink: [],
 };

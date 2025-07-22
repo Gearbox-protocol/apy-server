@@ -1,10 +1,11 @@
 import type { Address } from "viem";
 
 import type { NetworkType } from "../../../core/chains";
+import type { PartialRecord } from "../../../core/utils";
 
 export const PROTOCOL = "llama";
 
-export const TOKENS: Record<
+export const TOKENS: PartialRecord<
   NetworkType,
   Record<Address, { id: string; symbol: string }> // symbol to pool
 > = {
@@ -84,13 +85,6 @@ export const TOKENS: Record<
       symbol: "sfrxETH",
     },
   },
-  Base: {},
-  Sonic: {},
-
-  Monad: {},
-  MegaETH: {},
-  Berachain: {},
-  Avalanche: {},
   BNB: {
     "0x32C830f5c34122C6afB8aE87ABA541B7900a2C5F": {
       id: "89818a06-3414-4d9d-a8a6-7c8686a40d2a",
@@ -105,6 +99,4 @@ export const TOKENS: Record<
       symbol: "PT_sUSDX_1SEP2025",
     },
   },
-  WorldChain: {},
-  Etherlink: {},
 };

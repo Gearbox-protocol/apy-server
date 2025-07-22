@@ -28,7 +28,7 @@ const PAYLOAD = {
 };
 
 const getAPYCoinshift: APYHandler = async network => {
-  const tokens = TOKENS[network];
+  const tokens = TOKENS[network] || {};
   const tokenEntries = Object.entries(tokens).map(
     ([k, v]) => [k.toLowerCase(), v] as const,
   );

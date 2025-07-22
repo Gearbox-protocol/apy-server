@@ -1,6 +1,7 @@
 import type { Address } from "viem";
 
 import type { NetworkType } from "../../../core/chains";
+import type { PartialRecord } from "../../../core/utils";
 
 const rsETH = {
   symbol: "rsETH",
@@ -15,7 +16,7 @@ const pufETH = {
   apy: 3.47,
 };
 
-export const TOKENS: Record<
+export const TOKENS: PartialRecord<
   NetworkType,
   Record<Address, { symbol: string; apy: number }>
 > = {
@@ -24,20 +25,9 @@ export const TOKENS: Record<
     "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0": rswETH,
     "0xD9A442856C234a39a81a089C06451EBAa4306a72": pufETH,
   },
-  Optimism: {},
   Arbitrum: {
     "0x4186BFC76E2E237523CBC30FD220FE055156b41F": rsETH,
   },
-  Base: {},
-  Sonic: {},
-
-  Monad: {},
-  MegaETH: {},
-  Berachain: {},
-  Avalanche: {},
-  BNB: {},
-  WorldChain: {},
-  Etherlink: {},
 };
 
 export const PROTOCOL = "constant";

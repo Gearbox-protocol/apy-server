@@ -11,7 +11,7 @@ const getAPYURL = () =>
   "https://api-v2.pendle.finance/core/v2/1/markets/0xcdd26eb5eb2ce0f203a84553853667ae69ca29ce/data";
 
 const getAPYEthena: APYHandler = async network => {
-  const tokens = TOKENS[network];
+  const tokens = TOKENS[network] || {};
   const tokenEntries = Object.entries(tokens).map(
     ([k, v]) => [k.toLowerCase(), v] as const,
   );

@@ -1,8 +1,9 @@
 import type { Address } from "viem";
 
 import type { NetworkType } from "../../../core/chains";
+import type { PartialRecord } from "../../../core/utils";
 
-export const TOKENS: Record<NetworkType, Record<Address, string>> = {
+export const TOKENS: PartialRecord<NetworkType, Record<Address, string>> = {
   Mainnet: {
     "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": "wstETH",
     "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84": "STETH",
@@ -19,16 +20,9 @@ export const TOKENS: Record<NetworkType, Record<Address, string>> = {
   Arbitrum: {
     "0x5979D7b546E38E414F7E9822514be443A4800529": "wstETH",
   },
-  Base: {},
-  Sonic: {},
-
-  Monad: {},
-  MegaETH: {},
-  Berachain: {},
-  Avalanche: {},
-  BNB: {},
-  WorldChain: {},
-  Etherlink: {},
+  Lisk: {
+    "0x76D8de471F54aAA87784119c60Df1bbFc852C415": "wstETH",
+  },
 };
 
 export const PROTOCOL = "lido";
