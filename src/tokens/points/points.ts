@@ -4,7 +4,7 @@ import type { PointsHandler, PointsResult } from "./constants";
 import { POINTS_INFO_BY_NETWORK } from "./constants";
 
 const getPoints: PointsHandler = async network => {
-  const points = POINTS_INFO_BY_NETWORK[network];
+  const points = POINTS_INFO_BY_NETWORK[network] || [];
 
   const result = points.reduce<PointsResult>((acc, p) => {
     const address = p.address.toLowerCase() as Address;

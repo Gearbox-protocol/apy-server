@@ -12,7 +12,7 @@ interface Response {
 const getUrl = () => "https://app.ether.fi/api/protocol/protocol-detail";
 
 const getAPYEtherfi: APYHandler = async network => {
-  const tokens = TOKENS[network];
+  const tokens = TOKENS[network] || {};
   const tokenEntries = Object.entries(tokens).map(
     ([k, v]) => [k.toLowerCase(), v] as const,
   );

@@ -1,6 +1,7 @@
 import type { Address } from "viem";
 
 import type { NetworkType } from "../../core/chains";
+import type { PartialRecord } from "../../core/utils";
 import type { Apy } from "../apy";
 
 export interface ExtraCollateralAPY extends Omit<Apy, "protocol"> {
@@ -16,7 +17,10 @@ export type TokenExtraCollateralAPYHandler = (
   network: NetworkType,
 ) => Promise<TokenExtraCollateralAPYResult>;
 
-export const EXTRA_APY: Record<NetworkType, Array<ExtraCollateralAPY>> = {
+export const EXTRA_APY: PartialRecord<
+  NetworkType,
+  Array<ExtraCollateralAPY>
+> = {
   Mainnet: [
     {
       pool: "0xff94993fa7ea27efc943645f95adb36c1b81244b", // WSTETH_POOL
@@ -26,16 +30,4 @@ export const EXTRA_APY: Record<NetworkType, Array<ExtraCollateralAPY>> = {
       type: "relative",
     },
   ],
-  Optimism: [],
-  Arbitrum: [],
-  Base: [],
-  Sonic: [],
-
-  Monad: [],
-  MegaETH: [],
-  Berachain: [],
-  Avalanche: [],
-  BNB: [],
-  WorldChain: [],
-  Etherlink: [],
 };

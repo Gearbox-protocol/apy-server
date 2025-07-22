@@ -1,6 +1,7 @@
 import type { Address } from "viem";
 
 import type { NetworkType } from "../../core/chains";
+import type { PartialRecord } from "../../core/utils";
 import type { PointsInfo } from "../points";
 import { REWARDS_BASE_INFO } from "../points";
 
@@ -17,7 +18,7 @@ export interface ExtraCollateralPointsInfo extends PointsInfo {
   pool: Address;
 }
 
-export const POINTS_INFO_BY_NETWORK: Record<
+export const POINTS_INFO_BY_NETWORK: PartialRecord<
   NetworkType,
   Array<ExtraCollateralPointsInfo>
 > = {
@@ -32,16 +33,4 @@ export const POINTS_INFO_BY_NETWORK: Record<
       ],
     },
   ],
-  Arbitrum: [],
-  Optimism: [],
-  Base: [],
-  Sonic: [],
-
-  Monad: [],
-  MegaETH: [],
-  Berachain: [],
-  Avalanche: [],
-  BNB: [],
-  WorldChain: [],
-  Etherlink: [],
 };

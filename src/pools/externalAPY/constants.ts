@@ -1,6 +1,7 @@
 import type { Address } from "viem";
 
 import type { NetworkType } from "../../core/chains";
+import type { PartialRecord } from "../../core/utils";
 
 export interface ExternalApy {
   value: number;
@@ -16,7 +17,10 @@ export type PoolExternalAPYHandler = (
 
 const WETH_V3_GHO_ETH: Address = "0x4d56c9cba373ad39df69eb18f076b7348000ae09";
 
-export const POOL_EXTERNAL_APY: Record<NetworkType, Array<ExternalApy>> = {
+export const POOL_EXTERNAL_APY: PartialRecord<
+  NetworkType,
+  Array<ExternalApy>
+> = {
   Mainnet: [
     {
       value: 6,
@@ -24,16 +28,4 @@ export const POOL_EXTERNAL_APY: Record<NetworkType, Array<ExternalApy>> = {
       pool: WETH_V3_GHO_ETH,
     },
   ],
-  Arbitrum: [],
-  Optimism: [],
-  Base: [],
-  Sonic: [],
-
-  Monad: [],
-  MegaETH: [],
-  Berachain: [],
-  Avalanche: [],
-  BNB: [],
-  WorldChain: [],
-  Etherlink: [],
 };

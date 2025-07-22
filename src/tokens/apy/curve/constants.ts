@@ -1,13 +1,14 @@
 import type { Address } from "viem";
 
 import type { NetworkType } from "../../../core/chains";
+import type { PartialRecord } from "../../../core/utils";
 
 export const GEAR_POOL =
   "0x5Be6C45e2d074fAa20700C49aDA3E88a1cc0025d".toLowerCase() as Address;
 
 export const PROTOCOL = "curve";
 
-export const TOKENS: Record<NetworkType, Record<Address, string>> = {
+export const TOKENS: PartialRecord<NetworkType, Record<Address, string>> = {
   Mainnet: {
     // CURVE LP TOKENS
     // "0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490": "3Crv",
@@ -61,14 +62,4 @@ export const TOKENS: Record<NetworkType, Record<Address, string>> = {
     // "0x3aDf984c937FA6846E5a24E0A68521Bdaf767cE1": "crvUSDC_e",
     // "0x1c34204FCFE5314Dcf53BE2671C02c35DB58B4e3": "USDEUSDC",
   },
-  Base: {},
-  Sonic: {},
-
-  Monad: {},
-  MegaETH: {},
-  Berachain: {},
-  Avalanche: {},
-  BNB: {},
-  WorldChain: {},
-  Etherlink: {},
 };

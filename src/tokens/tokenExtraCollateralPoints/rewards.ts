@@ -8,7 +8,7 @@ import { POINTS_INFO_BY_NETWORK } from "./constants";
 
 const getTokenExtraCollateralPoints: ExtraCollateralPointsHandler =
   async network => {
-    const points = POINTS_INFO_BY_NETWORK[network];
+    const points = POINTS_INFO_BY_NETWORK[network] || [];
 
     const result = points.reduce<TokenExtraCollateralPointsResult>((acc, p) => {
       const address = p.address.toLowerCase() as Address;

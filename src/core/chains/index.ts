@@ -12,6 +12,8 @@ export const supportedChains = [
   "BNB",
   "WorldChain",
   "Etherlink",
+
+  "Lisk",
 ] as const;
 
 export type NetworkType = (typeof supportedChains)[number];
@@ -29,6 +31,8 @@ const CHAINS = {
   BNB: 56,
   WorldChain: 480,
   Etherlink: 42793,
+
+  Lisk: 1135,
 };
 
 export function getChainId(network: NetworkType) {
