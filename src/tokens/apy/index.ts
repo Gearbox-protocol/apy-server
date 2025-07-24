@@ -3,6 +3,7 @@ export * from "./constant";
 export * from "./constants";
 export * from "./curve";
 export * from "./ethena";
+export * from "./falcon";
 export * from "./lido";
 export * from "./llama";
 export * from "./mellow";

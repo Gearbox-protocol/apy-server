@@ -17,6 +17,7 @@ import {
   getAPYConstant,
   getAPYCurve,
   getAPYEthena,
+  getAPYFalcon,
   getAPYLama,
   getAPYLido,
   getAPYMellow,
@@ -88,6 +89,7 @@ export class Fetcher {
       getAPYMidas,
       getAPYMellow,
       getAPYMellowVaults,
+      getAPYFalcon,
     ];
     const [
       points,
