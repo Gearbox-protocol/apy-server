@@ -48,6 +48,10 @@ export const TOKENS: PartialRecord<
       id: "72fc3af9-cdce-4cc6-9221-68b21726124c",
       symbol: "PT_sUSDf_25SEP2025",
     },
+    "0xeC3b5e45dD278d5AB9CDB31754B54DB314e9D52a": {
+      id: "8d2a1154-094c-449e-bc5a-0e6bc418066c",
+      symbol: "PT_USDf_29JAN2026",
+    },
 
     // "0x276187f24D41745513cbE2Bd5dFC33a4d8CDc9ed": {
     //   id: "bd072651-d99c-4154-aeae-51f12109c054",
