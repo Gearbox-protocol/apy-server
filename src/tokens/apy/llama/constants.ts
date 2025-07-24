@@ -40,6 +40,15 @@ export const TOKENS: PartialRecord<
       symbol: "PT_uptBTC_14AUG2025",
     },
 
+    "0xa327D7f665AFE9Ecb0963B5561C84C48C7EC71AB": {
+      id: "977bc628-7476-43cf-abb8-68934bf56171",
+      symbol: "stkcvxUSDCUSDf",
+    },
+    "0xAB365C0879024481E4ad3b47bd6FeA9c10014FbC": {
+      id: "72fc3af9-cdce-4cc6-9221-68b21726124c",
+      symbol: "PT_sUSDf_25SEP2025",
+    },
+
     // "0x276187f24D41745513cbE2Bd5dFC33a4d8CDc9ed": {
     //   id: "bd072651-d99c-4154-aeae-51f12109c054",
     //   symbol: "stkcvxcrvFRAX",
