@@ -28,8 +28,8 @@ export const POINTS_INFO_BY_NETWORK: PartialRecord<
       address: "0x7a4EffD87C2f3C55CA251080b1343b605f327E3a",
       symbol: "rstETH",
       rewards: [
-        REWARDS_BASE_INFO.symbiotic(20n),
-        REWARDS_BASE_INFO.mellow(40n),
+        REWARDS_BASE_INFO.symbiotic(60n),
+        REWARDS_BASE_INFO.mellow(120n),
       ],
     },
   ],
