@@ -17,20 +17,21 @@ import {
   getAPYConstant,
   getAPYCurve,
   getAPYEthena,
+  getAPYEtherfi,
   getAPYFalcon,
   getAPYLama,
   getAPYLido,
   getAPYMellow,
   getAPYMellowVaults,
   getAPYMidas,
+  getAPYRenzo,
+  getAPYResolv,
   getAPYSky,
   getAPYSonic,
   getAPYTreehouse,
   getAPYYearn,
   getGearAPY,
 } from "../../tokens/apy";
-import { getAPYEtherfi } from "../../tokens/apy/etherfi";
-import { getAPYRenzo } from "../../tokens/apy/renzo";
 import type { PointsResult } from "../../tokens/points";
 import { getPoints } from "../../tokens/points";
 import type { TokenExtraCollateralAPYResult } from "../../tokens/tokenExtraCollateralAPY";
@@ -90,6 +91,7 @@ export class Fetcher {
       getAPYMellow,
       getAPYMellowVaults,
       getAPYFalcon,
+      getAPYResolv,
     ];
     const [
       points,

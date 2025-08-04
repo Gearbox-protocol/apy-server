@@ -4,7 +4,6 @@ export const supportedChains = [
   "Optimism",
   "Base",
   "Sonic",
-
   "MegaETH",
   "Monad",
   "Berachain",
@@ -12,9 +11,8 @@ export const supportedChains = [
   "BNB",
   "WorldChain",
   "Etherlink",
-
-  "Lisk",
   "Hemi",
+  "Lisk",
 ] as const;
 
 export type NetworkType = (typeof supportedChains)[number];
