@@ -57,6 +57,23 @@ export const TOKENS: PartialRecord<
       symbol: "PT-wstUSR-25SEP2025",
     },
 
+    "0x4274cD7277C7bb0806Bd5FE84b9aDAE466a8DA0a": {
+      id: "f91b2168-c279-475c-a98a-673220f4fee7",
+      symbol: "aegis-yusd",
+    },
+    "0x19Ebd191f7A24ECE672ba13A302212b5eF7F35cb": {
+      id: "7c43e890-cefc-48d1-bf80-203cdb7dfe4f",
+      symbol: "yieldfi-yusd",
+    },
+    "0xf580CF6B26251541f323bbda1f31CC8F91a0cA78": {
+      id: "909f237f-00f1-495f-83de-8321caa9c49b",
+      symbol: "PT-yUSD-27NOV2025",
+    },
+    "0x40fC1F58Ab6Efc06E008370a040e92b635dD4cE4": {
+      id: "156c505a-8bc3-46c8-89d1-8f4f8a58088b",
+      symbol: "stkcvxfrxUSDUSDf",
+    },
+
     // "0x276187f24D41745513cbE2Bd5dFC33a4d8CDc9ed": {
     //   id: "bd072651-d99c-4154-aeae-51f12109c054",
     //   symbol: "stkcvxcrvFRAX",
