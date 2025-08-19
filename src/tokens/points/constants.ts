@@ -34,7 +34,8 @@ export type PointsType =
   | "omni"
   | "sPoint"
   | "upshift"
-  | "mezo";
+  | "mezo"
+  | "falcon";
 
 interface PointsReward {
   name: string;
@@ -209,6 +210,13 @@ export const REWARDS_BASE_INFO = {
     units: "points",
     multiplier,
     type: "mezo",
+  }),
+
+  falcon: (multiplier: PointsReward["multiplier"]): PointsReward => ({
+    name: "Falcon",
+    units: "miles",
+    multiplier,
+    type: "falcon",
   }),
 };
 
