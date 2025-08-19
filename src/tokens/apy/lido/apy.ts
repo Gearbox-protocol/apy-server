@@ -70,6 +70,7 @@ async function fetchLidoData() {
         }
       : undefined,
   );
+
   const { smaApr = 0 } = res?.data?.data || {};
 
   return { smaApr };
