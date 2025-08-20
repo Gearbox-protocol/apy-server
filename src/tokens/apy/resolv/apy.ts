@@ -4,13 +4,13 @@ import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
 interface Response {
-  interval: "1d";
+  interval: string;
   value: number;
 }
 
-const getUrl = () => "https://external-api.resolv.xyz/apr/rlp?interval=1d";
+const getUrl = () => "https://external-api.resolv.xyz/apr/rlp?interval=7d";
 const getStakingUrl = () =>
-  "https://external-api.resolv.xyz/apr/staking?interval=1d";
+  "https://external-api.resolv.xyz/apr/staking?interval=7d";
 
 const REQUEST_CONFIG = {
   withCredentials: true,
