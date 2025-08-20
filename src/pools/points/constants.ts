@@ -89,7 +89,7 @@ export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
       symbol: "USDC",
 
       amount: 30n * 10000n,
-      duration: undefined,
+      duration: "day",
       name: `${REWARDS_BASE_INFO.falcon(1n).name} ${REWARDS_BASE_INFO.falcon(1n).units}`,
       type: REWARDS_BASE_INFO.falcon(1n).type,
       estimation: "absolute",
