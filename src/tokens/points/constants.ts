@@ -35,7 +35,8 @@ export type PointsType =
   | "sPoint"
   | "upshift"
   | "mezo"
-  | "falcon";
+  | "falcon"
+  | "aegis";
 
 interface PointsReward {
   name: string;
@@ -218,6 +219,19 @@ export const REWARDS_BASE_INFO = {
     multiplier,
     type: "falcon",
   }),
+
+  aegis: <CM extends DebtReward["cm"] | undefined = undefined>(
+    multiplier: PointsReward["multiplier"],
+    cm?: CM,
+  ): CommonReward<CM> => {
+    return {
+      name: "Aegis",
+      units: "points",
+      multiplier,
+      type: "aegis",
+      ...(cm ? { cm } : {}),
+    } as CommonReward<CM>;
+  },
 };
 
 export interface PointsInfo {
@@ -262,6 +276,18 @@ export const POINTS_INFO_BY_NETWORK: PartialRecord<
         REWARDS_BASE_INFO.ethena(
           500n,
           "0x58c8e983d9479b69b64970f79e8965ea347189c9",
+        ),
+      ],
+    },
+
+    {
+      address: "0x4274cD7277C7bb0806Bd5FE84b9aDAE466a8DA0a",
+      symbol: "aegis-yusd",
+      rewards: [REWARDS_BASE_INFO.aegis(300n)],
+      debtRewards: [
+        REWARDS_BASE_INFO.aegis(
+          150n,
+          "0x8c118e8c20cebbaa2467b735bbb8b13d614e6608",
         ),
       ],
     },
