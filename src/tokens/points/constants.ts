@@ -45,7 +45,7 @@ interface PointsReward {
   type: PointsType;
 }
 interface DebtReward extends PointsReward {
-  cm: Address;
+  cm: Address | "any";
 }
 
 type CommonReward<CM extends DebtReward["cm"] | undefined> =
@@ -283,13 +283,8 @@ export const POINTS_INFO_BY_NETWORK: PartialRecord<
     {
       address: "0x4274cD7277C7bb0806Bd5FE84b9aDAE466a8DA0a",
       symbol: "aegis-yusd",
-      rewards: [REWARDS_BASE_INFO.aegis(300n)],
-      debtRewards: [
-        REWARDS_BASE_INFO.aegis(
-          150n,
-          "0x8c118e8c20cebbaa2467b735bbb8b13d614e6608",
-        ),
-      ],
+      rewards: [],
+      debtRewards: [REWARDS_BASE_INFO.aegis(150n, "any")],
     },
 
     {

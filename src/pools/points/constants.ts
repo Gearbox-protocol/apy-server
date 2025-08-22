@@ -84,18 +84,6 @@ export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
       condition: "holding",
     },
     {
-      pool: POOLS.USDC_V3_1_INVARIANT_ETH,
-      token: TOKENS.USDC_ETH,
-      symbol: "USDC",
-
-      amount: 30n * 10000n,
-      duration: "day",
-      name: `${REWARDS_BASE_INFO.falcon(1n).name} ${REWARDS_BASE_INFO.falcon(1n).units}`,
-      type: REWARDS_BASE_INFO.falcon(1n).type,
-      estimation: "absolute",
-      condition: "deposit",
-    },
-    {
       pool: POOLS.WETH_V3_TRADE_ETH,
       token: TOKENS.NATIVE_ADDRESS,
       symbol: "ETH",
@@ -118,6 +106,30 @@ export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
       type: REWARDS_BASE_INFO.omni(1n).type,
       estimation: "absolute",
       condition: "cross-chain-deposit",
+    },
+    {
+      pool: POOLS.USDC_V3_1_INVARIANT_ETH,
+      token: TOKENS.USDC_ETH,
+      symbol: "USDC",
+
+      amount: 30n * 10000n,
+      duration: "day",
+      name: `${REWARDS_BASE_INFO.falcon(1n).name} ${REWARDS_BASE_INFO.falcon(1n).units}`,
+      type: REWARDS_BASE_INFO.falcon(1n).type,
+      estimation: "absolute",
+      condition: "holding",
+    },
+    {
+      pool: POOLS.USDC_V3_1_INVARIANT_ETH,
+      token: TOKENS.USDC_ETH,
+      symbol: "USDC",
+
+      amount: 45n * 10000n,
+      duration: "day",
+      name: `${REWARDS_BASE_INFO.aegis(1n).name} ${REWARDS_BASE_INFO.aegis(1n).units}`,
+      type: REWARDS_BASE_INFO.aegis(1n).type,
+      estimation: "absolute",
+      condition: "holding",
     },
   ],
   Arbitrum: [
