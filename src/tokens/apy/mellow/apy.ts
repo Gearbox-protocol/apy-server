@@ -1,6 +1,6 @@
 import { cachedAxios } from "../../../core/app";
 import type { APYHandler, APYResult } from "../constants";
-import { fetchLidoData } from "../lido";
+import { getSTETH } from "../llama";
 import { PROTOCOL, TOKENS } from "./constants";
 
 interface Response {
@@ -17,7 +17,7 @@ const getAPYMellow: APYHandler = async network => {
   );
   if (tokenEntries.length === 0) return {};
 
-  const { smaApr } = await fetchLidoData();
+  const { value: smaApr = 0 } = (await getSTETH()) || {};
   const { data } = await cachedAxios.get<Response>(getUrl());
 
   const obolRate = data?.obol || 0;

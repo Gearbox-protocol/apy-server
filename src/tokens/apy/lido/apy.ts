@@ -77,4 +77,4 @@ async function fetchLidoData() {
   return { smaApr };
 }
 
-export { fetchLidoData, getAPYLido };
+export { getAPYLido };

@@ -78,35 +78,44 @@ export const TOKENS: PartialRecord<
       symbol: "PT-pUSDe-16OCT2025",
     },
 
-    // "0x276187f24D41745513cbE2Bd5dFC33a4d8CDc9ed": {
-    //   id: "bd072651-d99c-4154-aeae-51f12109c054",
-    //   symbol: "stkcvxcrvFRAX",
-    // },
-    // "0x0Bf1626d4925F8A872801968be11c052862AC2D3": {
-    //   id: "654ac683-141b-42d3-b28d-b2f77eedd595",
-    //   symbol: "stkcvxcrvUSDETHCRV",
-    // },
-    // "0x7376AD488AB2bd8dF7665d619A4148f0E5094813": {
-    //   id: "411af006-56b0-480a-9586-1071bccbd178",
-    //   symbol: "stkcvxcrvUSDFRAX",
-    // },
-    // "0xEE3EE8373384BBfea3227E527C1B9b4e7821273E": {
-    //   id: "3be97c90-d4a8-42b3-a0d0-2906ae4e9d27",
-    //   symbol: "stkcvxcrvUSDTWBTCWETH",
-    // },
-    // "0xDb4217B9C8DB788Aa3871d45B4BE6ac5D1FF8C49": {
-    //   id: "755fcec6-f4fd-4150-9184-60f099206694",
-    //   symbol: "stkcvxcrvUSDUSDC",
-    // },
-    // "0x5C5e5117E26374870c80a5FA04c3f75a821440D6": {
-    //   id: "a3ffd3fe-b21c-44eb-94d5-22c80057a600",
-    //   symbol: "stkcvxcrvUSDUSDT",
-    // },
+    "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": {
+      id: "747c1d2a-c668-4682-b9f9-296708a3dd90",
+      symbol: "wstETH",
+    },
+    "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84": {
+      id: "747c1d2a-c668-4682-b9f9-296708a3dd90",
+      symbol: "STETH",
+    },
+    "0x84631c0d0081FDe56DeB72F6DE77abBbF6A9f93a": {
+      id: "747c1d2a-c668-4682-b9f9-296708a3dd90",
+      symbol: "Re7LRT",
+    },
+    "0xB908c9FE885369643adB5FBA4407d52bD726c72d": {
+      id: "747c1d2a-c668-4682-b9f9-296708a3dd90",
+      symbol: "cp0xLRT",
+    },
+    "0x7a4EffD87C2f3C55CA251080b1343b605f327E3a": {
+      id: "747c1d2a-c668-4682-b9f9-296708a3dd90",
+      symbol: "rstETH",
+    },
+    "0xBEEF69Ac7870777598A04B2bd4771c71212E6aBc": {
+      id: "747c1d2a-c668-4682-b9f9-296708a3dd90",
+      symbol: "steakLRT",
+    },
+    "0x5fD13359Ba15A84B76f7F87568309040176167cd": {
+      id: "747c1d2a-c668-4682-b9f9-296708a3dd90",
+      symbol: "amphrETH",
+    },
   },
   Optimism: {
     "0x9Bcef72be871e61ED4fBbc7630889beE758eb81D": {
       id: "d4b3c522-6127-4b89-bedf-83641cdcd2eb",
       symbol: "rETH",
+    },
+
+    "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb": {
+      id: "747c1d2a-c668-4682-b9f9-296708a3dd90",
+      symbol: "wstETH",
     },
   },
   Arbitrum: {
@@ -119,8 +128,13 @@ export const TOKENS: PartialRecord<
       symbol: "cbETH",
     },
     "0x95aB45875cFFdba1E5f451B950bC2E42c0053f39": {
-      id: "77020688-e1f9-443c-9388-e51ace15cc32",
+      id: "747c1d2a-c668-4682-b9f9-296708a3dd90",
       symbol: "sfrxETH",
+    },
+
+    "0x5979D7b546E38E414F7E9822514be443A4800529": {
+      id: "747c1d2a-c668-4682-b9f9-296708a3dd90",
+      symbol: "wstETH",
     },
   },
   BNB: {
@@ -135,6 +149,12 @@ export const TOKENS: PartialRecord<
     "0xfA56005cdf111725A8e5395fc90Cd33135BcCAE8": {
       id: "b0922876-0529-4541-869d-eee2a38c0867",
       symbol: "PT_sUSDX_1SEP2025",
+    },
+  },
+  Lisk: {
+    "0x76D8de471F54aAA87784119c60Df1bbFc852C415": {
+      id: "747c1d2a-c668-4682-b9f9-296708a3dd90",
+      symbol: "wstETH",
     },
   },
 };
