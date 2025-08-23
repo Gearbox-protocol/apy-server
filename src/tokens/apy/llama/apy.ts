@@ -1,7 +1,7 @@
 import type { Address } from "viem";
 
 import { cachedAxios } from "../../../core/app";
-import type { APYHandler, APYResult } from "../constants";
+import type { APYHandler, APYResult, TokenAPY } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
 interface LamaItem {
@@ -59,4 +59,34 @@ const getAPYLama: APYHandler = async network => {
   return allAPY;
 };
 
-export { getAPYLama };
+async function getSTETH(): Promise<TokenAPY["apys"][number] | undefined> {
+  const stethEntry = Object.entries(TOKENS.Mainnet || {})
+    .filter(([, v]) => v.symbol === "STETH")
+    .map(([k, v]) => [k.toLowerCase(), v] as const);
+  if (stethEntry.length !== 1) return undefined;
+
+  const res = await cachedAxios.get<LamaResponse>(getDefillamaURL());
+  const poolById = res.data.data.reduce<Record<string, LamaItem>>((acc, p) => {
+    acc[p.pool] = p;
+    return acc;
+  }, {});
+
+  const steth = stethEntry[0];
+  const address = steth[0] as Address;
+  const info = steth[1];
+
+  const pool = poolById[info.id] || {};
+
+  if (pool) {
+    return {
+      address: address,
+      symbol: info.symbol,
+      protocol: PROTOCOL,
+      value: pool.apy || 0,
+    };
+  }
+
+  return undefined;
+}
+
+export { getAPYLama, getSTETH };
