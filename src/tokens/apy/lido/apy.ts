@@ -60,6 +60,7 @@ const getAPYLido: APYHandler = async network => {
 
 async function fetchLidoData() {
   console.log("HAS LIDO TOKEN: ", String(!!LIDO_AUTH_TOKEN));
+
   const res = await cachedAxios.get<Response>(
     LIDO_URL,
     LIDO_AUTH_TOKEN
