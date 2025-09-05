@@ -31,7 +31,15 @@ export const TOKENS: PartialRecord<
       id: "18d68b7b-1674-4616-b5a8-65bbfb3723cd",
       symbol: "stkcvxllamathena",
     },
+    "0xB5528130B1d5D24aD172bF54CeeD062232AfbFBe": {
+      id: "18d68b7b-1674-4616-b5a8-65bbfb3723cd",
+      symbol: "stkcvxllamathena",
+    },
     "0x444FA0ffb033265591895b66c81c2e5fF606E097": {
+      id: "d826a92b-2bd2-4fae-8483-db1ef8888aee",
+      symbol: "stkcvxRLUSDUSDC",
+    },
+    "0x87FA6c0296c986D1C901d72571282D57916B964a": {
       id: "d826a92b-2bd2-4fae-8483-db1ef8888aee",
       symbol: "stkcvxRLUSDUSDC",
     },

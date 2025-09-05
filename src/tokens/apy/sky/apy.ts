@@ -57,6 +57,21 @@ const getAPYSky: APYHandler = async network => {
     };
   }
 
+  if (tokens?.stkUSDS_inv) {
+    result[tokens.stkUSDS_inv] = {
+      address: tokens.stkUSDS_inv,
+      symbol: "stkUSDS_inv",
+      apys: [
+        {
+          address: tokens.stkUSDS_inv,
+          symbol: "stkUSDS_inv",
+          protocol: PROTOCOL,
+          value: Number(farmRate) * 100,
+        },
+      ],
+    };
+  }
+
   return result;
 };
 

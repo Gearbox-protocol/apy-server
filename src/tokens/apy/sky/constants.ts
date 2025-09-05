@@ -5,11 +5,12 @@ import type { PartialRecord } from "../../../core/utils";
 
 export const TOKENS: PartialRecord<
   NetworkType,
-  { sUSDS?: Address; stkUSDS?: Address }
+  { sUSDS?: Address; stkUSDS?: Address; stkUSDS_inv?: Address }
 > = {
   Mainnet: {
     sUSDS: "0xa3931d71877C0E7a3148CB7Eb4463524FEc27fbD",
     stkUSDS: "0xcB5D10A57Aeb622b92784D53F730eE2210ab370E",
+    stkUSDS_inv: "0x00F7C0d39B05089e93858A82439EA17dE7160B5a",
   },
 };
 

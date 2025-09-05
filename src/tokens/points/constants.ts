@@ -372,6 +372,11 @@ export const POINTS_INFO_BY_NETWORK: PartialRecord<
       symbol: "stkcvxllamathena",
       rewards: [REWARDS_BASE_INFO.ethena(30_00n)],
     },
+    {
+      address: "0xB5528130B1d5D24aD172bF54CeeD062232AfbFBe",
+      symbol: "stkcvxllamathena",
+      rewards: [REWARDS_BASE_INFO.ethena(30_00n)],
+    },
 
     {
       address: "0x5E362eb2c0706Bd1d134689eC75176018385430B",
