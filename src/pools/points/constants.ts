@@ -60,18 +60,6 @@ const TOKENS = {
 export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
   Mainnet: [
     {
-      pool: POOLS.WETH_V3_TRADE_ETH,
-      token: TOKENS.RSETH_ETH,
-      symbol: "rsETH",
-
-      amount: 7500n * 10000n,
-      duration: "hour",
-      name: `${REWARDS_BASE_INFO.kelp(1n).name} ${REWARDS_BASE_INFO.kelp(1n).units}`,
-      type: REWARDS_BASE_INFO.kelp(1n).type,
-      estimation: "relative",
-      condition: "holding",
-    },
-    {
       pool: POOLS.WBTC_V3_TRADE_ETH,
       token: TOKENS.LBTC_ETH,
       symbol: "LBTC",
