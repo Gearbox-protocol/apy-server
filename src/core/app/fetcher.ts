@@ -22,6 +22,7 @@ import {
   getAPYLama,
   getAPYMellow,
   getAPYMellowVaults,
+  getAPYMerkle,
   getAPYMidas,
   getAPYRenzo,
   getAPYResolv,
@@ -90,6 +91,7 @@ export class Fetcher {
       getAPYMellowVaults,
       getAPYFalcon,
       getAPYResolv,
+      getAPYMerkle,
     ];
     const [
       points,

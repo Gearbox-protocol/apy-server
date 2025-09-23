@@ -9,6 +9,7 @@ export * from "./lido";
 export * from "./llama";
 export * from "./mellow";
 export * from "./mellow-vaults";
+export * from "./merkle";
 export * from "./midas";
 export * from "./renzo";
 export * from "./resolv";
