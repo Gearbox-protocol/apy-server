@@ -149,13 +149,15 @@ export const getTokenRewards: Handler = app => async (req, res) => {
 
     respondWithJson(app, res, response);
   } catch (e) {
+    const error = AppError.getAppError(e);
     const notReport =
       !!PATHS_TO_IGNORE[req.originalUrl] && req.query.chain_id === undefined;
+
     respondWithError({
       app,
       req,
       res,
-      error: AppError.getAppError(e),
+      error,
       file: "rewards/handlers/getTokenRewards",
       reportSentry: !notReport,
     });
@@ -179,11 +181,13 @@ export const getGearAPY: Handler = app => async (req, res) => {
 
     respondWithJson(app, res, response);
   } catch (e) {
+    const error = AppError.getAppError(e);
+
     respondWithError({
       app,
       req,
       res,
-      error: AppError.getAppError(e),
+      error,
       file: "rewards/handlers/getGearAPY",
     });
   }
@@ -264,13 +268,15 @@ export const getPoolRewards: Handler = app => async (req, res) => {
 
     respondWithJson(app, res, response);
   } catch (e) {
+    const error = AppError.getAppError(e);
     const notReport =
       !!PATHS_TO_IGNORE[req.originalUrl] && req.query.chain_id === undefined;
+
     respondWithError({
       app,
       req,
       res,
-      error: AppError.getAppError(e),
+      error,
       file: "rewards/handlers/getPoolRewards",
       reportSentry: !notReport,
     });

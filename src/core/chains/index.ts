@@ -33,6 +33,8 @@ const CHAINS = {
 
   Lisk: 1135,
   Hemi: 43111,
+
+  Plasma: 9745,
 };
 
 export function getChainId(network: NetworkType) {
