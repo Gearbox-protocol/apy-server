@@ -128,6 +128,8 @@ export interface MerklXYZV4RewardCampaign {
 export type MerkleXYZV4RewardCampaignResponse = Array<MerklXYZV4RewardCampaign>;
 
 export class MerkleXYZApi {
+  static getOpportunitiesByAddressUrl = (a: Address) =>
+    `https://api.merkl.xyz/v4/opportunities?search=${a}`;
   static getGearboxCampaignsUrl = () =>
     "https://api.merkl.xyz/v4/opportunities?name=gearbox";
   static getGearboxRewardCampaignUrl = (campaignId: Address) =>

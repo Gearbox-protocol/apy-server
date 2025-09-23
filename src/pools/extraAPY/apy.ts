@@ -4,17 +4,17 @@ import type { Address } from "viem";
 
 import { cachedAxios } from "../../core/app";
 import type {
+  MerkleXYZV4CampaignsResponse,
+  MerkleXYZV4RewardCampaignResponse,
+  MerklXYZV4RewardCampaign,
+} from "../../core/merkle/merklAPI";
+import { MerkleXYZApi } from "../../core/merkle/merklAPI";
+import type {
   PoolExtraApy,
   PoolExtraAPYHandler,
   PoolExtraAPYResultByChain,
 } from "./constants";
 import { BROKEN_CAMPAIGNS } from "./constants";
-import type {
-  MerkleXYZV4CampaignsResponse,
-  MerkleXYZV4RewardCampaignResponse,
-  MerklXYZV4RewardCampaign,
-} from "./merklAPI";
-import { MerkleXYZApi } from "./merklAPI";
 
 export const getPoolExtraAPY: PoolExtraAPYHandler = async () => {
   // get all campaigns
