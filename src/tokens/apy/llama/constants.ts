@@ -86,6 +86,11 @@ export const TOKENS: PartialRecord<
       symbol: "PT-pUSDe-16OCT2025",
     },
 
+    "0x48e502fbb6ff2cc687d049150e2c8addc765a43a": {
+      id: "d0d0021e-5e1c-4ef3-88b7-9084d78e4d82",
+      symbol: "PT_sUSDf_29JAN2026",
+    },
+
     "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0": {
       id: "747c1d2a-c668-4682-b9f9-296708a3dd90",
       symbol: "wstETH",
