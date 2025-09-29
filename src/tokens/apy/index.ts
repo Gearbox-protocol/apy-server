@@ -2,7 +2,6 @@ export * from "./coinshift";
 export * from "./constant";
 export * from "./constants";
 export * from "./curve";
-export * from "./ethena";
 export * from "./etherfi";
 export * from "./falcon";
 export * from "./lido";

@@ -16,7 +16,6 @@ import {
   getAPYCoinshift,
   getAPYConstant,
   getAPYCurve,
-  getAPYEthena,
   getAPYEtherfi,
   getAPYFalcon,
   getAPYLama,
@@ -77,7 +76,6 @@ export class Fetcher {
   ): Promise<Fetcher["rewards"][number]> {
     const protocolsAPYFunctions = [
       getAPYCurve,
-      getAPYEthena,
       getAPYLama,
       getAPYSky,
       getAPYYearn,

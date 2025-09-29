@@ -1,7 +1,6 @@
 import type { Address } from "viem";
 
 import { cachedAxios } from "../../../core/app";
-import { getChainId } from "../../../core/chains";
 import type { APYHandler, APYResult } from "../constants";
 import type { PendleResponse } from "./constants";
 import { PROTOCOL, TOKENS } from "./constants";
@@ -10,7 +9,6 @@ export const getPendleAPYURL = (id: Address, chainId: number) =>
   `https://api-v2.pendle.finance/core/v2/${chainId}/markets/${id}/data`;
 
 const getAPYPendle: APYHandler = async network => {
-  const chainId = getChainId(network);
   const tokenEntries = Object.entries(TOKENS[network] || {}).map(
     ([k, v]) => [k.toLowerCase(), v] as const,
   );
@@ -19,7 +17,7 @@ const getAPYPendle: APYHandler = async network => {
   // get all campaigns
   const res = await Promise.allSettled(
     tokenEntries.map(([, c]) =>
-      cachedAxios.get<PendleResponse>(getPendleAPYURL(c.id, chainId)),
+      cachedAxios.get<PendleResponse>(getPendleAPYURL(c.id, c.chainId)),
     ),
   );
 
