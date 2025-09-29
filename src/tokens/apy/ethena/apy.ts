@@ -1,14 +1,8 @@
 import { cachedAxios } from "../../../core/app";
 import type { APYHandler, APYResult } from "../constants";
+import { getPendleAPYURL } from "../pendle";
+import type { PendleResponse } from "../pendle/constants";
 import { PROTOCOL, TOKENS } from "./constants";
-
-interface Response {
-  underlyingInterestApy: number;
-}
-
-// get ethena apy using pendle api
-const getAPYURL = () =>
-  "https://api-v2.pendle.finance/core/v2/1/markets/0xcdd26eb5eb2ce0f203a84553853667ae69ca29ce/data";
 
 const getAPYEthena: APYHandler = async network => {
   const tokens = TOKENS[network] || {};
@@ -17,7 +11,9 @@ const getAPYEthena: APYHandler = async network => {
   );
   if (tokenEntries.length === 0) return {};
 
-  const resp = await cachedAxios.get<Response>(getAPYURL());
+  const resp = await cachedAxios.get<PendleResponse>(
+    getPendleAPYURL("0xcdd26eb5eb2ce0f203a84553853667ae69ca29ce", 1),
+  );
   const apyInfo = resp?.data;
 
   const rate = apyInfo?.underlyingInterestApy || 0;

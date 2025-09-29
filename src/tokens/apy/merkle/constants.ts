@@ -32,9 +32,5 @@ export const TOKENS: PartialRecord<
       id: "0x1e8d78e9b3f0152d54d32904b7933f1cfe439df1",
       symbol: "USDT0sUSDe",
     },
-    "0x0b2b2b2076d95dda7817e785989fe353fe955ef9": {
-      id: "0x0b2b2b2076d95dda7817e785989fe353fe955ef9",
-      symbol: "sUSDai",
-    },
   },
 };
