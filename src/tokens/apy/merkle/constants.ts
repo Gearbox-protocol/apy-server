@@ -23,4 +23,18 @@ export const TOKENS: PartialRecord<
       symbol: "mRE7USDC",
     },
   },
+  Plasma: {
+    "0x2d84d79c852f6842abe0304b70bbaa1506add457": {
+      id: "0x2d84d79c852f6842abe0304b70bbaa1506add457",
+      symbol: "USDT0USDe",
+    },
+    "0x1e8d78e9b3f0152d54d32904b7933f1cfe439df1": {
+      id: "0x1e8d78e9b3f0152d54d32904b7933f1cfe439df1",
+      symbol: "USDT0sUSDe",
+    },
+    "0x0b2b2b2076d95dda7817e785989fe353fe955ef9": {
+      id: "0x0b2b2b2076d95dda7817e785989fe353fe955ef9",
+      symbol: "sUSDai",
+    },
+  },
 };

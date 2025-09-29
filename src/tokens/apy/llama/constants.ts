@@ -43,26 +43,14 @@ export const TOKENS: PartialRecord<
       id: "d826a92b-2bd2-4fae-8483-db1ef8888aee",
       symbol: "stkcvxRLUSDUSDC",
     },
-    "0x7c853d6bfb49256af65af672dcc3f66c015e96e0": {
-      id: "2f17b2cf-9f50-41de-95f9-502079c789de",
-      symbol: "PT_uptBTC_14AUG2025",
-    },
 
     "0xa327D7f665AFE9Ecb0963B5561C84C48C7EC71AB": {
       id: "977bc628-7476-43cf-abb8-68934bf56171",
       symbol: "stkcvxUSDCUSDf",
     },
-    "0xAB365C0879024481E4ad3b47bd6FeA9c10014FbC": {
-      id: "72fc3af9-cdce-4cc6-9221-68b21726124c",
-      symbol: "PT_sUSDf_25SEP2025",
-    },
     "0xeC3b5e45dD278d5AB9CDB31754B54DB314e9D52a": {
       id: "8d2a1154-094c-449e-bc5a-0e6bc418066c",
       symbol: "PT_USDf_29JAN2026",
-    },
-    "0x23E60d1488525bf4685f53b3aa8E676c30321066": {
-      id: "3772ad47-be9e-4a14-bb75-f9880559b339",
-      symbol: "PT-wstUSR-25SEP2025",
     },
 
     "0x4274cD7277C7bb0806Bd5FE84b9aDAE466a8DA0a": {
@@ -159,15 +147,21 @@ export const TOKENS: PartialRecord<
       id: "e7ac1a5f-f141-4c00-9a5d-2e2c505a800c",
       symbol: "sUSDX",
     },
-    "0xfA56005cdf111725A8e5395fc90Cd33135BcCAE8": {
-      id: "b0922876-0529-4541-869d-eee2a38c0867",
-      symbol: "PT_sUSDX_1SEP2025",
-    },
   },
   Lisk: {
     "0x76D8de471F54aAA87784119c60Df1bbFc852C415": {
       id: "747c1d2a-c668-4682-b9f9-296708a3dd90",
       symbol: "wstETH",
+    },
+  },
+  Plasma: {
+    "0x6eaf19b2fc24552925db245f9ff613157a7dbb4c": {
+      id: "b7daea94-6378-4eeb-8d10-52beebadf77b",
+      symbol: "xUSD",
+    },
+    "0xc4374775489cb9c56003bf2c9b12495fc64f0771": {
+      id: "8edfdf02-cdbb-43f7-bca6-954e5fe56813",
+      symbol: "syrupUSDT",
     },
   },
 };
