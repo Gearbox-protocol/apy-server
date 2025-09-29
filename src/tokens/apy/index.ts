@@ -11,6 +11,7 @@ export * from "./mellow";
 export * from "./mellow-vaults";
 export * from "./merkle";
 export * from "./midas";
+export * from "./pendle";
 export * from "./renzo";
 export * from "./resolv";
 export * from "./sky";
