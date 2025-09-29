@@ -13,6 +13,7 @@ export const supportedChains = [
   "Etherlink",
   "Hemi",
   "Lisk",
+  "Plasma",
 ] as const;
 
 export type NetworkType = (typeof supportedChains)[number];
