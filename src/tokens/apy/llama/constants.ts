@@ -107,6 +107,11 @@ export const TOKENS: PartialRecord<
       id: "747c1d2a-c668-4682-b9f9-296708a3dd90",
       symbol: "amphrETH",
     },
+
+    "0xbe9895146f7af43049ca1c1ae358b0541ea49704": {
+      id: "0f45d730-b279-4629-8e11-ccb5cc3038b4",
+      symbol: "cbETH",
+    },
   },
   Optimism: {
     "0x9Bcef72be871e61ED4fBbc7630889beE758eb81D": {
