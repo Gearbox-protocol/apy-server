@@ -103,6 +103,7 @@ export const TOKENS: PartialRecord<
       id: "747c1d2a-c668-4682-b9f9-296708a3dd90",
       symbol: "steakLRT",
     },
+
     "0x5fD13359Ba15A84B76f7F87568309040176167cd": {
       id: "747c1d2a-c668-4682-b9f9-296708a3dd90",
       symbol: "amphrETH",
