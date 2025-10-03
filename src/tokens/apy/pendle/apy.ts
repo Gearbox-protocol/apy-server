@@ -43,6 +43,10 @@ const getAPYPendle: APYHandler = async network => {
       };
     }
 
+    if (r.status === "rejected") {
+      console.log(r.reason);
+    }
+
     return acc;
   }, {});
 
