@@ -1,6 +1,7 @@
 import type { Address } from "viem";
 
 import { cachedAxios } from "../../../core/app";
+import { getChainId } from "../../../core/chains";
 import type { MerkleXYZV4CampaignsResponse } from "../../../core/merkle/merklAPI";
 import { MerkleXYZApi } from "../../../core/merkle/merklAPI";
 import { json_stringify } from "../../../core/utils";
@@ -22,6 +23,8 @@ const getAPYMerkle: APYHandler = async network => {
     ),
   );
 
+  const currentChainId = getChainId(network);
+
   const allAPY = tokenEntries.reduce<APYResult>((acc, [addr, p], index) => {
     const address = addr as Address;
     const tokenCampaignsRes = res[index];
@@ -29,7 +32,10 @@ const getAPYMerkle: APYHandler = async network => {
     if (tokenCampaignsRes && tokenCampaignsRes.status === "fulfilled") {
       // filter out not active
       const currentActiveCampaigns = tokenCampaignsRes.value.data.filter(
-        c => c.status === "LIVE",
+        c =>
+          c.status === "LIVE" &&
+          c.chainId === currentChainId &&
+          c.identifier.toLowerCase() === p.id.toLowerCase(),
       );
 
       if (currentActiveCampaigns.length > 0) {
