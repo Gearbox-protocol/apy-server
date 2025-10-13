@@ -5,7 +5,7 @@ import type { PartialRecord } from "../../../core/utils";
 
 const pufETH = {
   symbol: "pufETH",
-  apy: 3.47,
+  apy: 2.31,
 };
 
 export const TOKENS: PartialRecord<
