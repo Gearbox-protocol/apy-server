@@ -113,6 +113,15 @@ export const TOKENS: PartialRecord<
       id: "0f45d730-b279-4629-8e11-ccb5cc3038b4",
       symbol: "cbETH",
     },
+
+    "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7": {
+      id: "33c732f6-a78d-41da-af5b-ccd9fa5e52d5",
+      symbol: "rsETH",
+    },
+    "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0": {
+      id: "eff9b43c-a80d-4bfc-9f9e-55e02a8ef619",
+      symbol: "rswETH",
+    },
   },
   Optimism: {
     "0x9Bcef72be871e61ED4fBbc7630889beE758eb81D": {
@@ -142,6 +151,11 @@ export const TOKENS: PartialRecord<
     "0x5979D7b546E38E414F7E9822514be443A4800529": {
       id: "747c1d2a-c668-4682-b9f9-296708a3dd90",
       symbol: "wstETH",
+    },
+
+    "0x4186BFC76E2E237523CBC30FD220FE055156b41F": {
+      id: "33c732f6-a78d-41da-af5b-ccd9fa5e52d5",
+      symbol: "rsETH",
     },
   },
   BNB: {
