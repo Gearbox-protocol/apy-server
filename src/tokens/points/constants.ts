@@ -37,7 +37,8 @@ export type PointsType =
   | "mezo"
   | "falcon"
   | "aegis"
-  | "merkl";
+  | "merkl"
+  | "strata";
 
 interface PointsReward {
   name: string;
@@ -239,6 +240,13 @@ export const REWARDS_BASE_INFO = {
     units: "rewards",
     multiplier,
     type: "merkl",
+  }),
+
+  strata: (multiplier: PointsReward["multiplier"]): PointsReward => ({
+    name: "Strata",
+    units: "points",
+    multiplier,
+    type: "strata",
   }),
 };
 

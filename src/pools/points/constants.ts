@@ -119,6 +119,18 @@ export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
       estimation: "absolute",
       condition: "holding",
     },
+    {
+      pool: POOLS.USDC_V3_1_INVARIANT_ETH,
+      token: TOKENS.USDC_ETH,
+      symbol: "USDC",
+
+      amount: 10n * 10000n,
+      duration: "day",
+      name: `${REWARDS_BASE_INFO.strata(1n).name} ${REWARDS_BASE_INFO.strata(1n).units}`,
+      type: REWARDS_BASE_INFO.strata(1n).type,
+      estimation: "absolute",
+      condition: "holding",
+    },
   ],
   Arbitrum: [
     {
