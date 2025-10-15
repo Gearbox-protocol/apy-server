@@ -66,6 +66,7 @@ interface CurvePoolData {
   usdTotalExcludingBasePool: number;
   virtualPrice: string;
 }
+
 interface CurvePoolDataResponse {
   data: {
     poolData: Array<CurvePoolData>;
