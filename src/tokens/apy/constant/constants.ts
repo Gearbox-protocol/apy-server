@@ -21,12 +21,7 @@ export const TOKENS: PartialRecord<
   },
 
   Arbitrum: {},
-  Etherlink: {
-    "0x733d504435a49FC8C4e9759e756C2846c92f0160": {
-      apy: 21.16,
-      symbol: "mRe7YIELD",
-    },
-  },
+  Etherlink: {},
 };
 
 export const PROTOCOL = "constant";
