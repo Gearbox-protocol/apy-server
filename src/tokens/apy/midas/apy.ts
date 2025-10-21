@@ -3,22 +3,59 @@ import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
 interface Response {
-  mbasis: number;
   mtbill: number;
+  mbasis: number;
   mbtc: number;
   medge: number;
-  mmev: number;
   mre7: number;
+  mre7sol: number;
+  mmev: number;
   msl: number;
   mfone: number;
-  hypeusd: number;
-  hypebtc: number;
-  hypeeth: number;
-  tbtc: number;
-  tusde: number;
-  teth: number;
+  mhyper: number;
+  mapollo: number;
   hbusdt: number;
   hbxaut: number;
+  hypeeth: number;
+  hypebtc: number;
+  hypeusd: number;
+  teth: number;
+  tusde: number;
+  tbtc: number;
+  mevbtc: number;
+  lsthype: number;
+  liquidhype: number;
+  hbusdc: number;
+  mfarm: number;
+  wvlp: number;
+  dnhype: number;
+  kmiusd: number;
+  msyrupusd: number;
+  dnpump: number;
+  zerogusdv: number;
+  zerogethv: number;
+  zerogbtcv: number;
+  jiv: number;
+  mre7btc: number;
+  kitusd: number;
+  kithype: number;
+  kitbtc: number;
+  dnfart: number;
+  mxrp: number;
+  msyrupusdp: number;
+  acrembtc1: number;
+  mwildusd: number;
+  tacton: number;
+  plusd: number;
+  splusd: number;
+  wnlp: number;
+  dneth: number;
+  dntest: number;
+  obeatusd: number;
+  mevusd: number;
+  cusdo: number;
+  mhypereth: number;
+  mhyperbtc: number;
 }
 
 const getUrl = () => "https://api-prod.midas.app/api/data/apys";
@@ -34,6 +71,7 @@ const getAPYMidas: APYHandler = async network => {
 
   const mBASISRate = data?.mbasis || 0;
   const mTBILLRate = data?.mtbill || 0;
+  const mRe7YIELDRate = data?.mre7 || 0;
 
   const result: APYResult = {};
 
@@ -64,6 +102,22 @@ const getAPYMidas: APYHandler = async network => {
           symbol: "mTBILL",
           protocol: PROTOCOL,
           value: Number(mTBILLRate) * 100,
+        },
+      ],
+    };
+  }
+
+  if (tokens?.mRe7YIELD) {
+    result[tokens.mRe7YIELD] = {
+      address: tokens.mRe7YIELD,
+      symbol: "mRe7YIELD",
+
+      apys: [
+        {
+          address: tokens.mRe7YIELD,
+          symbol: "mRe7YIELD",
+          protocol: PROTOCOL,
+          value: Number(mRe7YIELDRate) * 100,
         },
       ],
     };
