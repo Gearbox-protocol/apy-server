@@ -6,6 +6,7 @@ import { cachedAxios } from "../../core/app";
 import type {
   MerkleXYZV4CampaignsResponse,
   MerkleXYZV4RewardCampaignResponse,
+  MerklXYZV4Campaign,
   MerklXYZV4RewardCampaign,
 } from "../../core/merkle/merklAPI";
 import { MerkleXYZApi } from "../../core/merkle/merklAPI";
@@ -15,6 +16,10 @@ import type {
   PoolExtraAPYResultByChain,
 } from "./constants";
 import { BROKEN_CAMPAIGNS } from "./constants";
+
+const IDS_TO_OMIT = {
+  ["0x381d2c99a313d3c9e8d727c38dd7f34f6c3062003a3ddf015396e9a15f1bb386".toLowerCase()]: true,
+};
 
 export const getPoolExtraAPY: PoolExtraAPYHandler = async () => {
   // get all campaigns
@@ -30,7 +35,7 @@ export const getPoolExtraAPY: PoolExtraAPYHandler = async () => {
   // so we need to get all aprIds for campaigns with multiple rewards and then get the campaign by aprId
   const aprIdsList = currentActiveCampaigns
     .map(c =>
-      c.aprRecord.breakdowns.map(b => {
+      getBreakdowns(c).map(b => {
         return {
           campaignId: c.id,
           aprId: b.identifier,
@@ -42,7 +47,6 @@ export const getPoolExtraAPY: PoolExtraAPYHandler = async () => {
   const aprIdsResponse: Array<
     PromiseSettledResult<AxiosResponse<MerkleXYZV4RewardCampaignResponse, any>>
   > = [];
-
   for (const id of aprIdsList) {
     const resp = await Promise.allSettled([
       cachedAxios.get<MerkleXYZV4RewardCampaignResponse>(
@@ -69,7 +73,9 @@ export const getPoolExtraAPY: PoolExtraAPYHandler = async () => {
       const rewardSource = campaign.identifier.toLowerCase() as Address;
 
       const allRewards = campaign.aprRecord.breakdowns
-        .map((r, i) => {
+        .reduce<Array<PoolExtraApy>>((accInner, r, i) => {
+          if (isAPRToOmit(r)) return accInner;
+
           const apy = r.value;
 
           const aprCampaign = aprCampaignByAPRId[r.identifier]?.[0];
@@ -77,7 +83,7 @@ export const getPoolExtraAPY: PoolExtraAPYHandler = async () => {
           const tokenRewardsRecord =
             campaign.rewardsRecord.breakdowns[i]?.token;
 
-          // if aprCampaign is not defined use possibly wrong token from  breakdowns[i]?.token
+          // if aprCampaign is not defined use possibly wrong token from  rewardsRecord.breakdowns[i]?.token
           const { address = tokenRewardsRecord?.address || "" } =
             rewardToken || {};
 
@@ -98,9 +104,11 @@ export const getPoolExtraAPY: PoolExtraAPYHandler = async () => {
             lastUpdated: time,
           };
 
-          return apyObject;
-        })
-        .filter(r => r.apy > 0);
+          accInner.push(apyObject);
+
+          return accInner;
+        }, [])
+        .filter(r => r && r.apy > 0);
 
       if (!acc[campaign.chain.id]) acc[campaign.chain.id] = {};
       acc[campaign.chain.id][rewardSource] = [
@@ -115,3 +123,12 @@ export const getPoolExtraAPY: PoolExtraAPYHandler = async () => {
 
   return r;
 };
+
+function getBreakdowns(c: MerklXYZV4Campaign) {
+  return c.aprRecord.breakdowns.filter(b => !isAPRToOmit(b));
+}
+function isAPRToOmit(
+  apr: MerklXYZV4Campaign["aprRecord"]["breakdowns"][number],
+) {
+  return IDS_TO_OMIT[apr.identifier.toLowerCase()];
+}
