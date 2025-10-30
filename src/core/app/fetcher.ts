@@ -44,6 +44,7 @@ import { getTokenExtraRewards } from "../../tokens/tokenExtraRewards";
 import type { NetworkType } from "../chains";
 import { getChainId, getNetworkType, supportedChains } from "../chains";
 import { captureException } from "../sentry";
+import { POOL_APY_TASK_INTERVAL, TOKEN_APY_TASK_INTERVAL } from "./constants";
 
 export type ApyDetails = Apy & { lastUpdated: string };
 type TokenDetails = TokenAPY<ApyDetails>;
@@ -298,8 +299,8 @@ export class Fetcher {
       await quarterTask();
     })();
 
-    setInterval(hourTask, 60 * 60 * 1000); // 60min
-    setInterval(quarterTask, 15 * 60 * 1000); // 15 min
+    setInterval(hourTask, TOKEN_APY_TASK_INTERVAL);
+    setInterval(quarterTask, POOL_APY_TASK_INTERVAL);
   }
 }
 
