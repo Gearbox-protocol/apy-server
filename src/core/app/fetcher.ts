@@ -13,6 +13,7 @@ import type {
   TokenAPY,
 } from "../../tokens/apy";
 import {
+  getAPYAvantprotocol,
   getAPYCoinshift,
   getAPYConstant,
   getAPYCurve,
@@ -92,6 +93,7 @@ export class Fetcher {
       getAPYResolv,
       getAPYMerkle,
       getAPYPendle,
+      getAPYAvantprotocol,
     ];
     const [
       points,
