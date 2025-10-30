@@ -1,3 +1,4 @@
+export * from "./avantprotocol";
 export * from "./coinshift";
 export * from "./constant";
 export * from "./constants";
