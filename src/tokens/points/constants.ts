@@ -430,12 +430,6 @@ export const POINTS_INFO_BY_NETWORK: PartialRecord<
         REWARDS_BASE_INFO.upshift(5_00n),
       ],
     },
-
-    {
-      address: "0xe72b141df173b999ae7c1adcbf60cc9833ce56a8",
-      symbol: "ETHPlus",
-      rewards: [REWARDS_BASE_INFO.merkl(1_00n)],
-    },
   ],
   Arbitrum: [
     {

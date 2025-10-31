@@ -91,7 +91,9 @@ function getCampaignAPY(
 
 function getCompositeAPY(
   p: CommonPayload | CompositePayload,
-  additionalAPYs: PromiseSettledResult<PartialRecord<"midas", APYResult>>,
+  additionalAPYs: PromiseSettledResult<
+    PartialRecord<CompositePart["handler"]["type"], APYResult>
+  >,
 ) {
   if (p.type !== "composite") return null;
   if (additionalAPYs.status !== "fulfilled") return null;

@@ -14,10 +14,6 @@ export const TOKENS: PartialRecord<
 > = {
   Mainnet: {
     "0xD9A442856C234a39a81a089C06451EBAa4306a72": pufETH,
-    "0xe72b141df173b999ae7c1adcbf60cc9833ce56a8": {
-      symbol: "ETHPlus",
-      apy: 2.81,
-    },
   },
 
   Arbitrum: {},

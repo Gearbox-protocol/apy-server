@@ -18,3 +18,4 @@ export * from "./sky";
 export * from "./sonic";
 export * from "./treehouse";
 export * from "./yearn";
+export * from "./yieldsreserve";
