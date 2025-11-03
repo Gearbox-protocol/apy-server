@@ -31,6 +31,7 @@ import {
   getAPYSonic,
   getAPYTreehouse,
   getAPYYearn,
+  getAPYYuzu,
   getGearAPY,
 } from "../../tokens/apy";
 import type { PointsResult } from "../../tokens/points";
@@ -95,6 +96,7 @@ export class Fetcher {
       getAPYMerkle,
       getAPYPendle,
       getAPYAvantprotocol,
+      getAPYYuzu,
     ];
     const [
       points,

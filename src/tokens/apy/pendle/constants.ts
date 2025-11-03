@@ -9,6 +9,7 @@ export interface PendleResponse {
   underlyingApy: number;
   underlyingInterestApy: number;
   impliedApy: number;
+  aggregatedApy: number;
 }
 
 export const TOKENS: PartialRecord<
@@ -74,6 +75,13 @@ export const TOKENS: PartialRecord<
       id: "0x0d7d9abee602c7f0a242ea7e200e47c372acba84",
       symbol: "PT-sUSDai-19MAR2026",
       field: "impliedApy",
+      chainId: 9745,
+    },
+
+    "0x18d89b23d2875590c502cd3eac8f448f3ccf9999": {
+      id: "0x18d89b23d2875590c502cd3eac8f448f3ccf9999",
+      symbol: "LP-syrupUSDT-29JAN2026",
+      field: "aggregatedApy",
       chainId: 9745,
     },
   },
