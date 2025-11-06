@@ -121,6 +121,18 @@ export const getPoolExtraAPY: PoolExtraAPYHandler = async () => {
     {},
   );
 
+  const currentDisabledCampaigns = res.data.filter(
+    c => c.status === "PAST" && !BROKEN_CAMPAIGNS[c.id],
+  );
+  currentDisabledCampaigns.forEach(campaign => {
+    const rewardSource = campaign.identifier.toLowerCase() as Address;
+
+    if (!r[campaign.chain.id]) r[campaign.chain.id] = {};
+    if (!r[campaign.chain.id][rewardSource]) {
+      r[campaign.chain.id][rewardSource] = [];
+    }
+  });
+
   return r;
 };
 
