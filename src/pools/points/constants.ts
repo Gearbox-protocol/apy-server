@@ -72,30 +72,6 @@ export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
       condition: "holding",
     },
     {
-      pool: POOLS.WETH_V3_TRADE_ETH,
-      token: TOKENS.NATIVE_ADDRESS,
-      symbol: "ETH",
-
-      amount: 1000n * 10000n,
-      duration: undefined,
-      name: `${REWARDS_BASE_INFO.omni(1n).name} ${REWARDS_BASE_INFO.omni(1n).units}`,
-      type: REWARDS_BASE_INFO.omni(1n).type,
-      estimation: "absolute",
-      condition: "cross-chain-deposit",
-    },
-    {
-      pool: POOLS.USDC_V3_TRADE_ETH,
-      token: TOKENS.USDC_ETH,
-      symbol: "USDC",
-
-      amount: 1n * 10000n,
-      duration: undefined,
-      name: `${REWARDS_BASE_INFO.omni(1n).name} ${REWARDS_BASE_INFO.omni(1n).units}`,
-      type: REWARDS_BASE_INFO.omni(1n).type,
-      estimation: "absolute",
-      condition: "cross-chain-deposit",
-    },
-    {
       pool: POOLS.USDC_V3_1_INVARIANT_ETH,
       token: TOKENS.USDC_ETH,
       symbol: "USDC",
@@ -120,56 +96,6 @@ export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
       condition: "holding",
     },
   ],
-  Arbitrum: [
-    {
-      pool: POOLS.WETH_V3_TRADE_ARB,
-      token: TOKENS.NATIVE_ADDRESS,
-      symbol: "ETH",
-
-      amount: 1000n * 10000n,
-      duration: undefined,
-      name: `${REWARDS_BASE_INFO.omni(1n).name} ${REWARDS_BASE_INFO.omni(1n).units}`,
-      type: REWARDS_BASE_INFO.omni(1n).type,
-      estimation: "absolute",
-      condition: "cross-chain-deposit",
-    },
-    {
-      pool: POOLS.USDC_V3_TRADE_ARB,
-      token: TOKENS.USDC_ETH,
-      symbol: "USDC",
-
-      amount: 1n * 10000n,
-      duration: undefined,
-      name: `${REWARDS_BASE_INFO.omni(1n).name} ${REWARDS_BASE_INFO.omni(1n).units}`,
-      type: REWARDS_BASE_INFO.omni(1n).type,
-      estimation: "absolute",
-      condition: "cross-chain-deposit",
-    },
-  ],
-  Optimism: [
-    {
-      pool: POOLS.WETH_V3_TRADE_OP,
-      token: TOKENS.NATIVE_ADDRESS,
-      symbol: "ETH",
-
-      amount: 1000n * 10000n,
-      duration: undefined,
-      name: `${REWARDS_BASE_INFO.omni(1n).name} ${REWARDS_BASE_INFO.omni(1n).units}`,
-      type: REWARDS_BASE_INFO.omni(1n).type,
-      estimation: "absolute",
-      condition: "cross-chain-deposit",
-    },
-    {
-      pool: POOLS.USDC_V3_TRADE_OP,
-      token: TOKENS.USDC_ETH,
-      symbol: "USDC",
-
-      amount: 1n * 10000n,
-      duration: undefined,
-      name: `${REWARDS_BASE_INFO.omni(1n).name} ${REWARDS_BASE_INFO.omni(1n).units}`,
-      type: REWARDS_BASE_INFO.omni(1n).type,
-      estimation: "absolute",
-      condition: "cross-chain-deposit",
-    },
-  ],
+  Arbitrum: [],
+  Optimism: [],
 };
