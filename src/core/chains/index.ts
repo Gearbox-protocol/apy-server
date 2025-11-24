@@ -25,7 +25,7 @@ const CHAINS = {
   Base: 8453,
   Sonic: 146,
 
-  Monad: 10_143,
+  Monad: 143,
   MegaETH: 6342,
   Berachain: 80094,
   Avalanche: 43_114,
