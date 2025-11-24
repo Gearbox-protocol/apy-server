@@ -14,6 +14,7 @@ export const supportedChains = [
   "Hemi",
   "Lisk",
   "Plasma",
+  "Somnia",
 ] as const;
 
 export type NetworkType = (typeof supportedChains)[number];
@@ -36,6 +37,8 @@ const CHAINS = {
   Hemi: 43111,
 
   Plasma: 9745,
+
+  Somnia: 5031,
 };
 
 export function getChainId(network: NetworkType) {
