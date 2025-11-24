@@ -15,17 +15,17 @@ export type PoolExternalAPYHandler = (
   network: NetworkType,
 ) => Promise<PoolExternalAPYResult>;
 
-// const WETH_V3_GHO_ETH: Address = "0x4d56c9cba373ad39df69eb18f076b7348000ae09";
+const edgeUSDC: Address = "0x6b343f7b797f1488aa48c49d540690f2b2c89751";
 
 export const POOL_EXTERNAL_APY: PartialRecord<
   NetworkType,
   Array<ExternalApy>
 > = {
   Mainnet: [
-    // {
-    //   value: 6,
-    //   name: "Royco",
-    //   pool: WETH_V3_GHO_ETH,
-    // },
+    {
+      value: 110,
+      name: "MON via Merkl",
+      pool: edgeUSDC,
+    },
   ],
 };
