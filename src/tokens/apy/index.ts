@@ -17,6 +17,7 @@ export * from "./resolv";
 export * from "./sky";
 export * from "./sonic";
 export * from "./treehouse";
+export * from "./upshift";
 export * from "./yearn";
 export * from "./yieldsreserve";
 export * from "./yuzu";

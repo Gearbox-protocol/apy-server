@@ -100,4 +100,11 @@ export const TOKENS: PartialRecord<
       type: "common",
     },
   },
+  Monad: {
+    "0x942644106B073E30D72c2C5D7529D5C296ea91ab": {
+      id: "0x942644106B073E30D72c2C5D7529D5C296ea91ab",
+      symbol: "AUSDCT0",
+      type: "common",
+    },
+  },
 };

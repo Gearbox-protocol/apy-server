@@ -30,6 +30,7 @@ import {
   getAPYSky,
   getAPYSonic,
   getAPYTreehouse,
+  getAPYUpshift,
   getAPYYearn,
   getAPYYuzu,
   getGearAPY,
@@ -97,6 +98,7 @@ export class Fetcher {
       getAPYPendle,
       getAPYAvantprotocol,
       getAPYYuzu,
+      getAPYUpshift,
     ];
     const [
       points,
