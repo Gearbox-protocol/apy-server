@@ -3,7 +3,7 @@ import type { Address } from "viem";
 import type { NetworkType } from "../../../core/chains";
 import type { PartialRecord } from "../../../core/utils";
 
-export const PROTOCOL = "merkle.xyz";
+export const PROTOCOL = "upshift";
 
 export interface UpshiftTokenizedVaultResponse {
   historical_apy: { 1: number; 7: number };
