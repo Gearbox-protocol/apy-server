@@ -176,8 +176,9 @@ export const getGearAPY: Handler = app => async (req, res) => {
 
         lastUpdated: app.state.gear?.lastUpdated || "0",
       },
+      test: true,
       status: "ok",
-    };
+    } as any;
 
     respondWithJson(app, res, response);
   } catch (e) {
