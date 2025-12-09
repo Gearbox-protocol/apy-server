@@ -7,6 +7,7 @@ export * from "./etherfi";
 export * from "./falcon";
 export * from "./lido";
 export * from "./llama";
+export * from "./magma";
 export * from "./mellow";
 export * from "./mellow-vaults";
 export * from "./merkle";

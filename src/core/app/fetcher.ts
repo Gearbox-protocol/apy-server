@@ -20,6 +20,7 @@ import {
   getAPYEtherfi,
   getAPYFalcon,
   getAPYLama,
+  getAPYMagma,
   getAPYMellow,
   getAPYMellowVaults,
   getAPYMerkle,
@@ -99,6 +100,7 @@ export class Fetcher {
       getAPYAvantprotocol,
       getAPYYuzu,
       getAPYUpshift,
+      getAPYMagma,
     ];
     const [
       points,
