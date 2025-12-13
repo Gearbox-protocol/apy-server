@@ -106,5 +106,15 @@ export const TOKENS: PartialRecord<
       symbol: "AUSDCT0",
       type: "common",
     },
+    "0x2D84D79C852f6842AbE0304b70bBaA1506AdD457": {
+      id: "0x2D84D79C852f6842AbE0304b70bBaA1506AdD457",
+      symbol: "AZNDAUSD",
+      type: "common",
+    },
+    "0x74d80eE400D3026FDd2520265cC98300710b25D4": {
+      id: "0x74d80eE400D3026FDd2520265cC98300710b25D4",
+      symbol: "stMONMON",
+      type: "common",
+    },
   },
 };
