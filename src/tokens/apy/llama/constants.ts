@@ -122,6 +122,14 @@ export const TOKENS: PartialRecord<
       id: "eff9b43c-a80d-4bfc-9f9e-55e02a8ef619",
       symbol: "rswETH",
     },
+    "0x02a4cceed3c400b5ba9fd22ad6ec18d8f7a3d48e": {
+      id: "152b7ce2-7193-475d-9b15-3f17fee66047",
+      symbol: "wmooCurveETH+-WETH",
+    },
+    "0x8209b01357946a64a0793e9773f6f3fe5a5f2526": {
+      id: "b14fdc9c-e122-41c4-a99f-20e1390f2ef3",
+      symbol: "PT-DETH-29JAN2026",
+    },
   },
   Optimism: {
     "0x9Bcef72be871e61ED4fBbc7630889beE758eb81D": {
