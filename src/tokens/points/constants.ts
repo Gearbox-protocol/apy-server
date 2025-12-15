@@ -38,7 +38,8 @@ export type PointsType =
   | "falcon"
   | "aegis"
   | "merkl"
-  | "strata";
+  | "strata"
+  | "makina";
 
 interface PointsReward {
   name: string;
@@ -248,6 +249,13 @@ export const REWARDS_BASE_INFO = {
     multiplier,
     type: "strata",
   }),
+
+  makina: (multiplier: PointsReward["multiplier"]): PointsReward => ({
+    name: "Makina",
+    units: "points",
+    multiplier,
+    type: "makina",
+  }),
 };
 
 export interface PointsInfo {
@@ -429,6 +437,11 @@ export const POINTS_INFO_BY_NETWORK: PartialRecord<
         REWARDS_BASE_INFO.mezo(1_00n),
         REWARDS_BASE_INFO.upshift(5_00n),
       ],
+    },
+    {
+      address: "0x871ab8e36cae9af35c6a3488b049965233deb7ed",
+      symbol: "DETH",
+      rewards: [REWARDS_BASE_INFO.makina(360_00n)],
     },
   ],
   Arbitrum: [
