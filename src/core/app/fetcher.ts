@@ -21,6 +21,7 @@ import {
   getAPYFalcon,
   getAPYLama,
   getAPYMagma,
+  getAPYMakina,
   getAPYMellow,
   getAPYMellowVaults,
   getAPYMerkle,
@@ -101,6 +102,7 @@ export class Fetcher {
       getAPYYuzu,
       getAPYUpshift,
       getAPYMagma,
+      getAPYMakina,
     ];
     const [
       points,

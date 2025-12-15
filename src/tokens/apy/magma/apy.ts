@@ -1,5 +1,4 @@
 import { cachedAxios } from "../../../core/app";
-import { json_stringify } from "../../../core/utils";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
@@ -60,8 +59,6 @@ const getAPYMagma: APYHandler = async network => {
       ],
     };
   }
-
-  console.log(json_stringify(result));
 
   return result;
 };
