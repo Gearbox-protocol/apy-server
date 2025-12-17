@@ -5,7 +5,7 @@ import type { PartialRecord } from "../../../core/utils";
 
 export const TOKENS: PartialRecord<
   NetworkType,
-  { mBASIS?: Address; mTBILL?: Address; mRe7YIELD?: Address; mEDGE?:Address;}
+  { mBASIS?: Address; mTBILL?: Address; mRe7YIELD?: Address; mEDGE?: Address }
 > = {
   Etherlink: {
     mTBILL: "0xdd629e5241cbc5919847783e6c96b2de4754e438",
@@ -14,7 +14,7 @@ export const TOKENS: PartialRecord<
   },
   Monad: {
     mEDGE: "0x1c8eE940B654bFCeD403f2A44C1603d5be0F50Fa",
-  }
+  },
 };
 
 export const PROTOCOL = "midas";
