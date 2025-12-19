@@ -110,7 +110,7 @@ export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
       token: TOKENS.USDC_E_SOMNIA,
       symbol: "USDC.e",
 
-      amount: 1.2n,
+      amount: 120n * 10000n,
       duration: "day",
       name: `${REWARDS_BASE_INFO.somnia(1n).name} ${REWARDS_BASE_INFO.somnia(1n).units}`,
       type: REWARDS_BASE_INFO.somnia(1n).type,
@@ -122,7 +122,7 @@ export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
       token: TOKENS.SOMI_SOMNIA,
       symbol: "WSOMI",
 
-      amount: 1.2n,
+      amount: 120n * 10000n,
       duration: "day",
       name: `${REWARDS_BASE_INFO.somnia(1n).name} ${REWARDS_BASE_INFO.somnia(1n).units}`,
       type: REWARDS_BASE_INFO.somnia(1n).type,
