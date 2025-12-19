@@ -40,7 +40,7 @@ const POOLS = {
   USDC_V3_TRADE_OP: "0xa210BB193Ca352Fa81fBd0e81Cb800580b0762eE",
 
   USDC_E_V3_SOMNIA: "0xa561d6D554fB3637F590c4D73527fe19525d596b",
-  SOMI_V3_SOMNIA: "0x6f652fbcfc2107ef9c99456311b5650cd52d6419"
+  SOMI_V3_SOMNIA: "0x6f652fbcfc2107ef9c99456311b5650cd52d6419",
 } as const;
 
 // tokens
@@ -60,7 +60,7 @@ const TOKENS = {
   USDT_OP: "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
 
   USDC_E_SOMNIA: "0x28BEc7E30E6faee657a03e19Bf1128AaD7632A00",
-  SOMI_SOMNIA: "0x046EDe9564A72571df6F5e44d0405360c0f4dCab"
+  SOMI_SOMNIA: "0x046EDe9564A72571df6F5e44d0405360c0f4dCab",
 } as const;
 
 export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
@@ -84,7 +84,9 @@ export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
 
       amount: 15n * 10000n,
       duration: "day",
-      name: `${REWARDS_BASE_INFO.falcon(1n).name} ${REWARDS_BASE_INFO.falcon(1n).units}`,
+      name: `${REWARDS_BASE_INFO.falcon(1n).name} ${
+        REWARDS_BASE_INFO.falcon(1n).units
+      }`,
       type: REWARDS_BASE_INFO.falcon(1n).type,
       estimation: "absolute",
       condition: "holding",
@@ -96,7 +98,9 @@ export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
 
       amount: 10n * 10000n,
       duration: "day",
-      name: `${REWARDS_BASE_INFO.strata(1n).name} ${REWARDS_BASE_INFO.strata(1n).units}`,
+      name: `${REWARDS_BASE_INFO.strata(1n).name} ${
+        REWARDS_BASE_INFO.strata(1n).units
+      }`,
       type: REWARDS_BASE_INFO.strata(1n).type,
       estimation: "absolute",
       condition: "holding",
@@ -110,9 +114,11 @@ export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
       token: TOKENS.USDC_E_SOMNIA,
       symbol: "USDC.e",
 
-      amount: 120n * 10000n,
+      amount: 12n * 10000n,
       duration: "day",
-      name: `${REWARDS_BASE_INFO.somnia(1n).name} ${REWARDS_BASE_INFO.somnia(1n).units}`,
+      name: `${REWARDS_BASE_INFO.somnia(1n).name} ${
+        REWARDS_BASE_INFO.somnia(1n).units
+      }`,
       type: REWARDS_BASE_INFO.somnia(1n).type,
       estimation: "relative",
       condition: "holding",
@@ -122,9 +128,11 @@ export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
       token: TOKENS.SOMI_SOMNIA,
       symbol: "WSOMI",
 
-      amount: 120n * 10000n,
+      amount: 12n * 10000n,
       duration: "day",
-      name: `${REWARDS_BASE_INFO.somnia(1n).name} ${REWARDS_BASE_INFO.somnia(1n).units}`,
+      name: `${REWARDS_BASE_INFO.somnia(1n).name} ${
+        REWARDS_BASE_INFO.somnia(1n).units
+      }`,
       type: REWARDS_BASE_INFO.somnia(1n).type,
       estimation: "relative",
       condition: "holding",
