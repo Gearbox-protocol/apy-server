@@ -120,7 +120,7 @@ export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
         REWARDS_BASE_INFO.somnia(1n).units
       }`,
       type: REWARDS_BASE_INFO.somnia(1n).type,
-      estimation: "relative",
+      estimation: "absolute",
       condition: "holding",
     },
     {
@@ -134,7 +134,7 @@ export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
         REWARDS_BASE_INFO.somnia(1n).units
       }`,
       type: REWARDS_BASE_INFO.somnia(1n).type,
-      estimation: "relative",
+      estimation: "absolute",
       condition: "holding",
     },
   ],
