@@ -260,7 +260,7 @@ export const REWARDS_BASE_INFO = {
 
   somnia: (multiplier: PointsReward["multiplier"]): PointsReward => ({
     name: "Somnia",
-    units: "points",
+    units: "points multiplier",
     multiplier,
     type: "somnia",
   }),
