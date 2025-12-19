@@ -38,6 +38,9 @@ const POOLS = {
 
   WETH_V3_TRADE_OP: "0x42dB77B3103c71059F4b997d6441cFB299FD0d94",
   USDC_V3_TRADE_OP: "0xa210BB193Ca352Fa81fBd0e81Cb800580b0762eE",
+
+  USDC_E_V3_SOMNIA: "0xa561d6D554fB3637F590c4D73527fe19525d596b",
+  SOMI_V3_SOMNIA: "0x6f652fbcfc2107ef9c99456311b5650cd52d6419",
 } as const;
 
 // tokens
@@ -55,6 +58,9 @@ const TOKENS = {
   USDT_ARB: "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
 
   USDT_OP: "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
+
+  USDC_E_SOMNIA: "0x28BEc7E30E6faee657a03e19Bf1128AaD7632A00",
+  SOMI_SOMNIA: "0x046EDe9564A72571df6F5e44d0405360c0f4dCab",
 } as const;
 
 export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
@@ -78,7 +84,9 @@ export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
 
       amount: 15n * 10000n,
       duration: "day",
-      name: `${REWARDS_BASE_INFO.falcon(1n).name} ${REWARDS_BASE_INFO.falcon(1n).units}`,
+      name: `${REWARDS_BASE_INFO.falcon(1n).name} ${
+        REWARDS_BASE_INFO.falcon(1n).units
+      }`,
       type: REWARDS_BASE_INFO.falcon(1n).type,
       estimation: "absolute",
       condition: "holding",
@@ -90,7 +98,9 @@ export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
 
       amount: 10n * 10000n,
       duration: "day",
-      name: `${REWARDS_BASE_INFO.strata(1n).name} ${REWARDS_BASE_INFO.strata(1n).units}`,
+      name: `${REWARDS_BASE_INFO.strata(1n).name} ${
+        REWARDS_BASE_INFO.strata(1n).units
+      }`,
       type: REWARDS_BASE_INFO.strata(1n).type,
       estimation: "absolute",
       condition: "holding",
@@ -98,4 +108,34 @@ export const POOL_POINTS: PartialRecord<NetworkType, Array<PoolPointsInfo>> = {
   ],
   Arbitrum: [],
   Optimism: [],
+  Somnia: [
+    {
+      pool: POOLS.USDC_E_V3_SOMNIA,
+      token: TOKENS.USDC_E_SOMNIA,
+      symbol: "USDC.e",
+
+      amount: 12n * 10000n,
+      duration: "day",
+      name: `${REWARDS_BASE_INFO.somnia(1n).name} ${
+        REWARDS_BASE_INFO.somnia(1n).units
+      }`,
+      type: REWARDS_BASE_INFO.somnia(1n).type,
+      estimation: "absolute",
+      condition: "holding",
+    },
+    {
+      pool: POOLS.SOMI_V3_SOMNIA,
+      token: TOKENS.SOMI_SOMNIA,
+      symbol: "WSOMI",
+
+      amount: 12n * 10000n,
+      duration: "day",
+      name: `${REWARDS_BASE_INFO.somnia(1n).name} ${
+        REWARDS_BASE_INFO.somnia(1n).units
+      }`,
+      type: REWARDS_BASE_INFO.somnia(1n).type,
+      estimation: "absolute",
+      condition: "holding",
+    },
+  ],
 };

@@ -39,7 +39,8 @@ export type PointsType =
   | "aegis"
   | "merkl"
   | "strata"
-  | "makina";
+  | "makina"
+  | "somnia";
 
 interface PointsReward {
   name: string;
@@ -255,6 +256,13 @@ export const REWARDS_BASE_INFO = {
     units: "points",
     multiplier,
     type: "makina",
+  }),
+
+  somnia: (multiplier: PointsReward["multiplier"]): PointsReward => ({
+    name: "Somnia",
+    units: "points multiplier",
+    multiplier,
+    type: "somnia",
   }),
 };
 
