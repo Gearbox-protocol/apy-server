@@ -72,6 +72,7 @@ const getAPYMidas: APYHandler = async network => {
   const mBASISRate = data?.mbasis || 0;
   const mTBILLRate = data?.mtbill || 0;
   const mRe7YIELDRate = data?.mre7 || 0;
+  const mEDGERate = data?.medge || 0;
 
   const result: APYResult = {};
 
@@ -118,6 +119,22 @@ const getAPYMidas: APYHandler = async network => {
           symbol: "mRe7YIELD",
           protocol: PROTOCOL,
           value: Number(mRe7YIELDRate) * 100,
+        },
+      ],
+    };
+  }
+
+  if (tokens?.mEDGE) {
+    result[tokens.mEDGE] = {
+      address: tokens.mEDGE,
+      symbol: "mEDGE",
+
+      apys: [
+        {
+          address: tokens.mEDGE,
+          symbol: "mEDGE",
+          protocol: PROTOCOL,
+          value: Number(mEDGERate) * 100,
         },
       ],
     };
