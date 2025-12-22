@@ -191,6 +191,7 @@ export const TOKENS: PartialRecord<
       id: "8edfdf02-cdbb-43f7-bca6-954e5fe56813",
       symbol: "syrupUSDT",
     },
+  },
   Monad: {
     "0x1b68626dca36c7fe922fd2d55e4f631d962de19c": {
       id: "ee40513c-9356-4c53-9f26-446b484a8ae2",
