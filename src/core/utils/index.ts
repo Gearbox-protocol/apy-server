@@ -1,3 +1,5 @@
+import { setTimeout } from "node:timers/promises";
+
 export const json_stringify = (
   o: any,
   space?: number,
@@ -28,3 +30,15 @@ export const json_stringify = (
 };
 
 export type PartialRecord<K extends keyof any, T> = { [P in K]?: T };
+
+export async function timeout(ms: number): Promise<never> {
+  await setTimeout(ms);
+  throw new Error("The operation was timed out");
+}
+
+export async function withTimeout<T>(
+  run: () => Promise<T>,
+  ms: number,
+): Promise<T> {
+  return Promise.race([run(), timeout(ms)]);
+}

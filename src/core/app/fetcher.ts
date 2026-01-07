@@ -1,6 +1,5 @@
 import moment from "moment";
 import type { Address } from "viem";
-
 import type { PoolExternalAPYResult, PoolPointsResult } from "../../pools";
 import { getPoolExternalAPY, getPoolPoints } from "../../pools";
 import { getPoolExtraAPY } from "../../pools/extraAPY/apy";
@@ -52,8 +51,10 @@ import type { TokenExtraRewardsResult } from "../../tokens/tokenExtraRewards";
 import { getTokenExtraRewards } from "../../tokens/tokenExtraRewards";
 import type { NetworkType } from "../chains";
 import { getChainId, getNetworkType, supportedChains } from "../chains";
+import { ONE_SHOT_TIMEOUT } from "../config";
 import type { IOutputWriter, OneShotOutput } from "../output";
 import { captureException } from "../sentry";
+import { withTimeout } from "../utils";
 import { POOL_APY_TASK_INTERVAL, TOKEN_APY_TASK_INTERVAL } from "./constants";
 
 export type ApyDetails = Apy & { lastUpdated: string };
@@ -319,7 +320,7 @@ export class Fetcher {
     setInterval(quarterTask, POOL_APY_TASK_INTERVAL);
   }
 
-  public async oneShot(outputWriter: IOutputWriter): Promise<void> {
+  async #oneShot(outputWriter: IOutputWriter): Promise<void> {
     console.log("[SYSTEM]: Starting one-shot mode");
 
     await this.runNetworkRewards();
@@ -383,6 +384,17 @@ export class Fetcher {
     console.log(
       `[SYSTEM]: One-shot mode completed. Chains: ${output.metadata.totalChains}, Successful: ${output.metadata.successfulChains}, Failed: ${output.metadata.failedChains}`,
     );
+  }
+
+  public async oneShot(outputWriter: IOutputWriter): Promise<void> {
+    if (ONE_SHOT_TIMEOUT) {
+      await withTimeout(
+        () => this.#oneShot(outputWriter),
+        ONE_SHOT_TIMEOUT * 1000,
+      );
+    } else {
+      await this.#oneShot(outputWriter);
+    }
   }
 }
 

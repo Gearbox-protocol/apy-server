@@ -9,6 +9,16 @@ export const OUTPUT_JSON = process.env.OUTPUT_JSON || "output.json";
 export const SENTRY_DSN = process.env.SENTRY_DSN;
 
 export const S3_BUCKET = process.env.S3_BUCKET;
+/**
+ * Cache TTL in seconds
+ */
 export const CACHE_TTL = process.env.CACHE_TTL
   ? parseInt(process.env.CACHE_TTL, 10)
   : undefined;
+
+/**
+ * One-shot mode timeout in seconds
+ */
+export const ONE_SHOT_TIMEOUT = process.env.ONE_SHOT_TIMEOUT
+  ? parseInt(process.env.ONE_SHOT_TIMEOUT, 10)
+  : 0;
