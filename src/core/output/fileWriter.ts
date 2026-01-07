@@ -1,9 +1,9 @@
 import { writeFile } from "fs/promises";
 
 import { json_stringify } from "../../core/utils";
-import type { OutputWriter } from "./index";
+import type { IOutputWriter } from "./types";
 
-export class FileWriter implements OutputWriter {
+export class FileWriter implements IOutputWriter {
   constructor(private readonly filePath: string) {}
 
   async write(data: unknown): Promise<void> {

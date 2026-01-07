@@ -1,6 +1,6 @@
 import { Fetcher, initApp } from "./core/app";
-import { IS_DEV, ONE_SHOT, OUTPUT_JSON } from "./core/config";
-import { FileWriter } from "./core/output/fileWriter";
+import { IS_DEV, ONE_SHOT } from "./core/config";
+import { createWriter } from "./core/output";
 import { captureException, initSentry } from "./core/sentry";
 import { initServer } from "./server";
 
@@ -13,7 +13,7 @@ async function main() {
     // Check for one-shot mode
     if (ONE_SHOT) {
       const fetcher = new Fetcher();
-      const outputWriter = new FileWriter(OUTPUT_JSON);
+      const outputWriter = createWriter();
       await fetcher.oneShot(outputWriter);
       process.exit(0);
     }

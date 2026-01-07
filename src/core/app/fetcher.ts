@@ -52,7 +52,7 @@ import type { TokenExtraRewardsResult } from "../../tokens/tokenExtraRewards";
 import { getTokenExtraRewards } from "../../tokens/tokenExtraRewards";
 import type { NetworkType } from "../chains";
 import { getChainId, getNetworkType, supportedChains } from "../chains";
-import type { OneShotOutput, OutputWriter } from "../output";
+import type { IOutputWriter, OneShotOutput } from "../output";
 import { captureException } from "../sentry";
 import { POOL_APY_TASK_INTERVAL, TOKEN_APY_TASK_INTERVAL } from "./constants";
 
@@ -319,7 +319,7 @@ export class Fetcher {
     setInterval(quarterTask, POOL_APY_TASK_INTERVAL);
   }
 
-  public async oneShot(outputWriter: OutputWriter): Promise<void> {
+  public async oneShot(outputWriter: IOutputWriter): Promise<void> {
     console.log("[SYSTEM]: Starting one-shot mode");
 
     await this.runNetworkRewards();
