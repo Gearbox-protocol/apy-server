@@ -43,13 +43,13 @@ export class AppError extends Error {
 
   static isAppError(e: unknown): e is AppError {
     const correctField =
-      !!e && typeof e === "object" && "type" in e && e?.type === this.type;
+      !!e && typeof e === "object" && "type" in e && e?.type === AppError.type;
 
     return correctField || e instanceof AppError;
   }
 
   static getAppError(e: any): AppError {
-    const wrappedError = this.getTypedError(e);
+    const wrappedError = AppError.getTypedError(e);
     if (AppError.isAppError(wrappedError)) return wrappedError;
     return new AppError({ code: "UNKNOWN_ERROR", originalError: wrappedError });
   }

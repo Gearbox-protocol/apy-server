@@ -11,9 +11,9 @@ import {
   getTokenRewards,
 } from "../../server/controllers/rewards/data";
 import type {
-  Apy,
   APYHandler,
   APYResult,
+  Apy,
   GearAPY,
   TokenAPY,
 } from "../../tokens/apy";
@@ -478,8 +478,7 @@ function logRewards({
     if (l.length > 0) {
       console.log(
         `[${network}] (${EXTRA_REWARDS}): ${l
-          .map(p => p.map(t => `${t.symbol}: ${t.rewardSymbol}`))
-          .flat(1)
+          .flatMap(p => p.map(t => `${t.symbol}: ${t.rewardSymbol}`))
           .join(", ")}`,
       );
     } else {
@@ -503,8 +502,7 @@ function logRewards({
     if (l.length > 0) {
       console.log(
         `[${network}] (${POOL_POINTS}):  ${l
-          .map(p => p.map(t => `${t.pool}: ${t.symbol}`))
-          .flat(1)
+          .flatMap(p => p.map(t => `${t.pool}: ${t.symbol}`))
           .join(", ")}`,
       );
     } else {
@@ -525,9 +523,8 @@ function logRewards({
 
     if (l.length > 0) {
       console.log(
-        `\[${network}] (${EXTERNAL_APY}): ${l
-          .map(p => p.map(t => `${t.pool}: ${t.name} - ${t.value}`))
-          .flat(1)
+        `[${network}] (${EXTERNAL_APY}): ${l
+          .flatMap(p => p.map(t => `${t.pool}: ${t.name} - ${t.value}`))
           .join(", ")}`,
       );
     } else {
@@ -553,8 +550,7 @@ function logRewards({
     if (l.length > 0) {
       console.log(
         `[${network}] (${EXTRA_COLLATERAL_APY}): ${l
-          .map(p => p.map(t => `${t.pool}: ${t.symbol}`))
-          .flat(1)
+          .flatMap(p => p.map(t => `${t.pool}: ${t.symbol}`))
           .join(", ")}`,
       );
     } else {
@@ -651,8 +647,6 @@ function logPoolExtraAPY({ poolExtraAPY }: LogPoolExtraAPYProps) {
         ].join(": ");
 
         console.log(`[${network}] (${EXTRA_APY}): ${poolString}`);
-
-        return undefined;
       });
     });
   } else {

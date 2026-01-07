@@ -273,4 +273,4 @@ async function getGearAPY(): Promise<GearAPY> {
   return gearAPY;
 }
 
-export { GearAPY, getAPYCurve, getGearAPY };
+export { type GearAPY, getAPYCurve, getGearAPY };

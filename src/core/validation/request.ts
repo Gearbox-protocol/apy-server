@@ -6,7 +6,7 @@ type ChainId = number;
 
 const validateChainId = (rawChainId: unknown): ChainId => {
   const chainId = Number(rawChainId ?? "empty");
-  if (isNaN(chainId)) {
+  if (Number.isNaN(chainId)) {
     throw new AppError({
       code: "WRONG_FORMAT",
       message: "Incorrect chain_id - must be integer",

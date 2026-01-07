@@ -25,7 +25,9 @@ export const initServer = ({ app }: InitServerProps) => {
   server.use("/api/rewards", initRewardsRouter(app));
 
   server.get("/api/health", checkHealth(app));
-  server.get("*", notFound(app));
+
+  // send 404 for all other routes
+  server.use(notFound(app));
 
   return server;
 };

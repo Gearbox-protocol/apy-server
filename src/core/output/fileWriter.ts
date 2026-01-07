@@ -1,4 +1,4 @@
-import { writeFile } from "fs/promises";
+import { writeFile } from "node:fs/promises";
 
 import { json_stringify } from "../../core/utils";
 import type { IOutputWriter } from "./types";

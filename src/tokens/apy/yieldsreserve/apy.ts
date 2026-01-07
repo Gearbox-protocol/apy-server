@@ -1,6 +1,5 @@
 import { cachedAxios } from "../../../core/app";
 import { getChainId } from "../../../core/chains";
-import { json_stringify } from "../../../core/utils";
 import type { APYHandler, APYResult } from "../constants";
 import type { Response } from "./constants";
 import { PROTOCOL, TOKENS } from "./constants";

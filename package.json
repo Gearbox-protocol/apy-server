@@ -6,13 +6,10 @@
   "license": "MIT",
   "scripts": {
     "build": "node esbuild.config.mjs",
-    "docker": "npx ts-node ./build.mjs",
-    "dev": "npx ts-node main.ts",
+    "dev": "touch .env && tsx --env-file .env src/index.ts",
     "prepare": "husky",
-    "prettier": "prettier --write .",
-    "prettier:ci": "npx prettier --check .",
-    "lint": "eslint \"**/*.ts\" --fix",
-    "lint:ci": "eslint \"**/*.ts\"",
+    "check": "biome check --write",
+    "check:ci": "biome check",
     "typecheck:ci": "tsc --noEmit"
   },
   "dependencies": {
@@ -27,26 +24,27 @@
     "viem": "^2.43.5"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.3.11",
     "@commitlint/cli": "^20.3.0",
     "@commitlint/config-conventional": "^20.3.0",
-    "@gearbox-protocol/eslint-config": "^2.0.0-next.2",
-    "@gearbox-protocol/prettier-config": "^2.1.0",
+    "@gearbox-protocol/biome-config": "^1.0.17",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "esbuild": "^0.27.2",
-    "eslint": "^8.57.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
-    "prettier": "^3.7.4",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
-  "prettier": "@gearbox-protocol/prettier-config",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
   "lint-staged": {
-    "*.ts": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,md}": "prettier --write"
+    "*.{ts,tsx,mts,mjs,json}": [
+      "biome check --no-errors-on-unmatched --write"
+    ]
   },
   "packageManager": "yarn@4.9.2"
 }
