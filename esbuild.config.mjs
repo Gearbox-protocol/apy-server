@@ -1,13 +1,16 @@
+import { sentryEsbuildPlugin } from "@sentry/esbuild-plugin";
 import { build } from "esbuild";
 
+const { SENTRY_AUTH_TOKEN, SENTRY_ORG, SENTRY_PROJECT } = process.env;
+
 build({
-  entryPoints: ["main.ts"],
+  entryPoints: ["src/index.ts"],
   outdir: "build",
   bundle: true,
   platform: "node",
   format: "esm",
   outExtension: { ".js": ".mjs" },
-  target: ["node20"],
+  target: ["node24"],
   sourcemap: "external",
   banner: {
     js: `
@@ -15,11 +18,18 @@ build({
           import { fileURLToPath } from 'url';
 
           const require = createRequire(import.meta.url);
-          const __filename = fileURLToPath(import.meta.url);
-          const __dirname = path.dirname(__filename);
         `,
   },
-  external: ["node-pty"],
+  plugins:
+    SENTRY_AUTH_TOKEN && SENTRY_ORG
+      ? [
+          sentryEsbuildPlugin({
+            authToken: SENTRY_AUTH_TOKEN,
+            org: SENTRY_ORG,
+            project: SENTRY_PROJECT || "apy-server",
+          }),
+        ]
+      : undefined,
 }).catch(e => {
   console.error(e);
   process.exit(1);
