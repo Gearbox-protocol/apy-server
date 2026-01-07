@@ -2,18 +2,12 @@
 
 for fetching the apy of different asset on diferrent protocols. For protocols Like for curve, lido, sky, pendle, defillama etc.
 
-### Running locally
+## Running as docker
 
 ```
-yarn
-npx ts-node main.ts
+docker run --rm \
+  -e ONE_SHOT=true \
+  -e OUTPUT_JSON=/output/output.json \
+  -v "$(pwd)/tmp:/output" \
+  ghcr.io/gearbox-protocol/apy-server:1.1.0-static.1
 ```
-
-### Running via github actions on fly.io
-
-- https://fly.io/docs/launch/continuous-deployment-with-github-actions/
-
-### Deploying changes via github actions
-
-- Create a PR to the main branch.
-- On merger the changes will be applied to apy-server.fly.dev
