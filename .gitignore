@@ -1,6 +1,7 @@
 build
 node_modules
 .env
+output.json
 
 # Sentry Config File
 .env.sentry-build-plugin

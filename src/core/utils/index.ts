@@ -27,11 +27,4 @@ export const json_stringify = (
   return r;
 };
 
-export const IS_DEV = process.env.NODE_ENV !== "production";
-
-export const LIDO_AUTH_TOKEN = process.env.LIDO_AUTH_TOKEN;
-export const RESOLV_AUTH_TOKEN = process.env.RESOLV_AUTH_TOKEN;
-
-export type PartialRecord<K extends keyof any, T> = {
-  [P in K]?: T;
-};
+export type PartialRecord<K extends keyof any, T> = { [P in K]?: T };

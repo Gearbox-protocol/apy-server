@@ -1,7 +1,7 @@
 import type { Address } from "viem";
 
 import { cachedAxios } from "../../../core/app";
-import { LIDO_AUTH_TOKEN } from "../../../core/utils";
+import { LIDO_AUTH_TOKEN } from "../../../core/config";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
@@ -17,10 +17,7 @@ interface Meta {
 }
 
 interface Response {
-  data: {
-    aprs: Array<Apy>;
-    smaApr: number;
-  };
+  data: { aprs: Array<Apy>; smaApr: number };
   meta: Meta;
 }
 
@@ -43,12 +40,7 @@ const getAPYLido: APYHandler = async network => {
       symbol: symbol,
 
       apys: [
-        {
-          address: address,
-          symbol: symbol,
-          protocol: PROTOCOL,
-          value: smaApr,
-        },
+        { address: address, symbol: symbol, protocol: PROTOCOL, value: smaApr },
       ],
     };
 
@@ -66,9 +58,7 @@ async function fetchLidoData() {
     LIDO_AUTH_TOKEN
       ? {
           withCredentials: true,
-          headers: {
-            Cookie: `access_token=${LIDO_AUTH_TOKEN}`,
-          },
+          headers: { Cookie: `access_token=${LIDO_AUTH_TOKEN}` },
         }
       : undefined,
   );

@@ -5,6 +5,11 @@ import type { PoolExternalAPYResult, PoolPointsResult } from "../../pools";
 import { getPoolExternalAPY, getPoolPoints } from "../../pools";
 import { getPoolExtraAPY } from "../../pools/extraAPY/apy";
 import type { PoolExtraAPYResultByChain } from "../../pools/extraAPY/constants";
+import {
+  getGearAPY as getGearAPYData,
+  getPoolRewards,
+  getTokenRewards,
+} from "../../server/controllers/rewards/data";
 import type {
   Apy,
   APYHandler,
@@ -47,6 +52,7 @@ import type { TokenExtraRewardsResult } from "../../tokens/tokenExtraRewards";
 import { getTokenExtraRewards } from "../../tokens/tokenExtraRewards";
 import type { NetworkType } from "../chains";
 import { getChainId, getNetworkType, supportedChains } from "../chains";
+import type { OneShotOutput, OutputWriter } from "../output";
 import { captureException } from "../sentry";
 import { POOL_APY_TASK_INTERVAL, TOKEN_APY_TASK_INTERVAL } from "./constants";
 
@@ -227,6 +233,8 @@ export class Fetcher {
 
   private async runNetworkRewards() {
     console.log("[SYSTEM]: Updating rewards list");
+    // TODO: Consider parallelizing chain processing with Promise.allSettled
+    // Currently sequential, but chains are independent and could be processed in parallel
     for (const network of Object.values(supportedChains)) {
       const chainId = getChainId(network);
       const { tokenApyList, ...rest } = await this.getNetworkRewards(
@@ -292,7 +300,7 @@ export class Fetcher {
     });
   }
 
-  async loop() {
+  public async loop(): Promise<void> {
     const hourTask = async () => {
       await this.runNetworkRewards();
       await this.runGear();
@@ -309,6 +317,72 @@ export class Fetcher {
 
     setInterval(hourTask, TOKEN_APY_TASK_INTERVAL);
     setInterval(quarterTask, POOL_APY_TASK_INTERVAL);
+  }
+
+  public async oneShot(outputWriter: OutputWriter): Promise<void> {
+    console.log("[SYSTEM]: Starting one-shot mode");
+
+    await this.runNetworkRewards();
+    await this.runGear();
+    await this.runPoolExtraRewards();
+
+    console.log(
+      `[SYSTEM]: Data fetching completed. Processing ${Object.keys(this.rewards).length} chains...`,
+    );
+
+    // Create a minimal App-like object for data extraction functions
+    const app = { state: this };
+
+    // Collect results with error handling
+    const output: OneShotOutput = {
+      gearApy: getGearAPYData(app),
+      chains: {},
+      timestamp: moment().utc().format(),
+      metadata: {
+        totalChains: 0,
+        successfulChains: 0,
+        failedChains: 0,
+      },
+    };
+
+    // Process each chain independently
+    // TODO: Consider parallelizing chain processing with Promise.allSettled
+    // Currently sequential to match loop() behavior, but chains are independent
+    for (const chainId of Object.keys(this.rewards).map(Number)) {
+      const chainIdStr = String(chainId);
+      try {
+        output.chains[chainIdStr] = {
+          tokens: getTokenRewards(app, chainId),
+          pools: getPoolRewards(app, chainId),
+        };
+
+        output.metadata.totalChains++;
+
+        const chainSuccess =
+          output.chains[chainIdStr].tokens.status === "ok" &&
+          output.chains[chainIdStr].pools.status === "ok";
+
+        if (chainSuccess) {
+          output.metadata.successfulChains++;
+        } else {
+          output.metadata.failedChains++;
+          console.warn(`[SYSTEM]: Chain ${chainIdStr} processing had errors`);
+        }
+      } catch (error) {
+        console.error(`[SYSTEM]: Error processing chain ${chainIdStr}:`, error);
+        output.metadata.failedChains++;
+      }
+    }
+
+    // Write output
+    console.log(
+      `[SYSTEM]: Writing output with ${output.metadata.totalChains} chains...`,
+    );
+    await outputWriter.write(output);
+
+    console.log(
+      `[SYSTEM]: One-shot mode completed. Chains: ${output.metadata.totalChains}, Successful: ${output.metadata.successfulChains}, Failed: ${output.metadata.failedChains}`,
+    );
   }
 }
 
