@@ -1,4 +1,4 @@
-import { cachedAxios } from "../../../core/app";
+import { cachedAxios } from "../../../core/axios";
 import type { APYHandler, APYResult } from "../constants";
 import { getSTETH } from "../llama";
 import { PROTOCOL, TOKENS } from "./constants";

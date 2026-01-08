@@ -1,4 +1,4 @@
-import { cachedAxios } from "../../../core/app";
+import { cachedAxios } from "../../../core/axios";
 import { RESOLV_AUTH_TOKEN } from "../../../core/config";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";

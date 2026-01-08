@@ -1,4 +1,4 @@
-import { cachedAxios } from "../../../core/app";
+import { cachedAxios } from "../../../core/axios";
 import { getChainId } from "../../../core/chains";
 import type { APYHandler, APYResult } from "../constants";
 import type { Response } from "./constants";

@@ -1,7 +1,7 @@
 import type { CacheAxiosResponse } from "axios-cache-interceptor";
 import type { Address } from "viem";
 
-import { cachedAxios } from "../../../core/app";
+import { cachedAxios } from "../../../core/axios";
 import type { NetworkType } from "../../../core/chains";
 import { getChainId } from "../../../core/chains";
 import type { MerkleXYZV4CampaignsResponse } from "../../../core/merkle/merklAPI";

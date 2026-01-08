@@ -1,6 +1,6 @@
 import type { Address } from "viem";
 
-import { cachedAxios } from "../../../core/app";
+import { cachedAxios } from "../../../core/axios";
 import type { NetworkType } from "../../../core/chains";
 import type { PartialRecord } from "../../../core/utils";
 import type { APYHandler, APYResult } from "../constants";

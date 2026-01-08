@@ -2,7 +2,7 @@ import type { AxiosResponse } from "axios";
 import moment from "moment";
 import type { Address } from "viem";
 
-import { cachedAxios } from "../../core/app";
+import { cachedAxios } from "../../core/axios";
 import type {
   MerkleXYZV4CampaignsResponse,
   MerkleXYZV4RewardCampaignResponse,

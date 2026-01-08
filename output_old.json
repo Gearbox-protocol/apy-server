@@ -1,0 +1,2487 @@
+{
+  "gearApy": {
+    "status": "ok",
+    "data": {
+      "base": 0.76,
+      "crv": 0.01959891703403448,
+      "gear": 11.649788256871467,
+      "gearPrice": 0.001021869326051048,
+      "lastUpdated": "2026-01-08T14:35:48Z"
+    }
+  },
+  "chains": {
+    "1": {
+      "tokens": {
+        "status": "ok",
+        "data": [
+          {
+            "chainId": 1,
+            "address": "0x83f20f44975d03b1b09e64809b757c47f942beea",
+            "symbol": "sDAI",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 1.25,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xae78736cd615f374d3085123a210448e74fc6393",
+            "symbol": "rETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.38381,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xf1c9acdc66974dfb6decb12aa385b9cd01190e38",
+            "symbol": "osETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.50999,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x0655977feb2f289a4ab78af67bab0d17aab84367",
+            "symbol": "scrvUSD",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 1.0761,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x72ed19788bce2971a5ed6401662230ee57e254b7",
+            "symbol": "stkcvxllamathena",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 5.32899,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Ethena",
+                      "units": "sats",
+                      "multiplier": "3000",
+                      "type": "ethena"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xb5528130b1d5d24ad172bf54ceed062232afbfbe",
+            "symbol": "stkcvxllamathena",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 5.32899,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Ethena",
+                      "units": "sats",
+                      "multiplier": "3000",
+                      "type": "ethena"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x444fa0ffb033265591895b66c81c2e5ff606e097",
+            "symbol": "stkcvxRLUSDUSDC",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 8.08078,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x87fa6c0296c986d1c901d72571282d57916b964a",
+            "symbol": "stkcvxRLUSDUSDC",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 8.08078,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xa327d7f665afe9ecb0963b5561c84c48c7ec71ab",
+            "symbol": "stkcvxUSDCUSDf",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 6.22687,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xec3b5e45dd278d5ab9cdb31754b54db314e9d52a",
+            "symbol": "PT_USDf_29JAN2026",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 7.63322,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x4274cd7277c7bb0806bd5fe84b9adae466a8da0a",
+            "symbol": "aegis-yusd",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 7.93,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [],
+                  "debtRewards": [
+                    {
+                      "name": "Aegis",
+                      "units": "points",
+                      "multiplier": "150",
+                      "type": "aegis",
+                      "cm": "any"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x19ebd191f7a24ece672ba13a302212b5ef7f35cb",
+            "symbol": "yieldfi-yusd",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 9.81,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xf580cf6b26251541f323bbda1f31cc8f91a0ca78",
+            "symbol": "PT-yUSD-27NOV2025",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 0,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x40fc1f58ab6efc06e008370a040e92b635dd4ce4",
+            "symbol": "stkcvxfrxUSDUSDf",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 0.16935,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xf3f491e5608f8b8a6fd9e9d66a4a4036d7fd282c",
+            "symbol": "PT-pUSDe-16OCT2025",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 0,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x48e502fbb6ff2cc687d049150e2c8addc765a43a",
+            "symbol": "PT_sUSDf_29JAN2026",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 8.44438,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+            "symbol": "wstETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.512,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
+            "symbol": "STETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.512,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x84631c0d0081fde56deb72f6de77abbbf6a9f93a",
+            "symbol": "Re7LRT",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.512,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Symbiotic",
+                      "units": "points",
+                      "multiplier": "100",
+                      "type": "symbiotic"
+                    },
+                    {
+                      "name": "Mellow",
+                      "units": "points",
+                      "multiplier": "200",
+                      "type": "mellow"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xb908c9fe885369643adb5fba4407d52bd726c72d",
+            "symbol": "cp0xLRT",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.512,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Symbiotic",
+                      "units": "points",
+                      "multiplier": "50",
+                      "type": "symbiotic"
+                    },
+                    {
+                      "name": "Mellow",
+                      "units": "points",
+                      "multiplier": "100",
+                      "type": "mellow"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x7a4effd87c2f3c55ca251080b1343b605f327e3a",
+            "symbol": "rstETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.512,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Symbiotic",
+                      "units": "points",
+                      "multiplier": "100",
+                      "type": "symbiotic"
+                    },
+                    {
+                      "name": "Mellow",
+                      "units": "points",
+                      "multiplier": "200",
+                      "type": "mellow"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": [
+                {
+                  "pool": "0xff94993fa7ea27efc943645f95adb36c1b81244b",
+                  "rewards": [
+                    {
+                      "name": "Symbiotic",
+                      "units": "points",
+                      "multiplier": "60",
+                      "type": "symbiotic"
+                    },
+                    {
+                      "name": "Mellow",
+                      "units": "points",
+                      "multiplier": "120",
+                      "type": "mellow"
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xbeef69ac7870777598a04b2bd4771c71212e6abc",
+            "symbol": "steakLRT",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.512,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Symbiotic",
+                      "units": "points",
+                      "multiplier": "100",
+                      "type": "symbiotic"
+                    },
+                    {
+                      "name": "Mellow",
+                      "units": "points",
+                      "multiplier": "200",
+                      "type": "mellow"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x5fd13359ba15a84b76f7f87568309040176167cd",
+            "symbol": "amphrETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.512,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Symbiotic",
+                      "units": "points",
+                      "multiplier": "100",
+                      "type": "symbiotic"
+                    },
+                    {
+                      "name": "Mellow",
+                      "units": "points",
+                      "multiplier": "200",
+                      "type": "mellow"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xbe9895146f7af43049ca1c1ae358b0541ea49704",
+            "symbol": "cbETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.912,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xa1290d69c65a6fe4df752f95823fae25cb99e5a7",
+            "symbol": "rsETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 3.08,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Kernel",
+                      "units": "Points",
+                      "multiplier": "200",
+                      "type": "kelp"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xfae103dc9cf190ed75350761e95403b7b8afa6c0",
+            "symbol": "rswETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.66992,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x02a4cceed3c400b5ba9fd22ad6ec18d8f7a3d48e",
+            "symbol": "wmooCurveETH+-WETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 3.98868,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x8209b01357946a64a0793e9773f6f3fe5a5f2526",
+            "symbol": "PT-DETH-29JAN2026",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 4.50552,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xa3931d71877c0e7a3148cb7eb4463524fec27fbd",
+            "symbol": "sUSDS",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "sky",
+                  "value": 4,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xcb5d10a57aeb622b92784d53f730ee2210ab370e",
+            "symbol": "stkUSDS",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "sky",
+                  "value": 4.334072,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x00f7c0d39b05089e93858a82439ea17de7160b5a",
+            "symbol": "stkUSDS_inv",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "sky",
+                  "value": 4.334072,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xd11c452fc99cf405034ee446803b6f6c1f6d5ed8",
+            "symbol": "tETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "treehouse",
+                  "value": 2.935925,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Treehouse",
+                      "units": "nuts",
+                      "multiplier": "100",
+                      "type": "treehouseNuts"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xd9a442856c234a39a81a089c06451ebaa4306a72",
+            "symbol": "pufETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "constant",
+                  "value": 2.31,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xbeefc011e94f43b8b7b455ebab290c7ab4e216f1",
+            "symbol": "csUSDL",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "coinshift",
+                  "value": 0,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "SHIFT",
+                      "units": "points",
+                      "multiplier": "100",
+                      "type": "shift"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xbf5495efe5db9ce00f80364c8b423567e58d2110",
+            "symbol": "ezETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "renzo",
+                  "value": 2.6817362395979094,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x8c9532a60e0e7c6bbd2b2c1303f63ace1c3e9811",
+            "symbol": "pzETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "renzo",
+                  "value": 2.530625,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Symbiotic",
+                      "units": "points",
+                      "multiplier": "100",
+                      "type": "symbiotic"
+                    },
+                    {
+                      "name": "Mellow",
+                      "units": "points",
+                      "multiplier": "200",
+                      "type": "mellow"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xcd5fe23c85820f7b72d0926fc9b05b43e359b7ee",
+            "symbol": "weETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "etherfi",
+                  "value": 2.783432648326827,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Ether.fi",
+                      "units": "points",
+                      "multiplier": "200",
+                      "type": "etherfi"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x5e362eb2c0706bd1d134689ec75176018385430b",
+            "symbol": "DVstETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "mellow",
+                  "value": 3.9959465775869765,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Mellow",
+                      "units": "points",
+                      "multiplier": "200",
+                      "type": "mellow"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xc8cf6d7991f15525488b2a83df53468d682ba4b0",
+            "symbol": "sUSDf",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "falcon",
+                  "value": 6.056449567347428,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x4956b52ae2ff65d74ca2d61207523288e4528f96",
+            "symbol": "RLP",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "resolv",
+                  "value": 8.4576,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x1202f5c7b4b9e47a1a484e8b270be34dbbc75055",
+            "symbol": "wstUSR",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "resolv",
+                  "value": 4.6564000000000005,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xe72b141df173b999ae7c1adcbf60cc9833ce56a8",
+            "symbol": "ETHPlus",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "merkle.xyz",
+                  "value": 3.8305,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x9d39a5de30e57443bff2a8307a4256c8797a3497",
+            "symbol": "sUSDe",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "pendle",
+                  "value": 3.632910763673891,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Ethena",
+                      "units": "sats",
+                      "multiplier": "500",
+                      "type": "ethena"
+                    }
+                  ],
+                  "debtRewards": [
+                    {
+                      "name": "Ethena",
+                      "units": "sats",
+                      "multiplier": "500",
+                      "type": "ethena",
+                      "cm": "0x58c8e983d9479b69b64970f79e8965ea347189c9"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x871ab8e36cae9af35c6a3488b049965233deb7ed",
+            "symbol": "DETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "Makina",
+                  "value": 1.9695516084872133,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Makina",
+                      "units": "points",
+                      "multiplier": "36000",
+                      "type": "makina"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x4c9edd5852cd905f086c759e8383e09bff1e68b3",
+            "symbol": "USDe",
+            "rewards": {
+              "apy": [],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Ethena",
+                      "units": "sats",
+                      "multiplier": "2000",
+                      "type": "ethena"
+                    }
+                  ],
+                  "debtRewards": [
+                    {
+                      "name": "Ethena",
+                      "units": "sats",
+                      "multiplier": "500",
+                      "type": "ethena",
+                      "cm": "0x58c8e983d9479b69b64970f79e8965ea347189c9"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x8236a87084f8b84306f72007f36f2618a5634494",
+            "symbol": "LBTC",
+            "rewards": {
+              "apy": [],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Babylon",
+                      "units": "points",
+                      "multiplier": "100",
+                      "type": "babylon"
+                    },
+                    {
+                      "name": "Lombard",
+                      "units": "points",
+                      "multiplier": "300",
+                      "type": "lombard"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x657e8c867d8b37dcc18fa4caead9c45eb088c642",
+            "symbol": "eBTC",
+            "rewards": {
+              "apy": [],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Babylon",
+                      "units": "points",
+                      "multiplier": "100",
+                      "type": "babylon"
+                    },
+                    {
+                      "name": "Symbiotic",
+                      "units": "points",
+                      "multiplier": "100",
+                      "type": "symbiotic"
+                    },
+                    {
+                      "name": "Ether.fi",
+                      "units": "points",
+                      "multiplier": "200",
+                      "type": "etherfi"
+                    },
+                    {
+                      "name": "Lombard",
+                      "units": "points",
+                      "multiplier": "400",
+                      "type": "lombard"
+                    },
+                    {
+                      "name": "Veda",
+                      "units": "points",
+                      "multiplier": "300",
+                      "type": "veda"
+                    },
+                    {
+                      "name": "Karak",
+                      "units": "points",
+                      "multiplier": "200",
+                      "type": "karak"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0xf469fbd2abcd6b9de8e169d128226c0fc90a012e",
+            "symbol": "pumpBTC",
+            "rewards": {
+              "apy": [],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Babylon",
+                      "units": "points",
+                      "multiplier": "100",
+                      "type": "babylon"
+                    },
+                    {
+                      "name": "Pump BTC",
+                      "units": "points",
+                      "multiplier": "200",
+                      "type": "pumpBTC"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x97ad75064b20fb2b2447fed4fa953bf7f007a706",
+            "symbol": "beraSTONE",
+            "rewards": {
+              "apy": [],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Boyco",
+                      "units": "rewards",
+                      "multiplier": "100",
+                      "type": "boyco"
+                    },
+                    {
+                      "name": "Kodiak",
+                      "units": "points",
+                      "multiplier": "100",
+                      "type": "kodiak"
+                    },
+                    {
+                      "name": "Dolomite",
+                      "units": "points",
+                      "multiplier": "100",
+                      "type": "dolomite"
+                    },
+                    {
+                      "name": "Bera-wave",
+                      "units": "points",
+                      "multiplier": "100",
+                      "type": "beraWave"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1,
+            "address": "0x8aca0841993ef4c87244d519166e767f49362c21",
+            "symbol": "uptBTC",
+            "rewards": {
+              "apy": [],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Mezo",
+                      "units": "points",
+                      "multiplier": "100",
+                      "type": "mezo"
+                    },
+                    {
+                      "name": "Upshift",
+                      "units": "points",
+                      "multiplier": "500",
+                      "type": "upshift"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          }
+        ]
+      },
+      "pools": {
+        "status": "ok",
+        "data": [
+          {
+            "chainId": 1,
+            "pool": "0xda00010eda646913f273e10e7a5d1f659242757d",
+            "rewards": {
+              "points": [
+                {
+                  "token": "0x8236a87084f8b84306f72007f36f2618a5634494",
+                  "symbol": "LBTC",
+                  "amount": "20000000",
+                  "duration": "day",
+                  "name": "Lombard LUX",
+                  "type": "lombard",
+                  "estimation": "absolute",
+                  "condition": "holding"
+                }
+              ],
+              "externalAPY": [],
+              "extraAPY": []
+            }
+          },
+          {
+            "chainId": 1,
+            "pool": "0xc155444481854c60e7a29f4150373f479988f32d",
+            "rewards": {
+              "points": [
+                {
+                  "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                  "symbol": "USDC",
+                  "amount": "150000",
+                  "duration": "day",
+                  "name": "Falcon miles",
+                  "type": "falcon",
+                  "estimation": "absolute",
+                  "condition": "holding"
+                },
+                {
+                  "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                  "symbol": "USDC",
+                  "amount": "100000",
+                  "duration": "day",
+                  "name": "Strata points",
+                  "type": "strata",
+                  "estimation": "absolute",
+                  "condition": "holding"
+                }
+              ],
+              "externalAPY": [],
+              "extraAPY": []
+            }
+          },
+          {
+            "chainId": 1,
+            "pool": "0x6b343f7b797f1488aa48c49d540690f2b2c89751",
+            "rewards": {
+              "points": [],
+              "externalAPY": [
+                {
+                  "value": 110,
+                  "name": "MON via Merkl"
+                }
+              ],
+              "extraAPY": []
+            }
+          },
+          {
+            "chainId": 1,
+            "pool": "0x9396dcbf78fc526bb003665337c5e73b699571ef",
+            "rewards": {
+              "points": [],
+              "externalAPY": [],
+              "extraAPY": [
+                {
+                  "token": "0x9396dcbf78fc526bb003665337c5e73b699571ef",
+                  "apy": 1.026548783156206,
+                  "rewardToken": "0xba3335588d9403515223f109edc4eb7269a9ab5d",
+                  "rewardTokenSymbol": "GEAR",
+                  "endTimestamp": 1768924800,
+                  "lastUpdated": "2026-01-08T14:35:51Z"
+                },
+                {
+                  "token": "0x9396dcbf78fc526bb003665337c5e73b699571ef",
+                  "apy": 0.7342400721484148,
+                  "rewardToken": "0xe72b141df173b999ae7c1adcbf60cc9833ce56a8",
+                  "rewardTokenSymbol": "ETH+",
+                  "endTimestamp": 1768480200,
+                  "lastUpdated": "2026-01-08T14:35:51Z"
+                }
+              ]
+            }
+          },
+          {
+            "chainId": 1,
+            "pool": "0x9ebe8c8e7a8d00b6085302e78cdba319932898c7",
+            "rewards": {
+              "points": [],
+              "externalAPY": [],
+              "extraAPY": [
+                {
+                  "token": "0x9ebe8c8e7a8d00b6085302e78cdba319932898c7",
+                  "apy": 1.2705,
+                  "rewardToken": "0xe72b141df173b999ae7c1adcbf60cc9833ce56a8",
+                  "rewardTokenSymbol": "ETH+",
+                  "endTimestamp": 1768480200,
+                  "lastUpdated": "2026-01-08T14:35:51Z"
+                }
+              ]
+            }
+          },
+          {
+            "chainId": 1,
+            "pool": "0xa9d17f6d3285208280a1fd9b94479c62e0aaba64",
+            "rewards": {
+              "points": [],
+              "externalAPY": [],
+              "extraAPY": [
+                {
+                  "token": "0xa9d17f6d3285208280a1fd9b94479c62e0aaba64",
+                  "apy": 0.2304490475414869,
+                  "rewardToken": "0xba3335588d9403515223f109edc4eb7269a9ab5d",
+                  "rewardTokenSymbol": "GEAR",
+                  "endTimestamp": 1768924800,
+                  "lastUpdated": "2026-01-08T14:35:51Z"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "10": {
+      "tokens": {
+        "status": "ok",
+        "data": [
+          {
+            "chainId": 10,
+            "address": "0x9bcef72be871e61ed4fbbc7630889bee758eb81d",
+            "symbol": "rETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.38381,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 10,
+            "address": "0x1f32b1c2345538c0c6f582fcb022739c4a194ebb",
+            "symbol": "wstETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.512,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 10,
+            "address": "0x2416092f143378750bb29b79ed961ab195cceea5",
+            "symbol": "ezETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "renzo",
+                  "value": 2.6817362395979094,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          }
+        ]
+      },
+      "pools": {
+        "status": "ok",
+        "data": []
+      }
+    },
+    "56": {
+      "tokens": {
+        "status": "ok",
+        "data": [
+          {
+            "chainId": 56,
+            "address": "0x32c830f5c34122c6afb8ae87aba541b7900a2c5f",
+            "symbol": "ynBNBx",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 0.41356,
+                  "lastUpdated": "2026-01-08T14:35:44Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 56,
+            "address": "0x7788a3538c5fc7f9c7c8a74eac4c898fc8d87d92",
+            "symbol": "sUSDX",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 1.34994,
+                  "lastUpdated": "2026-01-08T14:35:44Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "S-Point",
+                      "units": "",
+                      "multiplier": "100",
+                      "type": "sPoint"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 56,
+            "address": "0xf3527ef8de265eaa3716fb312c12847bfba66cef",
+            "symbol": "USDX",
+            "rewards": {
+              "apy": [],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "S-Point",
+                      "units": "",
+                      "multiplier": "150",
+                      "type": "sPoint"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          }
+        ]
+      },
+      "pools": {
+        "status": "ok",
+        "data": []
+      }
+    },
+    "143": {
+      "tokens": {
+        "status": "ok",
+        "data": [
+          {
+            "chainId": 143,
+            "address": "0x1b68626dca36c7fe922fd2d55e4f631d962de19c",
+            "symbol": "shMON",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 12.13478,
+                  "lastUpdated": "2026-01-08T14:35:44Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 143,
+            "address": "0xa3227c5969757783154c60bf0bc1944180ed81b9",
+            "symbol": "sMON",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 12.86022,
+                  "lastUpdated": "2026-01-08T14:35:44Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 143,
+            "address": "0x1c8ee940b654bfced403f2a44c1603d5be0f50fa",
+            "symbol": "mEDGE",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "midas",
+                  "value": 9.01,
+                  "lastUpdated": "2026-01-08T14:35:44Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 143,
+            "address": "0x942644106b073e30d72c2c5d7529d5c296ea91ab",
+            "symbol": "AUSDCT0",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "merkle.xyz",
+                  "value": 5.061527098311021,
+                  "lastUpdated": "2026-01-08T14:35:44Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 143,
+            "address": "0x74d80ee400d3026fdd2520265cc98300710b25d4",
+            "symbol": "stMONMON",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "merkle.xyz",
+                  "value": 26.95898983790351,
+                  "lastUpdated": "2026-01-08T14:35:44Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 143,
+            "address": "0xd793c04b87386a6bb84ee61d98e0065fde7fda5e",
+            "symbol": "sAUSD",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "upshift",
+                  "value": 2.1219052520584336,
+                  "lastUpdated": "2026-01-08T14:35:44Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 143,
+            "address": "0x8498312a6b3cbd158bf0c93abdcf29e6e4f55081",
+            "symbol": "gMON",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "magma",
+                  "value": 10.93,
+                  "lastUpdated": "2026-01-08T14:35:44Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          }
+        ]
+      },
+      "pools": {
+        "status": "ok",
+        "data": [
+          {
+            "chainId": 143,
+            "pool": "0x6b343f7b797f1488aa48c49d540690f2b2c89751",
+            "rewards": {
+              "points": [],
+              "externalAPY": [],
+              "extraAPY": [
+                {
+                  "token": "0x6b343f7b797f1488aa48c49d540690f2b2c89751",
+                  "apy": 6.755112978831029,
+                  "rewardToken": "0x3bd359c1119da7da1d913d1c4d2b7c461115433a",
+                  "rewardTokenSymbol": "WMON",
+                  "endTimestamp": 1768225500,
+                  "lastUpdated": "2026-01-08T14:35:51Z"
+                }
+              ]
+            }
+          },
+          {
+            "chainId": 143,
+            "pool": "0xc4173359087ce643235420b7bc610d9b0cf2b82d",
+            "rewards": {
+              "points": [],
+              "externalAPY": [],
+              "extraAPY": [
+                {
+                  "token": "0xc4173359087ce643235420b7bc610d9b0cf2b82d",
+                  "apy": 6.936356838926623,
+                  "rewardToken": "0x3bd359c1119da7da1d913d1c4d2b7c461115433a",
+                  "rewardTokenSymbol": "WMON",
+                  "endTimestamp": 1768651200,
+                  "lastUpdated": "2026-01-08T14:35:51Z"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "146": {
+      "tokens": {
+        "status": "ok",
+        "data": [
+          {
+            "chainId": 146,
+            "address": "0xe5da20f15420ad15de0fa650600afc998bbe3955",
+            "symbol": "stS",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "beets",
+                  "value": 4.351779229109789,
+                  "lastUpdated": "2026-01-08T14:35:42Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 146,
+            "address": "0xd3dce716f3ef535c5ff8d041c1a41c3bd89b97ae",
+            "symbol": "scUSD",
+            "rewards": {
+              "apy": [],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Rings",
+                      "units": "points",
+                      "multiplier": "150",
+                      "type": "rings"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          }
+        ]
+      },
+      "pools": {
+        "status": "ok",
+        "data": []
+      }
+    },
+    "480": {
+      "tokens": {
+        "status": "ok",
+        "data": []
+      },
+      "pools": {
+        "status": "ok",
+        "data": []
+      }
+    },
+    "1135": {
+      "tokens": {
+        "status": "ok",
+        "data": [
+          {
+            "chainId": 1135,
+            "address": "0x76d8de471f54aaa87784119c60df1bbfc852c415",
+            "symbol": "wstETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.512,
+                  "lastUpdated": "2026-01-08T14:35:46Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 1135,
+            "address": "0x1b10e2270780858923cdbbc9b5423e29fffd1a44",
+            "symbol": "lskETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "mellow",
+                  "value": 2.786,
+                  "lastUpdated": "2026-01-08T14:35:46Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          }
+        ]
+      },
+      "pools": {
+        "status": "ok",
+        "data": []
+      }
+    },
+    "5031": {
+      "tokens": {
+        "status": "ok",
+        "data": []
+      },
+      "pools": {
+        "status": "ok",
+        "data": [
+          {
+            "chainId": 5031,
+            "pool": "0xa561d6d554fb3637f590c4d73527fe19525d596b",
+            "rewards": {
+              "points": [
+                {
+                  "token": "0x28bec7e30e6faee657a03e19bf1128aad7632a00",
+                  "symbol": "USDC.e",
+                  "amount": "12000",
+                  "duration": "day",
+                  "name": "Somnia points multiplier",
+                  "type": "somnia",
+                  "estimation": "absolute",
+                  "condition": "holding"
+                }
+              ],
+              "externalAPY": [],
+              "extraAPY": []
+            }
+          },
+          {
+            "chainId": 5031,
+            "pool": "0x6f652fbcfc2107ef9c99456311b5650cd52d6419",
+            "rewards": {
+              "points": [
+                {
+                  "token": "0x046ede9564a72571df6f5e44d0405360c0f4dcab",
+                  "symbol": "WSOMI",
+                  "amount": "12000",
+                  "duration": "day",
+                  "name": "Somnia points multiplier",
+                  "type": "somnia",
+                  "estimation": "absolute",
+                  "condition": "holding"
+                }
+              ],
+              "externalAPY": [],
+              "extraAPY": []
+            }
+          }
+        ]
+      }
+    },
+    "6342": {
+      "tokens": {
+        "status": "ok",
+        "data": []
+      },
+      "pools": {
+        "status": "ok",
+        "data": []
+      }
+    },
+    "8453": {
+      "tokens": {
+        "status": "ok",
+        "data": []
+      },
+      "pools": {
+        "status": "ok",
+        "data": []
+      }
+    },
+    "9745": {
+      "tokens": {
+        "status": "ok",
+        "data": [
+          {
+            "chainId": 9745,
+            "address": "0x6eaf19b2fc24552925db245f9ff613157a7dbb4c",
+            "symbol": "xUSD",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 0,
+                  "lastUpdated": "2026-01-08T14:35:47Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 9745,
+            "address": "0xc4374775489cb9c56003bf2c9b12495fc64f0771",
+            "symbol": "syrupUSDT",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 4.69011,
+                  "lastUpdated": "2026-01-08T14:35:47Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 9745,
+            "address": "0x2d84d79c852f6842abe0304b70bbaa1506add457",
+            "symbol": "USDT0USDe",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "merkle.xyz",
+                  "value": 9.349629458974718,
+                  "lastUpdated": "2026-01-08T14:35:47Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 9745,
+            "address": "0x1e8d78e9b3f0152d54d32904b7933f1cfe439df1",
+            "symbol": "USDT0sUSDe",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "merkle.xyz",
+                  "value": 6.328012642844585,
+                  "lastUpdated": "2026-01-08T14:35:47Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 9745,
+            "address": "0x211cc4dd073734da055fbf44a2b4667d5e5fe5d2",
+            "symbol": "sUSDe",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "pendle",
+                  "value": 3.632910763673891,
+                  "lastUpdated": "2026-01-08T14:35:47Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 9745,
+            "address": "0x0b2b2b2076d95dda7817e785989fe353fe955ef9",
+            "symbol": "sUSDai",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "pendle",
+                  "value": 10.839282156585895,
+                  "lastUpdated": "2026-01-08T14:35:47Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 9745,
+            "address": "0x93b544c330f60a2aa05ced87aeeffb8d38fd8c9a",
+            "symbol": "PT-USDe-15JAN2026",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "pendle",
+                  "value": 5.837926010156336,
+                  "lastUpdated": "2026-01-08T14:35:47Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 9745,
+            "address": "0x02fcc4989b4c9d435b7ced3fe1ba4cf77bbb5dd8",
+            "symbol": "PT-sUSDe-15JAN2026",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "pendle",
+                  "value": 6.800465050895554,
+                  "lastUpdated": "2026-01-08T14:35:47Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 9745,
+            "address": "0x8dfb9a39dfab16bffe77f15544b5bf03e377e419",
+            "symbol": "PT-syrupUSDT-29JAN2026",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "pendle",
+                  "value": 8.627081377016289,
+                  "lastUpdated": "2026-01-08T14:35:47Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 9745,
+            "address": "0xd516188daf64efa04a8d60872f891f2cc811a561",
+            "symbol": "PT-USDai-19MAR2026",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "pendle",
+                  "value": 8.645495687089033,
+                  "lastUpdated": "2026-01-08T14:35:47Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 9745,
+            "address": "0xedac81b27790e0728f54dea3b7718e5437e85353",
+            "symbol": "PT-sUSDai-19MAR2026",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "pendle",
+                  "value": 12.544929447892429,
+                  "lastUpdated": "2026-01-08T14:35:47Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 9745,
+            "address": "0x18d89b23d2875590c502cd3eac8f448f3ccf9999",
+            "symbol": "LP-syrupUSDT-29JAN2026",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "pendle",
+                  "value": 7.713055646263291,
+                  "lastUpdated": "2026-01-08T14:35:47Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 9745,
+            "address": "0xa29420057f3e3b9512d4786df135da1674bd74d4",
+            "symbol": "savUSD",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "avantprotocol",
+                  "value": 16.97,
+                  "lastUpdated": "2026-01-08T14:35:47Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 9745,
+            "address": "0xc8a8df9b210243c55d31c73090f06787ad0a1bf6",
+            "symbol": "syzUSD",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "yuzu",
+                  "value": 0,
+                  "lastUpdated": "2026-01-08T14:35:47Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          }
+        ]
+      },
+      "pools": {
+        "status": "ok",
+        "data": []
+      }
+    },
+    "42161": {
+      "tokens": {
+        "status": "ok",
+        "data": [
+          {
+            "chainId": 42161,
+            "address": "0xec70dcb4a1efa46b8f2d97c310c9c4790ba5ffa8",
+            "symbol": "rETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.38381,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 42161,
+            "address": "0x1debd73e752beaf79865fd6446b0c970eae7732f",
+            "symbol": "cbETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.912,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 42161,
+            "address": "0x95ab45875cffdba1e5f451b950bc2e42c0053f39",
+            "symbol": "sfrxETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.512,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 42161,
+            "address": "0x5979d7b546e38e414f7e9822514be443a4800529",
+            "symbol": "wstETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 2.512,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 42161,
+            "address": "0x4186bfc76e2e237523cbc30fd220fe055156b41f",
+            "symbol": "rsETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "llama",
+                  "value": 3.08,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Kernel",
+                      "units": "Points",
+                      "multiplier": "300",
+                      "type": "kelp"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 42161,
+            "address": "0x2416092f143378750bb29b79ed961ab195cceea5",
+            "symbol": "ezETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "renzo",
+                  "value": 2.6817362395979094,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 42161,
+            "address": "0x35751007a407ca6feffe80b3cb397736d2cf4dbe",
+            "symbol": "weETH",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "etherfi",
+                  "value": 2.783432648326827,
+                  "lastUpdated": "2026-01-08T14:35:41Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 42161,
+            "address": "0x5d3a1ff2b6bab83b63cd9ad0787074081a52ef34",
+            "symbol": "USDe",
+            "rewards": {
+              "apy": [],
+              "points": [
+                {
+                  "rewards": [
+                    {
+                      "name": "Ethena",
+                      "units": "sats",
+                      "multiplier": "2000",
+                      "type": "ethena"
+                    }
+                  ]
+                }
+              ],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          }
+        ]
+      },
+      "pools": {
+        "status": "ok",
+        "data": []
+      }
+    },
+    "42793": {
+      "tokens": {
+        "status": "ok",
+        "data": [
+          {
+            "chainId": 42793,
+            "address": "0x2247b5a46bb79421a314ab0f0b67ffd11dd37ee4",
+            "symbol": "mBASIS",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "midas",
+                  "value": 8.91,
+                  "lastUpdated": "2026-01-08T14:35:45Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 42793,
+            "address": "0xdd629e5241cbc5919847783e6c96b2de4754e438",
+            "symbol": "mTBILL",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "midas",
+                  "value": 3.81,
+                  "lastUpdated": "2026-01-08T14:35:45Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 42793,
+            "address": "0x733d504435a49fc8c4e9759e756c2846c92f0160",
+            "symbol": "mRe7YIELD",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "midas",
+                  "value": 1.05,
+                  "lastUpdated": "2026-01-08T14:35:45Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 42793,
+            "address": "0x942644106b073e30d72c2c5d7529d5c296ea91ab",
+            "symbol": "mTBILLUSDC",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "merkle.xyz",
+                  "value": 1.905,
+                  "lastUpdated": "2026-01-08T14:35:45Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 42793,
+            "address": "0x0714027e44802b2ff76389daf5371990cc3a4c24",
+            "symbol": "mBASISUSDC",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "merkle.xyz",
+                  "value": 4.455,
+                  "lastUpdated": "2026-01-08T14:35:45Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          },
+          {
+            "chainId": 42793,
+            "address": "0x5d37f9b272ca7cda2a05245b9a503746eefac88f",
+            "symbol": "mRE7USDC",
+            "rewards": {
+              "apy": [
+                {
+                  "protocol": "merkle.xyz",
+                  "value": 0.525,
+                  "lastUpdated": "2026-01-08T14:35:45Z"
+                }
+              ],
+              "points": [],
+              "extraRewards": [],
+              "extraCollateralAPY": [],
+              "extraCollateralPoints": []
+            }
+          }
+        ]
+      },
+      "pools": {
+        "status": "ok",
+        "data": []
+      }
+    },
+    "43111": {
+      "tokens": {
+        "status": "ok",
+        "data": []
+      },
+      "pools": {
+        "status": "ok",
+        "data": []
+      }
+    },
+    "43114": {
+      "tokens": {
+        "status": "ok",
+        "data": []
+      },
+      "pools": {
+        "status": "ok",
+        "data": []
+      }
+    },
+    "80094": {
+      "tokens": {
+        "status": "ok",
+        "data": []
+      },
+      "pools": {
+        "status": "ok",
+        "data": []
+      }
+    }
+  },
+  "timestamp": "2026-01-08T14:35:51Z",
+  "metadata": {
+    "totalChains": 16,
+    "successfulChains": 16,
+    "failedChains": 0
+  }
+}

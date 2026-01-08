@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "node esbuild.config.mjs",
-    "dev": "touch .env && tsx --env-file .env src/index.ts",
+    "start": "touch .env && tsx --env-file .env src/index.ts",
     "prepare": "husky",
     "check": "biome check --write",
     "check:ci": "biome check",
@@ -18,8 +18,6 @@
     "@sentry/node": "^10.32.1",
     "axios": "^1.13.2",
     "axios-cache-interceptor": "^1.11.2",
-    "cors": "^2.8.5",
-    "express": "^5.2.1",
     "moment": "^2.30.1",
     "viem": "^2.43.5"
   },
@@ -28,8 +26,6 @@
     "@commitlint/cli": "^20.3.0",
     "@commitlint/config-conventional": "^20.3.0",
     "@gearbox-protocol/biome-config": "^1.0.17",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.6",
     "esbuild": "^0.27.2",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",

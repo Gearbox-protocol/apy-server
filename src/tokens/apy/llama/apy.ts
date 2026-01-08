@@ -1,6 +1,6 @@
 import type { Address } from "viem";
 
-import { cachedAxios } from "../../../core/app";
+import { cachedAxios } from "../../../core/axios";
 import type { APYHandler, APYResult, TokenAPY } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
