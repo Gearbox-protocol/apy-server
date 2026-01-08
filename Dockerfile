@@ -39,6 +39,7 @@ RUN --mount=type=cache,id=yarn,target=/root/.yarn \
 FROM gcr.io/distroless/nodejs24-debian12
 ARG PACKAGE_VERSION
 ENV PACKAGE_VERSION=${PACKAGE_VERSION:-0.0.0}
+ENV NODE_ENV=production
 LABEL org.opencontainers.image.version="${PACKAGE_VERSION}"
 
 WORKDIR /app
