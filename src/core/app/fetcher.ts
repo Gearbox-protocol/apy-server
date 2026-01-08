@@ -449,43 +449,34 @@ export class Fetcher {
 
   private async runNetworkRewards() {
     console.log("[SYSTEM]: Updating rewards list");
-    // TODO: Consider parallelizing chain processing with Promise.allSettled
-    // Currently sequential, but chains are independent and could be processed in parallel
-    for (const network of SUPPORTED_NETWORKS) {
-      const chainId = getChain(network).id;
-      const { tokenApyList, ...rest } = await this.getNetworkRewards(
-        network as NetworkType,
-      );
+    const results = await Promise.allSettled(
+      SUPPORTED_NETWORKS.map(async network => {
+        const chainId = getChain(network).id;
+        const { tokenApyList, ...rest } = await this.getNetworkRewards(network);
 
-      const oldState = this.rewards[chainId] || {};
+        const oldState = this.rewards[chainId] || {};
 
-      // const entries = Object.entries(stateUpdate) as Array<
-      //   [keyof NetworkState, NetworkState[keyof NetworkState]]
-      // >;
-      // const newState = entries.reduce<NetworkState>(
-      //   (acc, [parameter, value]) => {
-      //     const oldValue = oldState[parameter];
+        // partially update apys
+        this.rewards[chainId] = {
+          ...oldState,
+          ...rest,
+          tokenApyList: {
+            ...(oldState.tokenApyList || {}),
+            ...tokenApyList,
+          },
+        };
+      }),
+    );
 
-      //     return {
-      //       ...acc,
-      //       [parameter]: {
-      //         ...oldValue,
-      //         ...value,
-      //       },
-      //     };
-      //   },
-      //   oldState,
-      // );
-
-      // partially update apys
-      this.rewards[chainId] = {
-        ...oldState,
-        ...rest,
-        tokenApyList: {
-          ...(oldState.tokenApyList || {}),
-          ...tokenApyList,
-        },
-      };
+    // Log any failures for debugging
+    for (const [index, result] of results.entries()) {
+      if (result.status === "rejected") {
+        const network = SUPPORTED_NETWORKS[index];
+        console.error(
+          `[SYSTEM]: Failed to fetch rewards for network ${network}:`,
+          result.reason,
+        );
+      }
     }
   }
 
@@ -539,32 +530,38 @@ export class Fetcher {
       },
     };
 
-    // Process each chain independently
-    // TODO: Consider parallelizing chain processing with Promise.allSettled
-    // Currently sequential to match loop() behavior, but chains are independent
-    for (const chainId of Object.keys(this.rewards).map(Number)) {
-      const chainIdStr = String(chainId);
-      try {
-        output.chains[chainIdStr] = {
+    // Process each chain independently in parallel
+    const chainIds = Object.keys(this.rewards).map(Number);
+    const chainResults = await Promise.allSettled(
+      chainIds.map(async chainId => {
+        const chainIdStr = String(chainId);
+        return {
+          chainId: chainIdStr,
+          chainIdNum: chainId,
           tokens: this.getTokenRewards(chainId),
           pools: this.getPoolRewards(chainId),
         };
+      }),
+    );
 
-        output.metadata.totalChains++;
+    for (const result of chainResults) {
+      output.metadata.totalChains++;
 
-        const chainSuccess =
-          output.chains[chainIdStr].tokens.status === "ok" &&
-          output.chains[chainIdStr].pools.status === "ok";
+      if (result.status === "fulfilled") {
+        const { chainId, tokens, pools } = result.value;
+        output.chains[chainId] = { tokens, pools };
+
+        const chainSuccess = tokens.status === "ok" && pools.status === "ok";
 
         if (chainSuccess) {
           output.metadata.successfulChains++;
         } else {
           output.metadata.failedChains++;
-          console.warn(`[SYSTEM]: Chain ${chainIdStr} processing had errors`);
+          console.warn(`[SYSTEM]: Chain ${chainId} processing had errors`);
         }
-      } catch (error) {
-        console.error(`[SYSTEM]: Error processing chain ${chainIdStr}:`, error);
+      } else {
         output.metadata.failedChains++;
+        console.error(`[SYSTEM]: Error processing chain:`, result.reason);
       }
     }
     console.log(
