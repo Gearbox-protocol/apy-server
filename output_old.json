@@ -3,10 +3,10 @@
     "status": "ok",
     "data": {
       "base": 0.76,
-      "crv": 0.01959891703403448,
-      "gear": 11.649788256871467,
+      "crv": 0.0196009057911184,
+      "gear": 11.60809635818481,
       "gearPrice": 0.001021869326051048,
-      "lastUpdated": "2026-01-08T14:35:48Z"
+      "lastUpdated": "2026-01-08T14:48:49Z"
     }
   },
   "chains": {
@@ -23,7 +23,7 @@
                 {
                   "protocol": "llama",
                   "value": 1.25,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -41,7 +41,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.38381,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -59,7 +59,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.50999,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -77,7 +77,7 @@
                 {
                   "protocol": "llama",
                   "value": 1.0761,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -95,7 +95,7 @@
                 {
                   "protocol": "llama",
                   "value": 5.32899,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [
@@ -124,7 +124,7 @@
                 {
                   "protocol": "llama",
                   "value": 5.32899,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [
@@ -153,7 +153,7 @@
                 {
                   "protocol": "llama",
                   "value": 8.08078,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -171,7 +171,7 @@
                 {
                   "protocol": "llama",
                   "value": 8.08078,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -189,7 +189,7 @@
                 {
                   "protocol": "llama",
                   "value": 6.22687,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -207,7 +207,7 @@
                 {
                   "protocol": "llama",
                   "value": 7.63322,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -225,7 +225,7 @@
                 {
                   "protocol": "llama",
                   "value": 7.93,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [
@@ -256,7 +256,7 @@
                 {
                   "protocol": "llama",
                   "value": 9.81,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -274,7 +274,7 @@
                 {
                   "protocol": "llama",
                   "value": 0,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -292,7 +292,7 @@
                 {
                   "protocol": "llama",
                   "value": 0.16935,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -310,7 +310,7 @@
                 {
                   "protocol": "llama",
                   "value": 0,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -328,7 +328,7 @@
                 {
                   "protocol": "llama",
                   "value": 8.44438,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -346,7 +346,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.512,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -364,7 +364,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.512,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -382,7 +382,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.512,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [
@@ -417,7 +417,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.512,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [
@@ -452,7 +452,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.512,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [
@@ -505,7 +505,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.512,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [
@@ -540,7 +540,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.512,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [
@@ -575,7 +575,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.912,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -593,7 +593,7 @@
                 {
                   "protocol": "llama",
                   "value": 3.08,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [
@@ -622,7 +622,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.66992,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -640,7 +640,7 @@
                 {
                   "protocol": "llama",
                   "value": 3.98868,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -658,7 +658,7 @@
                 {
                   "protocol": "llama",
                   "value": 4.50552,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -676,7 +676,7 @@
                 {
                   "protocol": "sky",
                   "value": 4,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -694,7 +694,7 @@
                 {
                   "protocol": "sky",
                   "value": 4.334072,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -712,7 +712,7 @@
                 {
                   "protocol": "sky",
                   "value": 4.334072,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -730,7 +730,7 @@
                 {
                   "protocol": "treehouse",
                   "value": 2.935925,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [
@@ -759,7 +759,7 @@
                 {
                   "protocol": "constant",
                   "value": 2.31,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -777,7 +777,7 @@
                 {
                   "protocol": "coinshift",
                   "value": 0,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [
@@ -806,7 +806,7 @@
                 {
                   "protocol": "renzo",
                   "value": 2.6817362395979094,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -824,7 +824,7 @@
                 {
                   "protocol": "renzo",
                   "value": 2.530625,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [
@@ -859,7 +859,7 @@
                 {
                   "protocol": "etherfi",
                   "value": 2.783432648326827,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [
@@ -888,7 +888,7 @@
                 {
                   "protocol": "mellow",
                   "value": 3.9959465775869765,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [
@@ -917,7 +917,7 @@
                 {
                   "protocol": "falcon",
                   "value": 6.056449567347428,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -935,7 +935,7 @@
                 {
                   "protocol": "resolv",
                   "value": 8.4576,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -953,7 +953,7 @@
                 {
                   "protocol": "resolv",
                   "value": 4.6564000000000005,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -971,7 +971,7 @@
                 {
                   "protocol": "merkle.xyz",
                   "value": 3.8305,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -989,7 +989,7 @@
                 {
                   "protocol": "pendle",
                   "value": 3.632910763673891,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [
@@ -1027,7 +1027,7 @@
                 {
                   "protocol": "Makina",
                   "value": 1.9695516084872133,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [
@@ -1338,19 +1338,19 @@
               "extraAPY": [
                 {
                   "token": "0x9396dcbf78fc526bb003665337c5e73b699571ef",
-                  "apy": 1.026548783156206,
+                  "apy": 1.029785336580044,
                   "rewardToken": "0xba3335588d9403515223f109edc4eb7269a9ab5d",
                   "rewardTokenSymbol": "GEAR",
                   "endTimestamp": 1768924800,
-                  "lastUpdated": "2026-01-08T14:35:51Z"
+                  "lastUpdated": "2026-01-08T14:48:52Z"
                 },
                 {
                   "token": "0x9396dcbf78fc526bb003665337c5e73b699571ef",
-                  "apy": 0.7342400721484148,
+                  "apy": 0.7365550203110575,
                   "rewardToken": "0xe72b141df173b999ae7c1adcbf60cc9833ce56a8",
                   "rewardTokenSymbol": "ETH+",
                   "endTimestamp": 1768480200,
-                  "lastUpdated": "2026-01-08T14:35:51Z"
+                  "lastUpdated": "2026-01-08T14:48:52Z"
                 }
               ]
             }
@@ -1368,7 +1368,7 @@
                   "rewardToken": "0xe72b141df173b999ae7c1adcbf60cc9833ce56a8",
                   "rewardTokenSymbol": "ETH+",
                   "endTimestamp": 1768480200,
-                  "lastUpdated": "2026-01-08T14:35:51Z"
+                  "lastUpdated": "2026-01-08T14:48:52Z"
                 }
               ]
             }
@@ -1382,11 +1382,11 @@
               "extraAPY": [
                 {
                   "token": "0xa9d17f6d3285208280a1fd9b94479c62e0aaba64",
-                  "apy": 0.2304490475414869,
+                  "apy": 0.2308544070090848,
                   "rewardToken": "0xba3335588d9403515223f109edc4eb7269a9ab5d",
                   "rewardTokenSymbol": "GEAR",
                   "endTimestamp": 1768924800,
-                  "lastUpdated": "2026-01-08T14:35:51Z"
+                  "lastUpdated": "2026-01-08T14:48:52Z"
                 }
               ]
             }
@@ -1407,7 +1407,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.38381,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -1425,7 +1425,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.512,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -1443,7 +1443,7 @@
                 {
                   "protocol": "renzo",
                   "value": 2.6817362395979094,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -1472,7 +1472,7 @@
                 {
                   "protocol": "llama",
                   "value": 0.41356,
-                  "lastUpdated": "2026-01-08T14:35:44Z"
+                  "lastUpdated": "2026-01-08T14:48:45Z"
                 }
               ],
               "points": [],
@@ -1490,7 +1490,7 @@
                 {
                   "protocol": "llama",
                   "value": 1.34994,
-                  "lastUpdated": "2026-01-08T14:35:44Z"
+                  "lastUpdated": "2026-01-08T14:48:45Z"
                 }
               ],
               "points": [
@@ -1553,7 +1553,7 @@
                 {
                   "protocol": "llama",
                   "value": 12.13478,
-                  "lastUpdated": "2026-01-08T14:35:44Z"
+                  "lastUpdated": "2026-01-08T14:48:45Z"
                 }
               ],
               "points": [],
@@ -1571,7 +1571,7 @@
                 {
                   "protocol": "llama",
                   "value": 12.86022,
-                  "lastUpdated": "2026-01-08T14:35:44Z"
+                  "lastUpdated": "2026-01-08T14:48:45Z"
                 }
               ],
               "points": [],
@@ -1589,7 +1589,7 @@
                 {
                   "protocol": "midas",
                   "value": 9.01,
-                  "lastUpdated": "2026-01-08T14:35:44Z"
+                  "lastUpdated": "2026-01-08T14:48:45Z"
                 }
               ],
               "points": [],
@@ -1606,8 +1606,8 @@
               "apy": [
                 {
                   "protocol": "merkle.xyz",
-                  "value": 5.061527098311021,
-                  "lastUpdated": "2026-01-08T14:35:44Z"
+                  "value": 5.046382233949448,
+                  "lastUpdated": "2026-01-08T14:48:45Z"
                 }
               ],
               "points": [],
@@ -1624,8 +1624,8 @@
               "apy": [
                 {
                   "protocol": "merkle.xyz",
-                  "value": 26.95898983790351,
-                  "lastUpdated": "2026-01-08T14:35:44Z"
+                  "value": 26.95906326511282,
+                  "lastUpdated": "2026-01-08T14:48:45Z"
                 }
               ],
               "points": [],
@@ -1643,7 +1643,7 @@
                 {
                   "protocol": "upshift",
                   "value": 2.1219052520584336,
-                  "lastUpdated": "2026-01-08T14:35:44Z"
+                  "lastUpdated": "2026-01-08T14:48:45Z"
                 }
               ],
               "points": [],
@@ -1661,7 +1661,7 @@
                 {
                   "protocol": "magma",
                   "value": 10.93,
-                  "lastUpdated": "2026-01-08T14:35:44Z"
+                  "lastUpdated": "2026-01-08T14:48:45Z"
                 }
               ],
               "points": [],
@@ -1684,11 +1684,11 @@
               "extraAPY": [
                 {
                   "token": "0x6b343f7b797f1488aa48c49d540690f2b2c89751",
-                  "apy": 6.755112978831029,
+                  "apy": 6.745456210675063,
                   "rewardToken": "0x3bd359c1119da7da1d913d1c4d2b7c461115433a",
                   "rewardTokenSymbol": "WMON",
                   "endTimestamp": 1768225500,
-                  "lastUpdated": "2026-01-08T14:35:51Z"
+                  "lastUpdated": "2026-01-08T14:48:52Z"
                 }
               ]
             }
@@ -1702,11 +1702,11 @@
               "extraAPY": [
                 {
                   "token": "0xc4173359087ce643235420b7bc610d9b0cf2b82d",
-                  "apy": 6.936356838926623,
+                  "apy": 6.911569791769188,
                   "rewardToken": "0x3bd359c1119da7da1d913d1c4d2b7c461115433a",
                   "rewardTokenSymbol": "WMON",
                   "endTimestamp": 1768651200,
-                  "lastUpdated": "2026-01-08T14:35:51Z"
+                  "lastUpdated": "2026-01-08T14:48:52Z"
                 }
               ]
             }
@@ -1726,8 +1726,8 @@
               "apy": [
                 {
                   "protocol": "beets",
-                  "value": 4.351779229109789,
-                  "lastUpdated": "2026-01-08T14:35:42Z"
+                  "value": 4.351770791689158,
+                  "lastUpdated": "2026-01-08T14:48:43Z"
                 }
               ],
               "points": [],
@@ -1789,7 +1789,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.512,
-                  "lastUpdated": "2026-01-08T14:35:46Z"
+                  "lastUpdated": "2026-01-08T14:48:47Z"
                 }
               ],
               "points": [],
@@ -1807,7 +1807,7 @@
                 {
                   "protocol": "mellow",
                   "value": 2.786,
-                  "lastUpdated": "2026-01-08T14:35:46Z"
+                  "lastUpdated": "2026-01-08T14:48:47Z"
                 }
               ],
               "points": [],
@@ -1907,7 +1907,7 @@
                 {
                   "protocol": "llama",
                   "value": 0,
-                  "lastUpdated": "2026-01-08T14:35:47Z"
+                  "lastUpdated": "2026-01-08T14:48:48Z"
                 }
               ],
               "points": [],
@@ -1925,7 +1925,7 @@
                 {
                   "protocol": "llama",
                   "value": 4.69011,
-                  "lastUpdated": "2026-01-08T14:35:47Z"
+                  "lastUpdated": "2026-01-08T14:48:48Z"
                 }
               ],
               "points": [],
@@ -1942,8 +1942,8 @@
               "apy": [
                 {
                   "protocol": "merkle.xyz",
-                  "value": 9.349629458974718,
-                  "lastUpdated": "2026-01-08T14:35:47Z"
+                  "value": 9.37034001841298,
+                  "lastUpdated": "2026-01-08T14:48:48Z"
                 }
               ],
               "points": [],
@@ -1960,8 +1960,8 @@
               "apy": [
                 {
                   "protocol": "merkle.xyz",
-                  "value": 6.328012642844585,
-                  "lastUpdated": "2026-01-08T14:35:47Z"
+                  "value": 6.338955121842118,
+                  "lastUpdated": "2026-01-08T14:48:48Z"
                 }
               ],
               "points": [],
@@ -1979,7 +1979,7 @@
                 {
                   "protocol": "pendle",
                   "value": 3.632910763673891,
-                  "lastUpdated": "2026-01-08T14:35:47Z"
+                  "lastUpdated": "2026-01-08T14:48:48Z"
                 }
               ],
               "points": [],
@@ -1997,7 +1997,7 @@
                 {
                   "protocol": "pendle",
                   "value": 10.839282156585895,
-                  "lastUpdated": "2026-01-08T14:35:47Z"
+                  "lastUpdated": "2026-01-08T14:48:48Z"
                 }
               ],
               "points": [],
@@ -2014,8 +2014,8 @@
               "apy": [
                 {
                   "protocol": "pendle",
-                  "value": 5.837926010156336,
-                  "lastUpdated": "2026-01-08T14:35:47Z"
+                  "value": 5.837925956961598,
+                  "lastUpdated": "2026-01-08T14:48:48Z"
                 }
               ],
               "points": [],
@@ -2032,8 +2032,8 @@
               "apy": [
                 {
                   "protocol": "pendle",
-                  "value": 6.800465050895554,
-                  "lastUpdated": "2026-01-08T14:35:47Z"
+                  "value": 6.800464988651322,
+                  "lastUpdated": "2026-01-08T14:48:48Z"
                 }
               ],
               "points": [],
@@ -2050,8 +2050,8 @@
               "apy": [
                 {
                   "protocol": "pendle",
-                  "value": 8.627081377016289,
-                  "lastUpdated": "2026-01-08T14:35:47Z"
+                  "value": 8.627081369196276,
+                  "lastUpdated": "2026-01-08T14:48:48Z"
                 }
               ],
               "points": [],
@@ -2068,8 +2068,8 @@
               "apy": [
                 {
                   "protocol": "pendle",
-                  "value": 8.645495687089033,
-                  "lastUpdated": "2026-01-08T14:35:47Z"
+                  "value": 8.645495686412286,
+                  "lastUpdated": "2026-01-08T14:48:48Z"
                 }
               ],
               "points": [],
@@ -2086,8 +2086,8 @@
               "apy": [
                 {
                   "protocol": "pendle",
-                  "value": 12.544929447892429,
-                  "lastUpdated": "2026-01-08T14:35:47Z"
+                  "value": 12.512058130303739,
+                  "lastUpdated": "2026-01-08T14:48:48Z"
                 }
               ],
               "points": [],
@@ -2104,8 +2104,8 @@
               "apy": [
                 {
                   "protocol": "pendle",
-                  "value": 7.713055646263291,
-                  "lastUpdated": "2026-01-08T14:35:47Z"
+                  "value": 7.711381498391084,
+                  "lastUpdated": "2026-01-08T14:48:48Z"
                 }
               ],
               "points": [],
@@ -2123,7 +2123,7 @@
                 {
                   "protocol": "avantprotocol",
                   "value": 16.97,
-                  "lastUpdated": "2026-01-08T14:35:47Z"
+                  "lastUpdated": "2026-01-08T14:48:48Z"
                 }
               ],
               "points": [],
@@ -2141,7 +2141,7 @@
                 {
                   "protocol": "yuzu",
                   "value": 0,
-                  "lastUpdated": "2026-01-08T14:35:47Z"
+                  "lastUpdated": "2026-01-08T14:48:48Z"
                 }
               ],
               "points": [],
@@ -2170,7 +2170,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.38381,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -2188,7 +2188,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.912,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -2206,7 +2206,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.512,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -2224,7 +2224,7 @@
                 {
                   "protocol": "llama",
                   "value": 2.512,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -2242,7 +2242,7 @@
                 {
                   "protocol": "llama",
                   "value": 3.08,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [
@@ -2271,7 +2271,7 @@
                 {
                   "protocol": "renzo",
                   "value": 2.6817362395979094,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -2289,7 +2289,7 @@
                 {
                   "protocol": "etherfi",
                   "value": 2.783432648326827,
-                  "lastUpdated": "2026-01-08T14:35:41Z"
+                  "lastUpdated": "2026-01-08T14:48:42Z"
                 }
               ],
               "points": [],
@@ -2341,7 +2341,7 @@
                 {
                   "protocol": "midas",
                   "value": 8.91,
-                  "lastUpdated": "2026-01-08T14:35:45Z"
+                  "lastUpdated": "2026-01-08T14:48:46Z"
                 }
               ],
               "points": [],
@@ -2359,7 +2359,7 @@
                 {
                   "protocol": "midas",
                   "value": 3.81,
-                  "lastUpdated": "2026-01-08T14:35:45Z"
+                  "lastUpdated": "2026-01-08T14:48:46Z"
                 }
               ],
               "points": [],
@@ -2377,7 +2377,7 @@
                 {
                   "protocol": "midas",
                   "value": 1.05,
-                  "lastUpdated": "2026-01-08T14:35:45Z"
+                  "lastUpdated": "2026-01-08T14:48:46Z"
                 }
               ],
               "points": [],
@@ -2395,7 +2395,7 @@
                 {
                   "protocol": "merkle.xyz",
                   "value": 1.905,
-                  "lastUpdated": "2026-01-08T14:35:45Z"
+                  "lastUpdated": "2026-01-08T14:48:46Z"
                 }
               ],
               "points": [],
@@ -2413,7 +2413,7 @@
                 {
                   "protocol": "merkle.xyz",
                   "value": 4.455,
-                  "lastUpdated": "2026-01-08T14:35:45Z"
+                  "lastUpdated": "2026-01-08T14:48:46Z"
                 }
               ],
               "points": [],
@@ -2431,7 +2431,7 @@
                 {
                   "protocol": "merkle.xyz",
                   "value": 0.525,
-                  "lastUpdated": "2026-01-08T14:35:45Z"
+                  "lastUpdated": "2026-01-08T14:48:46Z"
                 }
               ],
               "points": [],
@@ -2478,7 +2478,7 @@
       }
     }
   },
-  "timestamp": "2026-01-08T14:35:51Z",
+  "timestamp": "2026-01-08T14:48:52Z",
   "metadata": {
     "totalChains": 16,
     "successfulChains": 16,

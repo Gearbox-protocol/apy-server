@@ -1,3 +1,8 @@
+import {
+  getChain,
+  type NetworkType,
+  SUPPORTED_NETWORKS,
+} from "@gearbox-protocol/sdk";
 import moment from "moment";
 import type { Address } from "viem";
 import type { PoolExternalAPYResult, PoolPointsResult } from "../../pools";
@@ -38,8 +43,6 @@ import type { TokenExtraCollateralPointsResult } from "../../tokens/tokenExtraCo
 import { getTokenExtraCollateralPoints } from "../../tokens/tokenExtraCollateralPoints";
 import type { TokenExtraRewardsResult } from "../../tokens/tokenExtraRewards";
 import { getTokenExtraRewards } from "../../tokens/tokenExtraRewards";
-import type { NetworkType } from "../chains";
-import { getChainId, supportedChains } from "../chains";
 import { TIMEOUT } from "../config";
 import type { Output } from "../output";
 import { withTimeout } from "../utils";
@@ -448,8 +451,8 @@ export class Fetcher {
     console.log("[SYSTEM]: Updating rewards list");
     // TODO: Consider parallelizing chain processing with Promise.allSettled
     // Currently sequential, but chains are independent and could be processed in parallel
-    for (const network of Object.values(supportedChains)) {
-      const chainId = getChainId(network);
+    for (const network of SUPPORTED_NETWORKS) {
+      const chainId = getChain(network).id;
       const { tokenApyList, ...rest } = await this.getNetworkRewards(
         network as NetworkType,
       );

@@ -1,6 +1,5 @@
+import type { NetworkType } from "@gearbox-protocol/sdk";
 import type { Address } from "viem";
-
-import type { NetworkType } from "../../core/chains";
 import type { PartialRecord } from "../../core/utils";
 import type { Apy } from "../apy";
 

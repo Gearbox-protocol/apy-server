@@ -1,3 +1,4 @@
+import { getNetworkType, type NetworkType } from "@gearbox-protocol/sdk";
 import type { PoolExternalAPYResult, PoolPointsResult } from "../../pools";
 import type { PoolExtraAPYResultByChain } from "../../pools/extraAPY/constants";
 import type { APYHandler, APYResult, GearAPY } from "../../tokens/apy";
@@ -5,8 +6,6 @@ import type { PointsResult } from "../../tokens/points";
 import type { TokenExtraCollateralAPYResult } from "../../tokens/tokenExtraCollateralAPY";
 import type { TokenExtraCollateralPointsResult } from "../../tokens/tokenExtraCollateralPoints";
 import type { TokenExtraRewardsResult } from "../../tokens/tokenExtraRewards";
-import type { NetworkType } from "../chains";
-import { getNetworkType } from "../chains";
 import { captureException } from "../sentry";
 
 interface LogRewardsProps {
@@ -252,7 +251,7 @@ export function logPoolExtraAPY({ poolExtraAPY }: LogPoolExtraAPYProps) {
 
   if (poolExtraAPY.status === "fulfilled") {
     Object.entries(poolExtraAPY.value).forEach(([chainId, chainAPY]) => {
-      const network = getNetworkType(chainId) || chainId;
+      const network = getNetworkType(Number(chainId)) || chainId;
 
       console.log(`\n`);
       console.log(`[${network}] FETCHED POOL EXTRA APY RESULTS`);

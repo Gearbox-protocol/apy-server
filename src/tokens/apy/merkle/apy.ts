@@ -1,9 +1,8 @@
+import type { NetworkType } from "@gearbox-protocol/sdk";
+import { getChain } from "@gearbox-protocol/sdk";
 import type { CacheAxiosResponse } from "axios-cache-interceptor";
 import type { Address } from "viem";
-
 import { cachedAxios } from "../../../core/axios";
-import type { NetworkType } from "../../../core/chains";
-import { getChainId } from "../../../core/chains";
 import type { MerkleXYZV4CampaignsResponse } from "../../../core/merkle/merklAPI";
 import { MerkleXYZApi } from "../../../core/merkle/merklAPI";
 import type { PartialRecord } from "../../../core/utils";
@@ -31,7 +30,7 @@ const getAPYMerkle: APYHandler = async network => {
     ),
   ]);
 
-  const currentChainId = getChainId(network);
+  const currentChainId = getChain(network).id;
 
   const allAPY = tokenEntries.reduce<APYResult>((acc, [addr, p], index) => {
     const address = addr as Address;
