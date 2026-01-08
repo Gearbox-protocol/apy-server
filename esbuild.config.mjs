@@ -27,6 +27,9 @@ build({
             authToken: SENTRY_AUTH_TOKEN,
             org: SENTRY_ORG,
             project: SENTRY_PROJECT || "apy-server",
+            release: {
+              name: process.env.PACKAGE_VERSION ?? "0.0.0",
+            },
           }),
         ]
       : undefined,
