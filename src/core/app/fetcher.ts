@@ -43,7 +43,7 @@ import type { TokenExtraCollateralPointsResult } from "../../tokens/tokenExtraCo
 import { getTokenExtraCollateralPoints } from "../../tokens/tokenExtraCollateralPoints";
 import type { TokenExtraRewardsResult } from "../../tokens/tokenExtraRewards";
 import { getTokenExtraRewards } from "../../tokens/tokenExtraRewards";
-import { TIMEOUT } from "../config";
+import { PACKAGE_VERSION, TIMEOUT } from "../config";
 import type { Output } from "../output";
 import { withTimeout } from "../utils";
 import { logGear, logPoolExtraAPY, logRewards } from "./logging";
@@ -517,7 +517,7 @@ export class Fetcher {
   }
 
   async #run(): Promise<Output> {
-    console.log("[SYSTEM]: Starting one-shot mode");
+    console.log(`[SYSTEM]: Starting app v${PACKAGE_VERSION}`);
 
     await this.runNetworkRewards();
     await this.runGear();

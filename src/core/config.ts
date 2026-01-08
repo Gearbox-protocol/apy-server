@@ -9,6 +9,10 @@ export const SENTRY_DSN = process.env.SENTRY_DSN;
 
 export const S3_BUCKET = process.env.S3_BUCKET;
 export const AXIOS_CACHE_TTL = 5 * 60 * 1000;
+/**
+ * Set during docker image build
+ */
+export const PACKAGE_VERSION = process.env.PACKAGE_VERSION || "0.0.0";
 
 /**
  * Cache TTL in seconds
