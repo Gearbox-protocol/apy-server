@@ -3,6 +3,10 @@ export const IS_DEV = process.env.NODE_ENV !== "production";
 export const LIDO_AUTH_TOKEN = process.env.LIDO_AUTH_TOKEN;
 export const RESOLV_AUTH_TOKEN = process.env.RESOLV_AUTH_TOKEN;
 
+/**
+ * Filename to save output to
+ * If S3_BUCKET is set, it is treated as a key in the bucket.
+ */
 export const OUTPUT_JSON = process.env.OUTPUT_JSON || "output.json";
 
 export const SENTRY_DSN = process.env.SENTRY_DSN;
