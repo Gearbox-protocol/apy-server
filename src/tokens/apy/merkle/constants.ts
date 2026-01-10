@@ -35,21 +35,6 @@ export const TOKENS: PartialRecord<
   NetworkType,
   Record<Address, CommonPayload | CompositePayload> // symbol to pool
 > = {
-  Mainnet: {
-    "0xe72b141df173b999ae7c1adcbf60cc9833ce56a8": {
-      id: "0x9ebe8c8e7a8d00b6085302e78cdba319932898c7",
-      symbol: "ETHPlus",
-      type: "composite",
-      tokens: [
-        {
-          handler: { getter: getAPYYieldsreserve, type: "yieldsreserve" },
-          token:
-            TOKENS_YIELDRESERVE.Mainnet?.["ETH+"]?.address || ("" as Address),
-          fraction: 1,
-        },
-      ],
-    },
-  },
   Etherlink: {
     "0x942644106B073E30D72c2C5D7529D5C296ea91ab": {
       id: "0x942644106B073E30D72c2C5D7529D5C296ea91ab",
