@@ -22,12 +22,12 @@ export const EXTRA_APY: PartialRecord<
   Array<ExtraCollateralAPY>
 > = {
   Mainnet: [
-    // {
-    //   pool: "0xff94993fa7ea27efc943645f95adb36c1b81244b", // WSTETH_POOL
-    //   address: "0x7a4EffD87C2f3C55CA251080b1343b605f327E3a", // RSTETH
-    //   symbol: "rstETH",
-    //   value: 0.34,
-    //   type: "relative",
-    // },
+    {
+      pool: "0x9396dcbf78fc526bb003665337c5e73b699571ef", // kpk WETH
+      address: "0xE72B141DF173b999AE7c1aDcbF60Cc9833Ce56a8", // ETH+
+      symbol: "ETH+",
+      value: 1.25,
+      type: "relative",
+    },
   ],
 };
