@@ -32,6 +32,7 @@ import {
   getAPYTreehouse,
   getAPYUpshift,
   getAPYYearn,
+  getAPYYieldsreserve,
   getAPYYuzu,
   getGearAPY,
 } from "../../tokens/apy";
@@ -325,6 +326,7 @@ export class Fetcher {
       getAPYUpshift,
       getAPYMagma,
       getAPYMakina,
+      getAPYYieldsreserve,
     ];
     const [
       points,
