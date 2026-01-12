@@ -26,9 +26,11 @@ export interface CompositePayload {
   tokens: Array<CompositePart>;
 }
 
+export type MerklePayload = CommonPayload | CompositePayload;
+
 export const TOKENS: PartialRecord<
   NetworkType,
-  Record<Address, CommonPayload | CompositePayload> // symbol to pool
+  Record<Address, MerklePayload> // symbol to pool
 > = {
   Mainnet: {},
   Etherlink: {
