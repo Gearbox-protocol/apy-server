@@ -16,7 +16,7 @@ import { PROTOCOL, TOKENS } from "./constants";
 
 const getAPYMerkle: APYHandler = async network => {
   const tokenEntries = Object.entries(TOKENS[network] || {}).map(
-    ([k, v]) => [k.toLowerCase(), v] as const,
+    ([k, v]) => [k.toLowerCase() as Address, v] as const,
   );
   if (tokenEntries.length === 0) return {};
 
@@ -33,7 +33,7 @@ const getAPYMerkle: APYHandler = async network => {
   const currentChainId = getChain(network).id;
 
   const allAPY = tokenEntries.reduce<APYResult>((acc, [addr, p], index) => {
-    const address = addr as Address;
+    const address = addr;
     const tokenCampaignsRes = res[index];
 
     const merkleAPY = getCampaignAPY(currentChainId, p, tokenCampaignsRes);
