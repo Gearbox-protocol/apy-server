@@ -1,20 +1,10 @@
 import { json_stringify } from "../utils";
 import type { GeneralErrorCodes } from "./general";
-import { generalErrorHttpCode } from "./general";
-import type { ValidationErrorCodes } from "./validation";
-import { validationErrorHttpCodes } from "./validation";
 
-type AppErrorCodes = GeneralErrorCodes | ValidationErrorCodes;
+type AppErrorCodes = GeneralErrorCodes;
 
 const errorStrings: Record<AppErrorCodes, string> = {
-  NOT_FOUND: "Not found",
   UNKNOWN_ERROR: "Internal server error",
-  WRONG_FORMAT: "Wrong request format",
-};
-
-const appErrorHttpCodes = {
-  ...generalErrorHttpCode,
-  ...validationErrorHttpCodes,
 };
 
 interface AppErrorProps {
@@ -28,7 +18,6 @@ export class AppError extends Error {
   type = AppError.type;
 
   code: AppErrorCodes;
-  httpCode: number;
   message: string;
   originalError?: TypedError;
 
@@ -36,20 +25,19 @@ export class AppError extends Error {
     super();
 
     this.code = code;
-    this.httpCode = appErrorHttpCodes[code];
     this.message = message ?? errorStrings[code];
     this.originalError = originalError;
   }
 
   static isAppError(e: unknown): e is AppError {
     const correctField =
-      !!e && typeof e === "object" && "type" in e && e?.type === this.type;
+      !!e && typeof e === "object" && "type" in e && e?.type === AppError.type;
 
     return correctField || e instanceof AppError;
   }
 
   static getAppError(e: any): AppError {
-    const wrappedError = this.getTypedError(e);
+    const wrappedError = AppError.getTypedError(e);
     if (AppError.isAppError(wrappedError)) return wrappedError;
     return new AppError({ code: "UNKNOWN_ERROR", originalError: wrappedError });
   }

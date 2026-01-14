@@ -1,7 +1,6 @@
+import type { NetworkType } from "@gearbox-protocol/sdk";
 import type { Address } from "viem";
-
-import { cachedAxios } from "../../../core/app";
-import type { NetworkType } from "../../../core/chains";
+import { cachedAxios } from "../../../core/axios";
 import type { PartialRecord } from "../../../core/utils";
 import type { APYHandler, APYResult } from "../constants";
 import { GEAR_POOL, PROTOCOL, TOKENS } from "./constants";
@@ -273,4 +272,4 @@ async function getGearAPY(): Promise<GearAPY> {
   return gearAPY;
 }
 
-export { GearAPY, getAPYCurve, getGearAPY };
+export { type GearAPY, getAPYCurve, getGearAPY };

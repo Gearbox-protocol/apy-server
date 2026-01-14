@@ -1,4 +1,3 @@
-import type { Request, RequestHandler, Response } from "express";
 import type { Address } from "viem";
 
 import type { ExternalApy } from "../../pools";
@@ -8,24 +7,7 @@ import type { PointsInfo } from "../../tokens/points";
 import type { ExtraCollateralAPY } from "../../tokens/tokenExtraCollateralAPY";
 import type { ExtraCollateralPointsInfo } from "../../tokens/tokenExtraCollateralPoints";
 import type { FarmInfo } from "../../tokens/tokenExtraRewards";
-import type { App } from "../app";
-import type { ApyDetails, GearAPYDetails } from "../app/fetcher";
-import { AppError } from "../errors";
-import { captureException } from "../sentry";
-import { json_stringify } from "../utils";
-
-export type Handler = (app: App) => RequestHandler;
-
-export interface ResponseData {
-  status: "error" | "ok";
-  description?: string;
-  data?:
-    | Array<TokenOutputDetails>
-    | TokenOutputDetails
-    | Array<PoolOutputDetails>
-    | PoolOutputDetails
-    | GearAPYDetails;
-}
+import type { ApyDetails } from "./fetcher";
 
 export interface TokenOutputDetails {
   chainId: number;
@@ -64,34 +46,3 @@ export function removePool<T extends { pool: Address }>(
 ): Array<Omit<T, "pool">> {
   return l.map(({ pool, ...rest }) => rest);
 }
-
-interface RespondWithErrorProps {
-  app: App;
-  req: Request;
-  res: Response;
-
-  error: AppError;
-  file: string;
-  reportSentry?: boolean;
-}
-
-export const respondWithError = ({
-  res,
-  req,
-
-  error: e,
-  file,
-  reportSentry = true,
-}: RespondWithErrorProps) => {
-  res.status(e.httpCode);
-  res.set({ "Content-Type": "application/json" });
-  res.send({ message: e.message, code: e.code });
-
-  if (reportSentry) captureException({ file, req, error: e });
-  console.error(`[SYSTEM] (CHECK RESPONSE): ${AppError.serializeError(e)}`);
-};
-
-export const respondWithJson = (_: App, res: Response, data: ResponseData) => {
-  res.set({ "Content-Type": "application/json" });
-  res.send(json_stringify(data));
-};

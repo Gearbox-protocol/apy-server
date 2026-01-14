@@ -2,7 +2,7 @@ import type { AxiosResponse } from "axios";
 import moment from "moment";
 import type { Address } from "viem";
 
-import { cachedAxios } from "../../core/app";
+import { cachedAxios } from "../../core/axios";
 import type {
   MerkleXYZV4CampaignsResponse,
   MerkleXYZV4RewardCampaignResponse,
@@ -11,9 +11,9 @@ import type {
 } from "../../core/merkle/merklAPI";
 import { MerkleXYZApi } from "../../core/merkle/merklAPI";
 import type {
-  PoolExtraApy,
   PoolExtraAPYHandler,
   PoolExtraAPYResultByChain,
+  PoolExtraApy,
 } from "./constants";
 import { BROKEN_CAMPAIGNS } from "./constants";
 
@@ -33,16 +33,14 @@ export const getPoolExtraAPY: PoolExtraAPYHandler = async () => {
 
   // we can't definitely connect an apr from aprRecord.breakdowns to a token if there are multiple rewards
   // so we need to get all aprIds for campaigns with multiple rewards and then get the campaign by aprId
-  const aprIdsList = currentActiveCampaigns
-    .map(c =>
-      getBreakdowns(c).map(b => {
-        return {
-          campaignId: c.id,
-          aprId: b.identifier,
-        };
-      }),
-    )
-    .flat(1);
+  const aprIdsList = currentActiveCampaigns.flatMap(c =>
+    getBreakdowns(c).map(b => {
+      return {
+        campaignId: c.id,
+        aprId: b.identifier,
+      };
+    }),
+  );
 
   const aprIdsResponse: Array<
     PromiseSettledResult<AxiosResponse<MerkleXYZV4RewardCampaignResponse, any>>

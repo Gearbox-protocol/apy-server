@@ -1,6 +1,5 @@
-import { cachedAxios } from "../../../core/app";
-import { getChainId } from "../../../core/chains";
-import { json_stringify } from "../../../core/utils";
+import { getChain } from "@gearbox-protocol/sdk";
+import { cachedAxios } from "../../../core/axios";
 import type { APYHandler, APYResult } from "../constants";
 import type { Response } from "./constants";
 import { PROTOCOL, TOKENS } from "./constants";
@@ -14,7 +13,7 @@ const getAPYYieldsreserve: APYHandler = async network => {
   );
   if (tokenEntries.length === 0) return {};
 
-  const currentChainId = getChainId(network);
+  const currentChainId = getChain(network).id;
 
   const { data } = await cachedAxios.get<Response>(getUrl());
 

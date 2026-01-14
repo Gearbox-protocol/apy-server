@@ -1,9 +1,8 @@
+import type { NetworkType } from "@gearbox-protocol/sdk";
+import { getChain } from "@gearbox-protocol/sdk";
 import type { CacheAxiosResponse } from "axios-cache-interceptor";
 import type { Address } from "viem";
-
-import { cachedAxios } from "../../../core/app";
-import type { NetworkType } from "../../../core/chains";
-import { getChainId } from "../../../core/chains";
+import { cachedAxios } from "../../../core/axios";
 import type { MerkleXYZV4CampaignsResponse } from "../../../core/merkle/merklAPI";
 import { MerkleXYZApi } from "../../../core/merkle/merklAPI";
 import type { PartialRecord } from "../../../core/utils";
@@ -12,13 +11,22 @@ import type {
   CommonPayload,
   CompositePart,
   CompositePayload,
+  MerklePayload,
 } from "./constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
 const getAPYMerkle: APYHandler = async network => {
   const tokenEntries = Object.entries(TOKENS[network] || {}).map(
-    ([k, v]) => [k.toLowerCase(), v] as const,
+    ([k, v]): [Address, MerklePayload] => [k.toLowerCase() as Address, v],
   );
+
+  return getAPYMerkle_withFilter(network, tokenEntries);
+};
+
+const getAPYMerkle_withFilter = async (
+  network: NetworkType,
+  tokenEntries: Array<[Address, MerklePayload]>,
+) => {
   if (tokenEntries.length === 0) return {};
 
   // get all campaigns
@@ -31,10 +39,10 @@ const getAPYMerkle: APYHandler = async network => {
     ),
   ]);
 
-  const currentChainId = getChainId(network);
+  const currentChainId = getChain(network).id;
 
   const allAPY = tokenEntries.reduce<APYResult>((acc, [addr, p], index) => {
-    const address = addr as Address;
+    const address = addr;
     const tokenCampaignsRes = res[index];
 
     const merkleAPY = getCampaignAPY(currentChainId, p, tokenCampaignsRes);
@@ -68,7 +76,7 @@ function getCampaignAPY(
   currentChainId: number,
   p: CommonPayload | CompositePayload,
   tokenCampaignsRes: PromiseSettledResult<
-    CacheAxiosResponse<MerkleXYZV4CampaignsResponse, any>
+    CacheAxiosResponse<MerkleXYZV4CampaignsResponse, unknown>
   >,
 ) {
   if (tokenCampaignsRes && tokenCampaignsRes.status === "fulfilled") {
@@ -112,7 +120,7 @@ type GettersList = PartialRecord<HandlerTypes, [HandlerTypes, APYHandler]>;
 
 async function getAdditionalAPYs(
   network: NetworkType,
-  tokenEntries: (readonly [string, CommonPayload | CompositePayload])[],
+  tokenEntries: (readonly [Address, CommonPayload | CompositePayload])[],
 ) {
   const uniqueGetters = tokenEntries.reduce<GettersList>((acc, [_, v]) => {
     if (v.type === "composite") {
@@ -145,4 +153,4 @@ async function getAdditionalAPYs(
   return additionalAPYs;
 }
 
-export { getAPYMerkle };
+export { getAPYMerkle, getAPYMerkle_withFilter };

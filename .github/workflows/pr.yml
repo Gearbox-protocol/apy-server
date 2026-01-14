@@ -31,5 +31,4 @@ jobs:
         run: |
           yarn install --immutable
           yarn typecheck:ci
-          yarn lint:ci
-          yarn prettier:ci
+          yarn check:ci

@@ -1,5 +1,5 @@
-import { cachedAxios } from "../../../core/app";
-import { RESOLV_AUTH_TOKEN } from "../../../core/utils";
+import { cachedAxios } from "../../../core/axios";
+import { RESOLV_AUTH_TOKEN } from "../../../core/config";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
@@ -14,10 +14,7 @@ const getStakingUrl = () =>
 
 const REQUEST_CONFIG = {
   withCredentials: true,
-  headers: {
-    Accept: "application/json",
-    apikey: RESOLV_AUTH_TOKEN,
-  },
+  headers: { Accept: "application/json", apikey: RESOLV_AUTH_TOKEN },
 } as const;
 
 const getAPYResolv: APYHandler = async network => {

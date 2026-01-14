@@ -1,3 +1,5 @@
+import { setTimeout } from "node:timers/promises";
+
 export const json_stringify = (
   o: any,
   space?: number,
@@ -27,11 +29,16 @@ export const json_stringify = (
   return r;
 };
 
-export const IS_DEV = process.env.NODE_ENV !== "production";
+export type PartialRecord<K extends keyof any, T> = { [P in K]?: T };
 
-export const LIDO_AUTH_TOKEN = process.env.LIDO_AUTH_TOKEN;
-export const RESOLV_AUTH_TOKEN = process.env.RESOLV_AUTH_TOKEN;
+export async function timeout(ms: number): Promise<never> {
+  await setTimeout(ms);
+  throw new Error("The operation was timed out");
+}
 
-export type PartialRecord<K extends keyof any, T> = {
-  [P in K]?: T;
-};
+export async function withTimeout<T>(
+  run: () => Promise<T>,
+  ms: number,
+): Promise<T> {
+  return Promise.race([run(), timeout(ms)]);
+}

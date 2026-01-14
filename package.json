@@ -1,53 +1,47 @@
 {
-  "name": "apy-server",
-  "version": "1.0.1",
-  "description": "Gearbox SDK",
+  "name": "@gearbox-protocol/apy-server",
+  "version": "0.0.0",
+  "description": "Gearbox APY server",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "build": "node esbuild.config.mjs",
-    "docker": "npx ts-node ./build.mjs",
-    "dev": "npx ts-node main.ts",
+    "start": "touch .env && tsx --env-file .env src/index.ts",
     "prepare": "husky",
-    "prettier": "prettier --write .",
-    "prettier:ci": "npx prettier --check .",
-    "lint": "eslint \"**/*.ts\" --fix",
-    "lint:ci": "eslint \"**/*.ts\"",
+    "check": "biome check --write",
+    "check:ci": "biome check",
     "typecheck:ci": "tsc --noEmit"
   },
   "dependencies": {
-    "@sentry/esbuild-plugin": "^3.2.3",
-    "@sentry/node": "^9.10.0",
-    "axios": "^1.7.9",
-    "axios-cache-interceptor": "^1",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
-    "express": "^4.21.2",
+    "@aws-sdk/client-s3": "^3.968.0",
+    "@gearbox-protocol/sdk": "^12.3.16",
+    "@sentry/esbuild-plugin": "^4.6.1",
+    "@sentry/node": "^10.33.0",
+    "axios": "^1.13.2",
+    "axios-cache-interceptor": "^1.11.3",
     "moment": "^2.30.1",
-    "viem": "^2.4.0"
+    "viem": "^2.44.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.6.1",
-    "@commitlint/config-conventional": "^19.6.0",
-    "@gearbox-protocol/eslint-config": "^2.0.0-next.2",
-    "@gearbox-protocol/prettier-config": "^2.0.0",
-    "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.0",
-    "esbuild": "^0.25.0",
-    "esbuild-plugin-tsc": "^0.4.0",
-    "eslint": "^8.57.1",
+    "@biomejs/biome": "^2.3.11",
+    "@commitlint/cli": "^20.3.1",
+    "@commitlint/config-conventional": "^20.3.1",
+    "@gearbox-protocol/biome-config": "^1.0.17",
+    "esbuild": "^0.27.2",
     "husky": "^9.1.7",
-    "lint-staged": "^15.2.11",
-    "prettier": "^3.4.2",
-    "typescript": "^5.7.2"
+    "lint-staged": "^16.2.7",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   },
-  "prettier": "@gearbox-protocol/prettier-config",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
   "lint-staged": {
-    "*.ts": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,md}": "prettier --write"
+    "*.{ts,tsx,mts,mjs,json}": [
+      "biome check --no-errors-on-unmatched --write"
+    ]
   },
   "packageManager": "yarn@4.9.2"
 }

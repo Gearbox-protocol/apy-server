@@ -2,18 +2,25 @@
 
 for fetching the apy of different asset on diferrent protocols. For protocols Like for curve, lido, sky, pendle, defillama etc.
 
-### Running locally
+## Developing
+
+Run `yarn start` to launch app. It will save output to `output.json` file by default. See [config](./src/core/config.ts) for env variables.
+
+## Running as docker
 
 ```
-yarn
-npx ts-node main.ts
+docker run --rm \
+  -e OUTPUT_JSON=/output/output.json \
+  -v "$(pwd)/tmp:/output" \
+  ghcr.io/gearbox-protocol/apy-server
 ```
 
-### Running via github actions on fly.io
+### History
 
-- https://fly.io/docs/launch/continuous-deployment-with-github-actions/
+Historically, this was a backend API deployed on fly.io and providing several endpoints:
 
-### Deploying changes via github actions
+- `/api/rewards/gear-apy`
+- `/api/rewards/pools/all`
+- `/api/rewards/tokens/all`
 
-- Create a PR to the main branch.
-- On merger the changes will be applied to apy-server.fly.dev
+Currently, this mode is still supported, but we're transitioning to one-shot mode, that runs on schedule, and dumps all results into file that is served via CDN later

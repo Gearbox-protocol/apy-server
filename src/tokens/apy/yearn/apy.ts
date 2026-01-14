@@ -1,7 +1,6 @@
+import { getChain } from "@gearbox-protocol/sdk";
 import type { Address } from "viem";
-
-import { cachedAxios } from "../../../core/app";
-import { getChainId } from "../../../core/chains";
+import { cachedAxios } from "../../../core/axios";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
@@ -21,7 +20,7 @@ const getUrl = (chainId: number) =>
   `https://ydaemon.yearn.fi/vaults/all?chainids=${chainId}&limit=2500`;
 
 const getAPYYearn: APYHandler = async network => {
-  const chainId = getChainId(network);
+  const chainId = getChain(network).id;
   const tokenEntries = Object.entries(TOKENS[network] || {}).map(
     ([k, v]) => [k.toLowerCase(), v] as const,
   );

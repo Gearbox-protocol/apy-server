@@ -1,18 +1,15 @@
 {
   "branches": [
-    {
-      "name": "main"
-    }
+    { "name": "main" },
+    { "name": "next", "channel": "next", "prerelease": "next" },
+    { "name": "+([0-9])?(.{+([0-9]),x}).x" }
   ],
   "plugins": [
     "@semantic-release/commit-analyzer",
     "@semantic-release/release-notes-generator",
     [
       "@semantic-release/github",
-      {
-        "successComment": false,
-        "failTitle": false
-      }
+      { "successComment": false, "failTitle": false }
     ],
     [
       "@codedependant/semantic-release-docker",
@@ -21,9 +18,8 @@
           "{{#if prerelease.[0]}}{{prerelease.[0]}}{{else}}latest{{/if}}",
           "{{version}}"
         ],
-        "dockerArgs": {
-          "PACKAGE_VERSION": "{{version}}"
-        },
+        "dockerArgs": { "PACKAGE_VERSION": "{{version}}" },
+        "dockerPlatform": ["linux/amd64", "linux/arm64"],
         "dockerImage": "apy-server",
         "dockerRegistry": "ghcr.io",
         "dockerProject": "gearbox-protocol",
