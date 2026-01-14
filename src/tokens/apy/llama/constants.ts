@@ -129,6 +129,10 @@ export const TOKENS: PartialRecord<
       id: "b14fdc9c-e122-41c4-a99f-20e1390f2ef3",
       symbol: "PT-DETH-29JAN2026",
     },
+    "0x31454faa1daa04cacf59a6bd37681da9160d092a": {
+      id: "4373bbc2-156d-4939-bde0-f8281bb28bee",
+      symbol: "wmooBalancerEthereumrETH-WETH",
+    },
   },
   Optimism: {
     "0x9Bcef72be871e61ED4fBbc7630889beE758eb81D": {
