@@ -133,6 +133,10 @@ export const TOKENS: PartialRecord<
       id: "4373bbc2-156d-4939-bde0-f8281bb28bee",
       symbol: "wmooBalancerEthereumrETH-WETH",
     },
+    "0x1a711a5bc48b5c1352c1882fa65dc14b5b9e829d": {
+      id: "092e04ef-812a-41fd-9d28-b45c13b7d893",
+      symbol: "wmooBalancerEthereumosETH-WETH",
+    },
   },
   Optimism: {
     "0x9Bcef72be871e61ED4fBbc7630889beE758eb81D": {
