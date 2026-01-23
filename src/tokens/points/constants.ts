@@ -30,7 +30,6 @@ export type PointsType =
   | "rings"
   | "sonic"
   | "shift"
-  | "omni"
   | "sPoint"
   | "upshift"
   | "mezo"
@@ -187,13 +186,6 @@ export const REWARDS_BASE_INFO = {
     units: "points",
     multiplier,
     type: "shift",
-  }),
-
-  omni: (multiplier: PointsReward["multiplier"]): PointsReward => ({
-    name: "OMNI",
-    units: "points",
-    multiplier,
-    type: "omni",
   }),
 
   sPoint: (multiplier: PointsReward["multiplier"]): PointsReward => ({
