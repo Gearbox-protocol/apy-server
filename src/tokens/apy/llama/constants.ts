@@ -130,11 +130,11 @@ export const TOKENS: PartialRecord<
       symbol: "PT-DETH-29JAN2026",
     },
     "0x31454faa1daa04cacf59a6bd37681da9160d092a": {
-      id: "4373bbc2-156d-4939-bde0-f8281bb28bee",
+      id: "56494e41-dc61-4495-8639-52c100e96608",
       symbol: "wmooBalancerEthereumrETH-WETH",
     },
     "0x1a711a5bc48b5c1352c1882fa65dc14b5b9e829d": {
-      id: "092e04ef-812a-41fd-9d28-b45c13b7d893",
+      id: "af5d037e-a254-48e5-867e-c40b49a76716",
       symbol: "wmooBalancerEthereumosETH-WETH",
     },
   },
