@@ -172,6 +172,18 @@ export const TOKENS: PartialRecord<
       id: "33c732f6-a78d-41da-af5b-ccd9fa5e52d5",
       symbol: "rsETH",
     },
+    "0x199b9c20908590c6bbe4271c0cb3184e641dd0ba": {
+      id: "e8c12d8a-83b2-4c28-abdd-f4a3d7c75e69",
+      symbol: "stkcvxsavUSDUSDC",
+    },
+    "0x1774a6b4aba3b999461a1682f6776cac66dd1987": {
+      id: "eb395019b-ecc9-430d-be47-617f13fa3975",
+      symbol: "stkcvxpmcrvUSD",
+    },
+    "0xf4faf5d5cf017fe9792122d8f4972d06e144ceba": {
+      id: "02ad75ab-b463-465f-a942-1c858ab4fd17",
+      symbol: "stkcvxpmfrxUSD",
+    },
   },
   BNB: {
     "0x32C830f5c34122C6afB8aE87ABA541B7900a2C5F": {
