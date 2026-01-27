@@ -130,11 +130,11 @@ export const TOKENS: PartialRecord<
       symbol: "PT-DETH-29JAN2026",
     },
     "0x31454faa1daa04cacf59a6bd37681da9160d092a": {
-      id: "4373bbc2-156d-4939-bde0-f8281bb28bee",
+      id: "56494e41-dc61-4495-8639-52c100e96608",
       symbol: "wmooBalancerEthereumrETH-WETH",
     },
     "0x1a711a5bc48b5c1352c1882fa65dc14b5b9e829d": {
-      id: "092e04ef-812a-41fd-9d28-b45c13b7d893",
+      id: "af5d037e-a254-48e5-867e-c40b49a76716",
       symbol: "wmooBalancerEthereumosETH-WETH",
     },
   },
@@ -171,6 +171,18 @@ export const TOKENS: PartialRecord<
     "0x4186BFC76E2E237523CBC30FD220FE055156b41F": {
       id: "33c732f6-a78d-41da-af5b-ccd9fa5e52d5",
       symbol: "rsETH",
+    },
+    "0x199b9c20908590c6bbe4271c0cb3184e641dd0ba": {
+      id: "e8c12d8a-83b2-4c28-abdd-f4a3d7c75e69",
+      symbol: "stkcvxsavUSDUSDC",
+    },
+    "0x1774a6b4aba3b999461a1682f6776cac66dd1987": {
+      id: "eb395019b-ecc9-430d-be47-617f13fa3975",
+      symbol: "stkcvxpmcrvUSD",
+    },
+    "0xf4faf5d5cf017fe9792122d8f4972d06e144ceba": {
+      id: "02ad75ab-b463-465f-a942-1c858ab4fd17",
+      symbol: "stkcvxpmfrxUSD",
     },
   },
   BNB: {
