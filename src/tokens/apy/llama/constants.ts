@@ -145,9 +145,13 @@ export const TOKENS: PartialRecord<
       id: "b395019b-ecc9-430d-be47-617f13fa3975",
       symbol: "stkcvxpmcrvUSD",
     },
-    "0xf4faf5d5cf017fe9792122d8f4972d06e144ceba": {
-      id: "02ad75ab-b463-465f-a942-1c858ab4fd17",
-      symbol: "stkcvxpmfrxUSD",
+    "0x12b004719fb632f1e7c010c6f5d6009fb4258442": {
+      id: "fef01bce-008a-43b0-85f9-5377a56411c4",
+      symbol: "liUSD-1w",
+    },
+    "0xdbdc1ef57537e34680b898e1febd3d68c7389bcb": {
+      id: "8fa2e60e-365a-41fc-8d50-fadde5041f94",
+      symbol: "siUSD",
     },
   },
   Optimism: {
