@@ -125,9 +125,9 @@ export const TOKENS: PartialRecord<
       id: "152b7ce2-7193-475d-9b15-3f17fee66047",
       symbol: "wmooCurveETH+-WETH",
     },
-    "0x8209b01357946a64a0793e9773f6f3fe5a5f2526": {
-      id: "b14fdc9c-e122-41c4-a99f-20e1390f2ef3",
-      symbol: "PT-DETH-29JAN2026",
+    "0xe1d9b789da5b5375eacf66f036022b019a2af307": {
+      id: "a571ac18-ff00-4184-859f-3fc67c9d4d15",
+      symbol: "PT-DETH-23APR2026",
     },
     "0x31454faa1daa04cacf59a6bd37681da9160d092a": {
       id: "56494e41-dc61-4495-8639-52c100e96608",
