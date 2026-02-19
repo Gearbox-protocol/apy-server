@@ -153,6 +153,10 @@ export const TOKENS: PartialRecord<
       id: "8fa2e60e-365a-41fc-8d50-fadde5041f94",
       symbol: "siUSD",
     },
+    "0x924d24c238db7ecae2aa3a19430239ed684bde4a": {
+      id: "fdf7b072-3fb3-47fd-8ac4-0cb2cfbeefb3",
+      symbol: "wmooStakeDaoWBTC-cbBTC-hemiBTC",
+    },
   },
   Optimism: {
     "0x9Bcef72be871e61ED4fBbc7630889beE758eb81D": {
