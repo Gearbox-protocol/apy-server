@@ -157,6 +157,10 @@ export const TOKENS: PartialRecord<
       id: "fdf7b072-3fb3-47fd-8ac4-0cb2cfbeefb3",
       symbol: "wmooStakeDaoWBTC-cbBTC-hemiBTC",
     },
+    "0x403Cc0d2694eC2639101F32B146b90D766461CE9": {
+      id: "e985df91-5e34-45de-9590-b8e22bb8b443",
+      symbol: "wmooBalancerEthereumwstETH-tETH",
+    },
   },
   Optimism: {
     "0x9Bcef72be871e61ED4fBbc7630889beE758eb81D": {
