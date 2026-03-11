@@ -122,7 +122,7 @@ export const TOKENS: PartialRecord<
       symbol: "rswETH",
     },
     "0x02a4cceed3c400b5ba9fd22ad6ec18d8f7a3d48e": {
-      id: "152b7ce2-7193-475d-9b15-3f17fee66047",
+      id: "c98203f5-ea5c-42b0-ab85-f3edfd7b9cbe",
       symbol: "wmooCurveETH+-WETH",
     },
     "0xe1d9b789da5b5375eacf66f036022b019a2af307": {
