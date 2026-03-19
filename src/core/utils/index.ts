@@ -1,7 +1,7 @@
 import { setTimeout } from "node:timers/promises";
 
 export const json_stringify = (
-  o: any,
+  o: unknown,
   space?: number,
   allowDuplicates = false,
 ) => {
@@ -29,7 +29,9 @@ export const json_stringify = (
   return r;
 };
 
-export type PartialRecord<K extends keyof any, T> = { [P in K]?: T };
+export type PartialRecord<K extends string | number | symbol, V> = Partial<
+  Record<K, V>
+>;
 
 export async function timeout(ms: number): Promise<never> {
   await setTimeout(ms);

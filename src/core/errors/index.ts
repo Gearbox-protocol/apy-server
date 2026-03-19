@@ -36,13 +36,13 @@ export class AppError extends Error {
     return correctField || e instanceof AppError;
   }
 
-  static getAppError(e: any): AppError {
+  static getAppError(e: unknown): AppError {
     const wrappedError = AppError.getTypedError(e);
     if (AppError.isAppError(wrappedError)) return wrappedError;
     return new AppError({ code: "UNKNOWN_ERROR", originalError: wrappedError });
   }
 
-  private static getTypedError(value: any): TypedError {
+  private static getTypedError(value: unknown): TypedError {
     if (typeof value === "object" && value !== null) {
       return value;
     }
@@ -56,7 +56,7 @@ export class AppError extends Error {
         ...Object.getOwnPropertySymbols(err),
       ];
 
-      const serializedObj = allProps.reduce<Record<string | symbol, any>>(
+      const serializedObj = allProps.reduce<Record<string | symbol, unknown>>(
         (acc, key) => {
           if (!omit?.[key]) {
             const value = err[key as keyof TypedError];
