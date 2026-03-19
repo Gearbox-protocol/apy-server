@@ -1,4 +1,5 @@
 import type { Address } from "viem";
+import { cachedAxios } from "../axios";
 
 interface MerkleXYZChain {
   id: number;
@@ -128,10 +129,28 @@ export interface MerklXYZV4RewardCampaign {
 export type MerkleXYZV4RewardCampaignResponse = Array<MerklXYZV4RewardCampaign>;
 
 export class MerkleXYZApi {
-  static getOpportunitiesByAddressUrl = (a: Address) =>
-    `https://api.merkl.xyz/v4/opportunities?search=${a}`;
-  static getGearboxCampaignsUrl = () =>
-    "https://api.merkl.xyz/v4/opportunities?name=gearbox";
-  static getGearboxRewardCampaignUrl = (campaignId: Address) =>
-    `https://api.merkl.xyz/v4/campaigns?campaignId=${campaignId}`;
+  private constructor() {}
+
+  static defaultDomain = "https://api.merkl.xyz";
+  static angleDomain = "https://api-merkl.angle.money";
+
+  static getOpportunitiesByAddressUrl = (a: Address) => (domain: string) =>
+    `${domain}/v4/opportunities?search=${a}`;
+
+  static getGearboxCampaignsUrl =
+    () =>
+    (domain = MerkleXYZApi.defaultDomain) =>
+      `${domain}/v4/opportunities?name=gearbox`;
+
+  static getGearboxRewardCampaignUrl =
+    (campaignId: Address) => (domain: string) =>
+      `${domain}/v4/campaigns?campaignId=${campaignId}`;
+
+  static fetchWithFallback = async <T>(getUrl: (domain: string) => string) => {
+    try {
+      return await cachedAxios.get<T>(getUrl(MerkleXYZApi.defaultDomain));
+    } catch {
+      return await cachedAxios.get<T>(getUrl(MerkleXYZApi.angleDomain));
+    }
+  };
 }

@@ -2,7 +2,6 @@ import type { AxiosResponse } from "axios";
 import moment from "moment";
 import type { Address } from "viem";
 
-import { cachedAxios } from "../../core/axios";
 import type {
   MerkleXYZV4CampaignsResponse,
   MerkleXYZV4RewardCampaignResponse,
@@ -23,9 +22,10 @@ const IDS_TO_OMIT = {
 
 export const getPoolExtraAPY: PoolExtraAPYHandler = async () => {
   // get all campaigns
-  const res = await cachedAxios.get<MerkleXYZV4CampaignsResponse>(
-    MerkleXYZApi.getGearboxCampaignsUrl(),
-  );
+  const res =
+    await MerkleXYZApi.fetchWithFallback<MerkleXYZV4CampaignsResponse>(
+      MerkleXYZApi.getGearboxCampaignsUrl(),
+    );
   // filter out not active
   const currentActiveCampaigns = res.data.filter(
     c => c.status === "LIVE" && !BROKEN_CAMPAIGNS[c.id],
@@ -43,11 +43,13 @@ export const getPoolExtraAPY: PoolExtraAPYHandler = async () => {
   );
 
   const aprIdsResponse: Array<
-    PromiseSettledResult<AxiosResponse<MerkleXYZV4RewardCampaignResponse, any>>
+    PromiseSettledResult<
+      AxiosResponse<MerkleXYZV4RewardCampaignResponse, unknown>
+    >
   > = [];
   for (const id of aprIdsList) {
     const resp = await Promise.allSettled([
-      cachedAxios.get<MerkleXYZV4RewardCampaignResponse>(
+      MerkleXYZApi.fetchWithFallback<MerkleXYZV4RewardCampaignResponse>(
         MerkleXYZApi.getGearboxRewardCampaignUrl(id.aprId),
       ),
     ]);

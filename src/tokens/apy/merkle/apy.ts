@@ -2,7 +2,6 @@ import type { NetworkType } from "@gearbox-protocol/sdk";
 import { getChain } from "@gearbox-protocol/sdk";
 import type { CacheAxiosResponse } from "axios-cache-interceptor";
 import type { Address } from "viem";
-import { cachedAxios } from "../../../core/axios";
 import type { MerkleXYZV4CampaignsResponse } from "../../../core/merkle/merklAPI";
 import { MerkleXYZApi } from "../../../core/merkle/merklAPI";
 import type { PartialRecord } from "../../../core/utils";
@@ -33,7 +32,7 @@ const getAPYMerkle_withFilter = async (
   const [additionalAPYs, ...res] = await Promise.allSettled([
     getAdditionalAPYs(network, tokenEntries),
     ...tokenEntries.map(([, c]) =>
-      cachedAxios.get<MerkleXYZV4CampaignsResponse>(
+      MerkleXYZApi.fetchWithFallback<MerkleXYZV4CampaignsResponse>(
         MerkleXYZApi.getOpportunitiesByAddressUrl(c.id),
       ),
     ),
