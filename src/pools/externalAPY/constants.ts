@@ -1,13 +1,9 @@
 import type { NetworkType } from "@gearbox-protocol/sdk";
+import type { ExternalApy } from "@gearbox-protocol/sdk/rewards";
 import type { Address } from "viem";
 import type { PartialRecord } from "../../core/utils";
 
-export interface ExternalApy {
-  value: number;
-  name: string;
-
-  pool: Address;
-}
+export type { ExternalApy };
 
 export type PoolExternalAPYResult = Record<Address, Array<ExternalApy>>;
 export type PoolExternalAPYHandler = (

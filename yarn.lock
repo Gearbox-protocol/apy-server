@@ -1757,7 +1757,7 @@ __metadata:
     "@commitlint/cli": "npm:^20.3.1"
     "@commitlint/config-conventional": "npm:^20.3.1"
     "@gearbox-protocol/biome-config": "npm:^1.0.17"
-    "@gearbox-protocol/sdk": "npm:^12.3.16"
+    "@gearbox-protocol/sdk": "npm:^13.3.1"
     "@sentry/esbuild-plugin": "npm:^4.6.1"
     "@sentry/node": "npm:^10.33.0"
     axios: "npm:^1.13.2"
@@ -1781,33 +1781,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gearbox-protocol/integrations-v3@npm:1.52.2":
-  version: 1.52.2
-  resolution: "@gearbox-protocol/integrations-v3@npm:1.52.2"
-  checksum: 10c0/b453b2bb30aeed85d6089bae12ae30fb4a46c0515c0be6e4d99f2d0b4d242eb215abf768419094aff25708a858439f30b3f21b6a848eccd52166be5200012f46
+"@gearbox-protocol/integrations-v3@npm:1.54.2":
+  version: 1.54.2
+  resolution: "@gearbox-protocol/integrations-v3@npm:1.54.2"
+  checksum: 10c0/5bc799f73dc47b4929d27007a164f00cba7c001c5828dccb86bf0e7ba39c0094efafd386f9f1ef0a0f85d7b80bbbfb58919aea8b61a8a047672b264dc98756ae
   languageName: node
   linkType: hard
 
-"@gearbox-protocol/sdk@npm:^12.3.16":
-  version: 12.3.16
-  resolution: "@gearbox-protocol/sdk@npm:12.3.16"
+"@gearbox-protocol/sdk@npm:^13.3.1":
+  version: 13.3.1
+  resolution: "@gearbox-protocol/sdk@npm:13.3.1"
   dependencies:
-    "@gearbox-protocol/integrations-v3": "npm:1.52.2"
+    "@gearbox-protocol/integrations-v3": "npm:1.54.2"
     "@redstone-finance/evm-connector": "npm:^0.9.0"
     "@redstone-finance/protocol": "npm:^0.9.0"
     "@redstone-finance/sdk": "npm:^0.9.0"
+    "@redstone-finance/utils": "npm:^0.9.0"
     "@types/bn.js": "npm:^5.2.0"
     abitype: "npm:^1.2.3"
-    bn.js: "npm:^5.2.2"
+    bn.js: "npm:^5.2.3"
     buffer: "npm:^6.0.3"
     date-fns: "npm:^4.1.0"
     decimal.js-light: "npm:^2.5.1"
     viem: "npm:>=2.23.15 <3.0.0"
-    zod: "npm:^4.3.5"
+    zod: "npm:^4.3.6"
   peerDependencies:
     axios: ^1.0.0
     viem-deal: ^2.0.4
-  checksum: 10c0/4c067745c8615258bec057543a26d0cd21b3880aacf7cc75dd878f94df97baf61b15d2260005dbbf56c24afa264a7cdf3cd01bd1c78a8abe9fbc866b5eb8452b
+  checksum: 10c0/e5a037387d54f67e693ad64c7ed60c85151acfbc63dda9f2386baa26656c3771351f40db8654b43b3b9646bcfd3e0870aa4b79112f5c4faa3389caf6909a7247
   languageName: node
   linkType: hard
 
@@ -2420,7 +2421,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@redstone-finance/utils@npm:0.9.0":
+"@redstone-finance/utils@npm:0.9.0, @redstone-finance/utils@npm:^0.9.0":
   version: 0.9.0
   resolution: "@redstone-finance/utils@npm:0.9.0"
   dependencies:
@@ -3619,10 +3620,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bn.js@npm:^5.2.1, bn.js@npm:^5.2.2":
+"bn.js@npm:^5.2.1":
   version: 5.2.2
   resolution: "bn.js@npm:5.2.2"
   checksum: 10c0/cb97827d476aab1a0194df33cd84624952480d92da46e6b4a19c32964aa01553a4a613502396712704da2ec8f831cf98d02e74ca03398404bd78a037ba93f2ab
+  languageName: node
+  linkType: hard
+
+"bn.js@npm:^5.2.3":
+  version: 5.2.3
+  resolution: "bn.js@npm:5.2.3"
+  checksum: 10c0/eef19cb9cf5e91e91e3e0f036b799ce6c72f79463c3934d62991c3dcdb58f6c94dc3d806495d9b0bf31cd121870ed79bb2115cea71b56c03e794fb71485031fa
   languageName: node
   linkType: hard
 
@@ -6334,9 +6342,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^4.3.5":
-  version: 4.3.5
-  resolution: "zod@npm:4.3.5"
-  checksum: 10c0/5a2db7e59177a3d7e202543f5136cb87b97b047b77c8a3d824098d3fa8b80d3aa40a0a5f296965c3b82dfdccdd05dbbfacce91347f16a39c675680fd7b1ab109
+"zod@npm:^4.3.6":
+  version: 4.3.6
+  resolution: "zod@npm:4.3.6"
+  checksum: 10c0/860d25a81ab41d33aa25f8d0d07b091a04acb426e605f396227a796e9e800c44723ed96d0f53a512b57be3d1520f45bf69c0cb3b378a232a00787a2609625307
   languageName: node
   linkType: hard

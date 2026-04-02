@@ -1,13 +1,6 @@
 import type { NetworkType } from "@gearbox-protocol/sdk";
+import type { Apy } from "@gearbox-protocol/sdk/rewards";
 import type { Address } from "viem";
-
-export interface Apy {
-  address: Address;
-  symbol: string;
-  protocol: string;
-
-  value: number;
-}
 
 export interface TokenAPY<A = Apy> {
   address: Address;

@@ -1,8 +1,13 @@
 import type { NetworkType } from "@gearbox-protocol/sdk";
+import type { ExtraCollateralPointsInfo as ExtraCollateralPointsInfoSDK } from "@gearbox-protocol/sdk/rewards";
 import type { Address } from "viem";
 import type { PartialRecord } from "../../core/utils";
-import type { PointsInfo } from "../points";
+import type { PointsType } from "../points";
 import { REWARDS_BASE_INFO } from "../points";
+
+type ExtraCollateralPointsInfo = ExtraCollateralPointsInfoSDK<PointsType>;
+
+export type { ExtraCollateralPointsInfo };
 
 export type TokenExtraCollateralPointsResult = Record<
   Address,
@@ -12,10 +17,6 @@ export type TokenExtraCollateralPointsResult = Record<
 export type ExtraCollateralPointsHandler = (
   network: NetworkType,
 ) => Promise<TokenExtraCollateralPointsResult>;
-
-export interface ExtraCollateralPointsInfo extends PointsInfo {
-  pool: Address;
-}
 
 export const POINTS_INFO_BY_NETWORK: PartialRecord<
   NetworkType,

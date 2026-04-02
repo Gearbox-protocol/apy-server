@@ -3,13 +3,18 @@ import {
   type NetworkType,
   SUPPORTED_NETWORKS,
 } from "@gearbox-protocol/sdk";
+import type {
+  ApyDetails,
+  DataResult,
+  GearAPYDetails,
+} from "@gearbox-protocol/sdk/rewards";
 import moment from "moment";
 import type { Address } from "viem";
 import type { PoolExternalAPYResult, PoolPointsResult } from "../../pools";
 import { getPoolExternalAPY, getPoolPoints } from "../../pools";
 import { getPoolExtraAPY } from "../../pools/extraAPY/apy";
 import type { PoolExtraAPYResultByChain } from "../../pools/extraAPY/constants";
-import type { Apy, GearAPY, TokenAPY } from "../../tokens/apy";
+import type { TokenAPY } from "../../tokens/apy";
 import {
   getAPYAvantprotocol,
   getAPYCoinshift,
@@ -51,10 +56,7 @@ import { logGear, logPoolExtraAPY, logRewards } from "./logging";
 import type { PoolOutputDetails, TokenOutputDetails } from "./types";
 import { removePool, removeSymbolAndAddress } from "./types";
 
-export type ApyDetails = Apy & { lastUpdated: string };
 type TokenDetails = TokenAPY<ApyDetails>;
-
-export type GearAPYDetails = GearAPY & { lastUpdated: string };
 
 interface NetworkState {
   tokenApyList: Record<Address, TokenDetails>;
@@ -66,10 +68,6 @@ interface NetworkState {
   poolPointsList: PoolPointsResult;
   poolExternalAPYList: PoolExternalAPYResult;
 }
-
-export type DataResult<T> =
-  | { status: "ok"; data: T }
-  | { status: "error"; message: string; code?: string };
 
 export class Fetcher {
   public rewards: Record<number, NetworkState> = {};

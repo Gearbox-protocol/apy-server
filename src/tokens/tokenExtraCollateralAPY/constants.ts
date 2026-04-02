@@ -1,14 +1,10 @@
 import type { NetworkType } from "@gearbox-protocol/sdk";
+import type { ExtraCollateralAPY } from "@gearbox-protocol/sdk/rewards";
 import type { Address } from "viem";
 import type { PartialRecord } from "../../core/utils";
-import { type Apy, getAPYMerkle_withFilter } from "../apy";
+import { getAPYMerkle_withFilter } from "../apy";
 
-export interface ExtraCollateralAPY extends Omit<Apy, "protocol"> {
-  pool: Address;
-  // absolute apy completely replaces apy value of token for given pool
-  // relative apy adds to the apy value of token for given pool
-  type: "relative" | "absolute";
-}
+export type { ExtraCollateralAPY };
 
 export type TokenExtraCollateralAPYResult = Record<
   Address,

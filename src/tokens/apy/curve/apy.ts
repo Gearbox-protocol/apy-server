@@ -1,4 +1,5 @@
 import type { NetworkType } from "@gearbox-protocol/sdk";
+import type { GearAPY } from "@gearbox-protocol/sdk/rewards";
 import type { Address } from "viem";
 import { cachedAxios } from "../../../core/axios";
 import type { PartialRecord } from "../../../core/utils";
@@ -223,13 +224,6 @@ async function getCurvePools(network: NetworkType) {
     default:
       throw new Error(`Unknown network ${network}`);
   }
-}
-
-interface GearAPY {
-  base: number;
-  crv: number;
-  gear: number;
-  gearPrice: number;
 }
 
 async function getGearAPY(): Promise<GearAPY> {

@@ -1,6 +1,15 @@
 import type { NetworkType } from "@gearbox-protocol/sdk";
+import type {
+  DebtReward as DebtRewardSDK,
+  PointsInfo as PointsInfoSDK,
+  PointsReward as PointsRewardSDK,
+} from "@gearbox-protocol/sdk/rewards";
 import type { Address } from "viem";
 import type { PartialRecord } from "../../core/utils";
+
+type PointsInfo = PointsInfoSDK<PointsType>;
+type DebtReward = DebtRewardSDK<PointsType>;
+type PointsReward = PointsRewardSDK<PointsType>;
 
 export type PointsResult = Record<Address, PointsInfo>;
 export type PointsHandler = (network: NetworkType) => Promise<PointsResult>;
@@ -39,16 +48,6 @@ export type PointsType =
   | "strata"
   | "makina"
   | "somnia";
-
-interface PointsReward {
-  name: string;
-  units: string;
-  multiplier: bigint | "soon";
-  type: PointsType;
-}
-interface DebtReward extends PointsReward {
-  cm: Address | "any";
-}
 
 type CommonReward<CM extends DebtReward["cm"] | undefined> =
   CM extends undefined ? PointsReward : DebtReward;
@@ -256,13 +255,6 @@ export const REWARDS_BASE_INFO = {
     type: "somnia",
   }),
 };
-
-export interface PointsInfo {
-  symbol: string;
-  address: Address;
-  rewards: Array<PointsReward>;
-  debtRewards?: Array<DebtReward>;
-}
 
 export const POINTS_INFO_BY_NETWORK: PartialRecord<
   NetworkType,

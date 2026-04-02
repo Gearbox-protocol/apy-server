@@ -1,26 +1,17 @@
 import type { NetworkType } from "@gearbox-protocol/sdk";
+import type { PoolPointsInfo as PoolPointsInfoSDK } from "@gearbox-protocol/sdk/rewards";
 import type { Address } from "viem";
 import type { PartialRecord } from "../../core/utils";
-import type { PointsType } from "../../tokens/points";
-import { REWARDS_BASE_INFO } from "../../tokens/points";
+import { type PointsType, REWARDS_BASE_INFO } from "../../tokens/points";
+
+type PoolPointsInfo = PoolPointsInfoSDK<PointsType>;
+
+export type { PoolPointsInfo };
 
 export type PoolPointsResult = Record<Address, Array<PoolPointsInfo>>;
 export type PoolPointsHandler = (
   network: NetworkType,
 ) => Promise<PoolPointsResult>;
-
-export interface PoolPointsInfo {
-  pool: Address;
-  token: Address;
-  symbol: string;
-
-  amount: bigint;
-  duration: string | undefined;
-  name: string;
-  type: PointsType;
-  estimation: "absolute" | "relative";
-  condition: "deposit" | "cross-chain-deposit" | "holding";
-}
 
 // pools
 const POOLS = {

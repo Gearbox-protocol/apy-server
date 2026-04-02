@@ -1,15 +1,7 @@
+import type { PoolExtraApy } from "@gearbox-protocol/sdk/rewards";
 import type { Address } from "viem";
 
-export interface PoolExtraApy {
-  token: Address;
-
-  apy: number;
-  rewardToken: Address;
-  rewardTokenSymbol: string;
-  endTimestamp?: number;
-
-  lastUpdated: string;
-}
+export type { PoolExtraApy };
 
 export type PoolExtraAPYResult = Record<Address, Array<PoolExtraApy>>;
 export type PoolExtraAPYResultByChain = Record<number, PoolExtraAPYResult>;
