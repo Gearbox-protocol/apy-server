@@ -20,7 +20,7 @@
     "axios": "^1.13.2",
     "axios-cache-interceptor": "^1.11.3",
     "moment": "^2.30.1",
-    "viem": "^2.44.2"
+    "viem": "^2.47.6"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.3.11",
