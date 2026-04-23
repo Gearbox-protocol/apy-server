@@ -8,7 +8,7 @@ import type { PointsType } from "../../tokens/points";
 type TokenOutputDetails = TokenOutputDetailsSDK<PointsType>;
 type PoolOutputDetails = PoolOutputDetailsSDK<PointsType>;
 
-export type { TokenOutputDetails, PoolOutputDetails };
+export type { PoolOutputDetails, TokenOutputDetails };
 
 export function removeSymbolAndAddress<
   T extends { address: Address; symbol: string },

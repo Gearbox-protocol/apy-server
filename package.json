@@ -23,7 +23,7 @@
     "viem": "^2.47.6"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.3.11",
+    "@biomejs/biome": "^2.4.12",
     "@commitlint/cli": "^20.3.1",
     "@commitlint/config-conventional": "^20.3.1",
     "@gearbox-protocol/biome-config": "^1.0.17",
@@ -43,5 +43,5 @@
       "biome check --no-errors-on-unmatched --write"
     ]
   },
-  "packageManager": "yarn@4.9.2"
+  "packageManager": "pnpm@10.33.0"
 }

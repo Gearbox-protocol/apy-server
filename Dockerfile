@@ -1,6 +1,8 @@
 FROM node:24.11 AS dev
 
-ENV YARN_CACHE_FOLDER=/root/.yarn
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
 ARG SENTRY_AUTH_TOKEN
 ARG SENTRY_ORG
@@ -14,25 +16,26 @@ WORKDIR /app
 
 COPY . .
 
-RUN --mount=type=cache,id=yarn,target=/root/.yarn \
-    corepack enable \
-    && yarn install --immutable \
-    && yarn build
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install --frozen-lockfile \
+    && pnpm build
 
 # Production npm modules
 
 FROM node:24.11 AS prod
 
-ENV YARN_CACHE_FOLDER=/root/.yarn
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
 WORKDIR /app
 
-COPY --from=dev /app/package.json /app/yarn.lock /app/.yarnrc.yml /app/
+COPY --from=dev /app/package.json /app/pnpm-lock.yaml /app/pnpm-workspace.yaml /app/
 COPY --from=dev /app/build/ /app/build
 
-RUN --mount=type=cache,id=yarn,target=/root/.yarn \
-    corepack enable \
-    && yarn workspaces focus --all --production
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    npm pkg delete scripts.prepare \
+    && pnpm install --prod --frozen-lockfile
 
 # Final image
 

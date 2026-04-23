@@ -1,0 +1,7 @@
+minimumReleaseAge: 1440
+minimumReleaseAgeExclude:
+  - "@gearbox-protocol/*"
+onlyBuiltDependencies:
+  - "@sentry/cli"
+  - esbuild
+  - secp256k1

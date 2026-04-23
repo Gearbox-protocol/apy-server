@@ -6,4 +6,3 @@ tmp
 
 # Sentry Config File
 .env.sentry-build-plugin
-.yarn/install-state.gz
