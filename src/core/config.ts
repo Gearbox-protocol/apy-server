@@ -8,6 +8,10 @@ export const RESOLV_AUTH_TOKEN = process.env.RESOLV_AUTH_TOKEN;
  * If S3_BUCKET is set, it is treated as a key in the bucket.
  */
 export const OUTPUT_JSON = process.env.OUTPUT_JSON || "output.json";
+/**
+ * If set, output will be placed here as timestamped files.
+ */
+export const HISTORICAL_OUT = process.env.HISTORICAL_OUT;
 
 export const SENTRY_DSN = process.env.SENTRY_DSN;
 
