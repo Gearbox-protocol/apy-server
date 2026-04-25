@@ -1,3 +1,5 @@
+import type { AxiosError } from "axios";
+import { isAxiosError } from "axios";
 import { json_stringify } from "../utils";
 import type { GeneralErrorCodes } from "./general";
 
@@ -51,6 +53,42 @@ export class AppError extends Error {
 
   static serializeError(err: TypedError, omit?: Record<string | symbol, true>) {
     try {
+      if (isAxiosError(err as unknown)) {
+        const e = err as AxiosError;
+        const cfg = e.config;
+
+        const config = cfg
+          ? stripUndefined({
+              headers: cfg.headers,
+              url: cfg.url,
+              withCredentials: cfg.withCredentials,
+              xsrfCookieName: cfg.xsrfCookieName,
+              xsrfHeaderName: cfg.xsrfHeaderName,
+            })
+          : undefined;
+
+        const method = cfg?.method;
+        const methodLower = method?.toLowerCase();
+        const request =
+          method !== undefined
+            ? stripUndefined({
+                method,
+                ...(methodLower === "post" ? { body: cfg?.data } : {}),
+              })
+            : undefined;
+
+        const serialized = stripUndefined({
+          config,
+          code: e.code,
+          isAxiosError: e.isAxiosError,
+          message: e.message,
+          stack: e.stack,
+          request,
+        });
+
+        return json_stringify(serialized);
+      }
+
       const allProps = [
         ...Object.getOwnPropertyNames(err),
         ...Object.getOwnPropertySymbols(err),
@@ -109,4 +147,10 @@ interface TypedError {
   info?: {
     error?: BaseError;
   };
+}
+
+function stripUndefined<T extends Record<string, unknown>>(obj: T) {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([, v]) => v !== undefined),
+  ) as Partial<T>;
 }
