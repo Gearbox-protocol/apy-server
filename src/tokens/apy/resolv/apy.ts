@@ -9,8 +9,8 @@ interface Response {
 }
 
 const getUrl = () => "https://external-api.resolv.xyz/apr/rlp?interval=7d";
-const getStakingUrl = () =>
-  "https://external-api.resolv.xyz/apr/staking?interval=7d";
+// const getStakingUrl = () =>
+//   "https://external-api.resolv.xyz/apr/staking?interval=7d";
 
 const REQUEST_CONFIG = {
   withCredentials: true,
@@ -24,13 +24,16 @@ const getAPYResolv: APYHandler = async network => {
   );
   if (tokenEntries.length === 0) return {};
 
-  const [data, stakingData] = await Promise.all([
+  const [
+    data,
+    // stakingData
+  ] = await Promise.all([
     cachedAxios.get<Response>(getUrl(), REQUEST_CONFIG),
-    cachedAxios.get<Response>(getStakingUrl(), REQUEST_CONFIG),
+    // cachedAxios.get<Response>(getStakingUrl(), REQUEST_CONFIG),
   ]);
 
   const rplRate = Number(data?.data?.value || 0);
-  const wstUSRRate = Number(stakingData?.data?.value || 0);
+  // const wstUSRRate = Number(stakingData?.data?.value || 0);
 
   const result: APYResult = {};
 
@@ -50,21 +53,21 @@ const getAPYResolv: APYHandler = async network => {
     };
   }
 
-  if (tokens?.wstUSR) {
-    result[tokens.wstUSR] = {
-      address: tokens.wstUSR,
-      symbol: "wstUSR",
+  // if (tokens?.wstUSR) {
+  //   result[tokens.wstUSR] = {
+  //     address: tokens.wstUSR,
+  //     symbol: "wstUSR",
 
-      apys: [
-        {
-          address: tokens.wstUSR,
-          symbol: "wstUSR",
-          protocol: PROTOCOL,
-          value: Number(wstUSRRate) * 100,
-        },
-      ],
-    };
-  }
+  //     apys: [
+  //       {
+  //         address: tokens.wstUSR,
+  //         symbol: "wstUSR",
+  //         protocol: PROTOCOL,
+  //         value: Number(wstUSRRate) * 100,
+  //       },
+  //     ],
+  //   };
+  // }
 
   return result;
 };
