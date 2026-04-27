@@ -12,6 +12,7 @@ interface Response {
   };
 }
 
+// WARNING: This API is down
 const URL = "https://api.makina-dev.finance/graphql";
 const PAYLOAD = {
   query:
