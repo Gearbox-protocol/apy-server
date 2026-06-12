@@ -6,6 +6,10 @@ for fetching the apy of different asset on diferrent protocols. For protocols Li
 
 Run `yarn start` to launch app. It will save output to `output.json` file by default. See [config](./src/core/config.ts) for env variables.
 
+For Merkl API integration, set `MERKL_API_KEY` environment variable. Anonymous requests are limited to 10 req/sec; a key removes this limit and enables attribution.
+
+In GitHub Actions releases the secret is expected to be named `MERKL_API_KEY_BACK` and is mapped to `MERKL_API_KEY` for the application.
+
 ## Running as docker
 
 ```

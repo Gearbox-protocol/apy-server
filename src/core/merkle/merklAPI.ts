@@ -1,10 +1,20 @@
 import type { Address } from "viem";
 import { cachedAxios } from "../axios";
+import { MERKL_API_KEY } from "../config";
 
 interface MerkleXYZChain {
   id: number;
   name: string;
   icon: string;
+  liveCampaigns?: number;
+  endOfDisputePeriod?: number | string;
+  lastClaimsOnchainFetchTimestamp?: string;
+  explorers?: Array<{
+    id: string | number;
+    type: string;
+    url: string;
+    chainId: number;
+  }>;
 }
 
 interface MerkleXYZToken {
@@ -15,9 +25,14 @@ interface MerkleXYZToken {
   decimals: number;
   icon: string;
   verified: boolean;
+  isNative?: boolean;
   isTest: boolean;
+  type?: string;
   price: number | null;
   symbol: string;
+  updatedAt?: number;
+  priceSource?: string;
+  displaySymbol?: string;
 }
 
 export interface MerklXYZV4Campaign {
@@ -25,12 +40,21 @@ export interface MerklXYZV4Campaign {
   type: string;
   identifier: Address;
   name: string;
+  description?: string;
+  howToSteps?: Array<string>;
   status: "LIVE" | "PAST";
-  action: "LEND" | "BORROW";
+  action: string;
   tvl: number;
   apr: number;
+  maxApr?: number;
   dailyRewards: number;
+  maxDailyRewards?: number;
   tags: Array<string>;
+  liveCampaigns?: number;
+  earliestCampaignStart?: string;
+  latestCampaignStart?: string;
+  earliestCampaignEnd?: string;
+  latestCampaignEnd?: string;
   id: string;
   tokens: Array<MerkleXYZToken>;
   chain: MerkleXYZChain;
@@ -38,11 +62,13 @@ export interface MerklXYZV4Campaign {
     cumulated: number;
     timestamp: string;
     breakdowns: Array<{
-      id: number;
+      id?: number;
       identifier: Address;
       type: "CAMPAIGN";
       value: number;
-      aprRecordId: string;
+      aprRecordId?: string;
+      distributionType?: string;
+      timestamp?: string;
     }>;
   };
   tvlRecord: {
@@ -58,25 +84,34 @@ export interface MerklXYZV4Campaign {
     breakdowns: Array<{
       token: MerkleXYZToken;
       amount: string;
-      id: number;
+      maxAmount?: string;
+      id?: string | number;
       value: number;
-      campaignId: string;
-      dailyRewardsRecordid: string;
+      maxValue?: number;
+      campaignId?: string;
+      dailyRewardsRecordid?: string;
+      dailyRewardsRecordId?: string;
+      distributionType?: string;
+      onChainCampaignId?: Address;
+      timestamp?: string;
     }>;
   };
 
   depositUrl: string;
   explorerAddress: Address;
 
-  lastCampaignCreatedAt: string;
+  lastCampaignCreatedAt: number | string;
 
   protocol: {
-    description: string;
-    icon: string;
     id: string;
     name: string;
+    description?: string;
+    icon: string;
     tags: Array<string>;
     url: string;
+    banner?: string | null;
+    opportunityBannerLight?: string | null;
+    opportunityBannerDark?: string | null;
   };
 }
 export type MerkleXYZV4CampaignsResponse = Array<MerklXYZV4Campaign>;
@@ -86,12 +121,17 @@ export interface MerklXYZV4RewardCampaign {
   computeChainId: number;
   distributionChainId: number;
   campaignId: Address;
+  type?: string;
+  subType?: number;
   rewardTokenId: string;
   amount: string;
   opportunityId: string;
   startTimestamp: number;
   endTimestamp: number;
+  dailyRewards?: number;
+  apr?: number;
   creatorAddress: Address;
+  isPrivate?: boolean;
   params: {
     url: string;
     duration: number;
@@ -103,28 +143,45 @@ export interface MerklXYZV4RewardCampaign {
     symbolTargetToken: string;
     decimalsRewardToken: number;
     decimalsTargetToken: number;
+    hooks?: Array<unknown>;
+    forwardingList?: Array<unknown>;
+    forwardingEnabled?: boolean;
+    computeScoreParameters?: {
+      computeMethod: string;
+    };
+    distributionMethodParameters?: {
+      distributionMethod: string;
+      distributionSettings: Record<string, unknown>;
+    };
   };
   chain: MerkleXYZChain;
   rewardToken: MerkleXYZToken;
   distributionChain: MerkleXYZChain;
+  distributionType?: string;
   campaignStatus: {
     campaignId: string;
     computedUntil: string;
     processingStarted: string;
-    status: "SUCCESS";
+    status: "SUCCESS" | string;
     error: string;
     details: string;
+    preComputeStatus?: string;
+    delay?: number;
+    preComputeProcessingStarted?: number | string;
+    createdAt?: number;
   };
 
-  createdAt: string;
+  createdAt: string | number;
   creator: {
     address: Address;
-    creatorId: null;
+    creatorId: string | null;
     tags: Array<string>;
+    googleSub?: string | null;
+    email?: string | null;
+    tier?: number;
+    maxNegativeBalance?: number;
+    missingCreatorAlertDismissedAt?: string | null;
   };
-  distributionType: string;
-  subType: number;
-  type: string;
 }
 export type MerkleXYZV4RewardCampaignResponse = Array<MerklXYZV4RewardCampaign>;
 
@@ -140,17 +197,26 @@ export class MerkleXYZApi {
   static getGearboxCampaignsUrl =
     () =>
     (domain = MerkleXYZApi.defaultDomain) =>
-      `${domain}/v4/opportunities?name=gearbox`;
+      `${domain}/v4/opportunities?mainProtocolId=gearbox`;
 
   static getGearboxRewardCampaignUrl =
     (campaignId: Address) => (domain: string) =>
       `${domain}/v4/campaigns?campaignId=${campaignId}`;
 
+  private static get headers(): Record<string, string> | undefined {
+    return MERKL_API_KEY ? { "X-API-Key": MERKL_API_KEY } : undefined;
+  }
+
   static fetchWithFallback = async <T>(getUrl: (domain: string) => string) => {
+    const headers = MerkleXYZApi.headers;
     try {
-      return await cachedAxios.get<T>(getUrl(MerkleXYZApi.defaultDomain));
+      return await cachedAxios.get<T>(getUrl(MerkleXYZApi.defaultDomain), {
+        headers,
+      });
     } catch {
-      return await cachedAxios.get<T>(getUrl(MerkleXYZApi.angleDomain));
+      return await cachedAxios.get<T>(getUrl(MerkleXYZApi.angleDomain), {
+        headers,
+      });
     }
   };
 }
