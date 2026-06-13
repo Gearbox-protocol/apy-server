@@ -5,7 +5,6 @@ import type { Address } from "viem";
 export interface TokenAPY<A = Apy> {
   address: Address;
   symbol: string;
-
   apys: Array<A>;
 }
 
