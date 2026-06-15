@@ -161,6 +161,15 @@ export const TOKENS: PartialRecord<
       id: "e985df91-5e34-45de-9590-b8e22bb8b443",
       symbol: "wmooBalancerEthereumwstETH-tETH",
     },
+
+    "0xb8d89678e75a973e74698c976716308abb8a46a4": {
+      id: "c74227a1-e738-4021-bbe1-13363815aecb",
+      symbol: "savUSD",
+    },
+    "0xda06ee2dacf9245aa80072a4407debdea0d7e341": {
+      id: "b2c0504c-fed5-46ae-908e-aac28bfbede2",
+      symbol: "savETH",
+    },
   },
   Optimism: {
     "0x9Bcef72be871e61ED4fBbc7630889beE758eb81D": {
