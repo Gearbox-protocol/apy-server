@@ -2,12 +2,18 @@ import { cachedAxios } from "../../../core/axios";
 import type { APYHandler, APYResult } from "../constants";
 import { PROTOCOL, TOKENS } from "./constants";
 
-interface Response {
+interface SavUSDResponse {
   savusdApy: string;
   lastUpdated: string;
 }
 
-const getUrl = () => "https://app.avantprotocol.com/api/savusdApy";
+interface SavETHResponse {
+  apy: string;
+  lastUpdated: string;
+}
+
+const getSavUSDUrl = () => "https://app.avantprotocol.com/api/savusdApy";
+const getSavETHUrl = () => "https://app.avantprotocol.com/api/apy/saveth";
 
 const getAPYAvantprotocol: APYHandler = async network => {
   const tokens = TOKENS[network] || {};
@@ -16,21 +22,37 @@ const getAPYAvantprotocol: APYHandler = async network => {
   );
   if (tokenEntries.length === 0) return {};
 
-  const { data } = await cachedAxios.get<Response>(getUrl());
-
-  const rate = data?.savusdApy || 0;
-
   const result: APYResult = {};
 
   if (tokens?.savUSD) {
+    const { data } = await cachedAxios.get<SavUSDResponse>(getSavUSDUrl());
+    const rate = data?.savusdApy || 0;
+
     result[tokens.savUSD] = {
       address: tokens.savUSD,
       symbol: "savUSD",
-
       apys: [
         {
           address: tokens.savUSD,
           symbol: "savUSD",
+          protocol: PROTOCOL,
+          value: Number(rate),
+        },
+      ],
+    };
+  }
+
+  if (tokens?.savETH) {
+    const { data } = await cachedAxios.get<SavETHResponse>(getSavETHUrl());
+    const rate = data?.apy || 0;
+
+    result[tokens.savETH] = {
+      address: tokens.savETH,
+      symbol: "savETH",
+      apys: [
+        {
+          address: tokens.savETH,
+          symbol: "savETH",
           protocol: PROTOCOL,
           value: Number(rate),
         },
