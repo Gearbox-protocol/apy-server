@@ -1,4 +1,4 @@
-FROM node:24.11 AS dev
+FROM node:24.22.1 AS dev
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -22,7 +22,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 
 # Production npm modules
 
-FROM node:24.11 AS prod
+FROM node:24.22.1 AS prod
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
@@ -39,7 +39,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 
 # Final image
 
-FROM gcr.io/distroless/nodejs24-debian12
+FROM gcr.io/distroless/nodejs24-debian13@sha256:c23cc7262662efd642cd9c9d61783d10f600321f7bafdd37c8a82365ffaa2aa6
 ARG PACKAGE_VERSION
 ENV PACKAGE_VERSION=${PACKAGE_VERSION:-0.0.0}
 ENV NODE_ENV=production
